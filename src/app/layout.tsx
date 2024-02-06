@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import ThemeClientProvider from "@/components/ThemeClientProvider";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,7 +15,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {/* theme provider */}
+        <ThemeClientProvider>
+          <header>Header</header>
+          <main>{children}</main>
+          <footer>Footer</footer>
+        </ThemeClientProvider>
+      </body>
     </html>
   );
 }
