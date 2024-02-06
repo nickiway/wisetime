@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+
 import ThemeClientProvider from "@/components/ThemeClientProvider";
+import Header from "@/components/Header";
 
 import "./globals.css";
 
@@ -18,7 +20,7 @@ export default function RootLayout({
       <body>
         {/* theme provider */}
         <ThemeClientProvider>
-          <header>Header</header>
+          <Header />
           <main>{children}</main>
           <footer>Footer</footer>
         </ThemeClientProvider>

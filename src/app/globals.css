@@ -8,3 +8,8 @@ body {
     dark:text-gray-100
     dark:bg-gray-900;
 }
+
+header {
+  @apply flex
+  items-center;
+}
