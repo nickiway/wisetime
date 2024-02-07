@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
 
-import ThemeClientProvider from "@/components/ThemeClientProvider";
-import Header from "@/components/Header";
+import ThemeClientProvider from "@/components/layout/ThemeClientProvider";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "WiseTime App",
+  title: {
+    default:
+      "Time tracking app for freelancers and small businesses | Time tracking app",
+    template: "%s | Time tracking app",
+  },
   description: "Time tracking app for freelancers and small businesses",
 };
 
@@ -21,8 +26,8 @@ export default function RootLayout({
         {/* theme provider */}
         <ThemeClientProvider>
           <Header />
-          <main>{children}</main>
-          <footer>Footer</footer>
+          {/* <main>{children}</main> */}
+          {/* <Footer /> */}
         </ThemeClientProvider>
       </body>
     </html>
