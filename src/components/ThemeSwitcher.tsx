@@ -1,12 +1,13 @@
+"use client";
+
 import { FC } from "react";
 import { useTheme } from "next-themes";
 
 const ThemeSwitcher: FC = () => {
-  const { theme, setTheme } = useTheme();
+  const { setTheme } = useTheme();
 
   return (
     <div className="gap-4 flex">
-      <p>Current theme {theme}</p>
       <button className="bg-red-200" onClick={() => setTheme("dark")}>
         Dark
       </button>

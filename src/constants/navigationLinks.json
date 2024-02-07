@@ -1,6 +1,8 @@
 [
   { "label": "Home", "href": "/" },
-  { "label": "About", "href": "/about" },
-  { "label": "Products", "href": "/products" },
-  { "label": "Contact", "href": "/contact" }
+  { "label": "Dashboard", "href": "/dashboard" },
+  { "label": "Time Tracking", "href": "/time-tracking" },
+  { "label": "Task Management", "href": "/task-management" },
+  { "label": "Report Error", "href": "/report" },
+  { "label": "Settings", "href": "/settings" }
 ]
