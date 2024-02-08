@@ -26,8 +26,8 @@ export default function RootLayout({
         {/* theme provider */}
         <ThemeClientProvider>
           <Header />
-          {/* <main>{children}</main> */}
-          {/* <Footer /> */}
+          <main>{children}</main>
+          <Footer />
         </ThemeClientProvider>
       </body>
     </html>

@@ -6,7 +6,7 @@ const Home = () => {
     <main>
       <p>Home page</p>
       <Button
-        clickHandler={() => alert("clicked")}
+        clickHandler={() => {}}
         cutomClasses="bg-blue-500 text-white"
         label="Click me"
       />
