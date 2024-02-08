@@ -8,7 +8,14 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        apricot: "#ffcdb2",
+        melon: "#ffb4a2",
+        salmonPink: "#e5989b",
+        oldRose: "#b5838d",
+      },
+    },
   },
   plugins: [],
 };

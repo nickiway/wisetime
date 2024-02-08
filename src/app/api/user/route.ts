@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { connectDB } from "@/db/connectDB";
-import { User } from "@/db/models/User";
+import { User } from "@/db/models/auth/User";
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
   try {

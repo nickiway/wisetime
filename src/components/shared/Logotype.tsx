@@ -17,8 +17,14 @@ const Logotype: FC<LogotypeProps> = ({
   height,
 }) => {
   return (
-    <figure className={className}>
-      <Image src={image} alt={alt} width={width} height={height} />
+    <figure>
+      <Image
+        className={className}
+        src={image}
+        alt={alt}
+        width={width}
+        height={height}
+      />
     </figure>
   );
 };

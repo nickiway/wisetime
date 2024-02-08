@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* light */
+  --apricot: #ffcdb2;
+  --melon: #ffb4a2;
+  --salmonPink: #e5989b;
+  --oldRose: #b5838d;
+  --eggplant: #6b4d57;
+
+  /* dark */
+  --snow: #fffbff;
+  --almond: #f1dabf;
+  --cinereous: #92817a;
+  --bistre: #362417;
+  --black: #000500;
+}
+
+body {
+  @apply dark:bg-red-200;
+  background-color: var(--apricot);
+}

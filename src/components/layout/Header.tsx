@@ -8,10 +8,9 @@ const Header = () => {
       {/* logotype */}
       <Logotype
         alt="WiseTime"
-        image="/logotype.png"
-        width={64}
-        height={64}
-        className="p-5"
+        image="/logo-3.svg"
+        width={96}
+        height={96}
       />{" "}
       {/* navigation */}
       <Navigation />
