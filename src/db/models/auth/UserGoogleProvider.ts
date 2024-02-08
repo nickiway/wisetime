@@ -7,5 +7,6 @@ const schema = new Schema({
   Email: String,
 });
 
-export const UserGoogle =
-  mongoose.models.UserGoogle || mongoose.model("UserGoogle", schema);
+export const UserGoogleProvider =
+  mongoose.models.UserGoogleProvider ||
+  mongoose.model("UserGoogleProvider", schema);
