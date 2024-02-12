@@ -2,6 +2,8 @@
 const nextConfig = {
   env: {
     dbConnection: process.env.dbConnection,
+    githubProviderClientID: process.env.githubProviderClientID,
+    clientSecret: process.env.clientSecret,
   },
 };
 

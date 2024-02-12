@@ -3,7 +3,7 @@
 import { FC } from "react";
 import { useTheme } from "next-themes";
 
-const ThemeSwitch: FC = () => {
+export const ThemeSwitch: FC = () => {
   const { setTheme } = useTheme();
 
   return (
@@ -13,5 +13,3 @@ const ThemeSwitch: FC = () => {
     </div>
   );
 };
-
-export default ThemeSwitch;

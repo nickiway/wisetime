@@ -1,13 +1,20 @@
 "use client";
-import { ThemeProvider } from "next-themes";
+
 import { useEffect, useState } from "react";
 
-const ThemeClientProvider = ({ children }: { children: React.ReactNode }) => {
+import { ThemeProvider } from "next-themes";
+
+export const ThemeClientProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   // checking if it mounted to except the hydration errror
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    console.log("test");
   }, []);
 
   if (!mounted) {
@@ -16,5 +23,3 @@ const ThemeClientProvider = ({ children }: { children: React.ReactNode }) => {
 
   return <ThemeProvider attribute="class">{children}</ThemeProvider>;
 };
-
-export default ThemeClientProvider;

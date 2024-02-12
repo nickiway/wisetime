@@ -7,6 +7,6 @@ const schema = new Schema({
   isEmailConfirmed: Boolean,
 });
 
-export const UserGeneralProvider =
-  mongoose.models.UserGeneralProvider ||
-  mongoose.model("UserGeneralProvider", schema);
+export const UserCredentialsProvider =
+  mongoose.models.UserCredentialsProvider ||
+  mongoose.model("UserCredentialsProvider", schema);

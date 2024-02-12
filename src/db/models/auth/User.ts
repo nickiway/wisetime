@@ -1,13 +1,13 @@
 import mongoose, { Schema } from "mongoose";
 
 import { UserGoogleProvider } from "./UserGoogleProvider";
-import { UserGeneralProvider } from "./UserGeneralProvider";
+import { UserCredentialsProvider } from "./UserCredentialsProvider";
 
 const schema = new Schema({
   _id: Number,
   name: String,
   GoogleProviderID: UserGoogleProvider,
-  GeneralProviderID: UserGeneralProvider,
+  CredentialsProviderID: UserCredentialsProvider,
 });
 
 export const User = mongoose.models.User || mongoose.model("User", schema);
