@@ -4,9 +4,8 @@ import * as z from "zod";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTransition } from "react";
 
-import { LoginSchema } from "@/schemas";
+import { RegisterSchema } from "@/schemas";
 import {
   Form,
   FormItem,
@@ -21,11 +20,11 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormError } from "./form-error";
 import { FormSuccess } from "./form-success";
 
-export const LoginForm = () => {
-  const [isPending, startTransition] = useTransition();
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+export const RegisterForm = () => {
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
+      username: "",
       password: "",
       email: "",
     },
@@ -33,14 +32,32 @@ export const LoginForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Login Your Account"
-      backButtonLabel="Don't have account yet?"
-      backButtonHref="/auth/register"
+      headerLabel="Register new account"
+      backButtonLabel="Do you have account already?"
+      backButtonHref="/auth/login"
       showSocials
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(() => {})}>
           <div className="py-5 space-y-4">
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Username</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      placeholder="Same Jhonson"
+                      type="text"
+                    ></Input>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="email"
@@ -81,7 +98,7 @@ export const LoginForm = () => {
           </div>
 
           <Button type="submit" className="w-full">
-            Login My Account
+            Register My Account
           </Button>
         </form>
       </Form>

@@ -21,5 +21,5 @@ export const ThemeClientProvider = ({
     return <>{children}</>;
   }
 
-  return <ThemeProvider attribute="class">{children}</ThemeProvider>;
+  return <div>{children}</div>;
 };

@@ -23,14 +23,17 @@ export const CardWrapper = ({
   showSocials,
 }: CardWrapperProps) => {
   return (
-    <Card>
+    <Card className="w-[400px]">
       <CardHeader>
         <CardTitle className="flex justify-center text-xl">
           {headerLabel}
         </CardTitle>
       </CardHeader>
+
       <CardContent>{children}</CardContent>
+
       <CardFooter>{showSocials && <Socials />}</CardFooter>
+
       <CardFooter>
         <BackButton label={backButtonLabel} href={backButtonHref} />
       </CardFooter>
