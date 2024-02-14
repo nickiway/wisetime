@@ -4,8 +4,11 @@ import * as z from "zod";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState, useTransition } from "react";
 
 import { RegisterSchema } from "@/schemas";
+import { register } from "@/actions/register";
+
 import {
   Form,
   FormItem,
@@ -21,6 +24,19 @@ import { FormError } from "./form-error";
 import { FormSuccess } from "./form-success";
 
 export const RegisterForm = () => {
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
+
+  const onSubmit = async (value: z.infer<typeof RegisterSchema>) => {
+    startTransition(async () => {
+      const response = await register(value);
+
+      setError(response.error);
+      setSuccess(response.success);
+    });
+  };
+
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -38,7 +54,7 @@ export const RegisterForm = () => {
       showSocials
     >
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(() => {})}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="py-5 space-y-4">
             <FormField
               control={form.control}
@@ -93,8 +109,8 @@ export const RegisterForm = () => {
                 </FormItem>
               )}
             />
-            <FormError message="Somethin went wrong" />
-            <FormSuccess message="The email was sent" />
+            <FormError message={error} />
+            <FormSuccess message={success} />
           </div>
 
           <Button type="submit" className="w-full">

@@ -1,10 +1,9 @@
 import mongoose, { Schema } from "mongoose";
 
 const schema = new Schema({
-  _id: Number,
-  Email: String,
-  Password: String,
-  isEmailConfirmed: Boolean,
+  email: String,
+  password: String,
+  emailConfirmed: Boolean,
 });
 
 export const UserCredentialsProvider =
