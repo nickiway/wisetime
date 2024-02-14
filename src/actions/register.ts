@@ -16,16 +16,16 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   }
 
   const { email, username, password } = validData.data;
-
   const hashedPassword = await bcryptjs.hash(password, 10);
 
   try {
     await connectDB();
 
     const userExists = await UserCredentialsProvider.find({ email });
+    const trimUsername = username.trim();
 
-    if (userExists.length > 0) {
-      return { error: "The user already exists" };
+    if (userExists.length) {
+      return { error: "The user with this email already exists" };
     }
 
     const createdCredentialsUser = await UserCredentialsProvider.create({
@@ -35,13 +35,12 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     });
 
     await User.create({
-      username,
+      username: trimUsername,
       CredentialsProviderID: createdCredentialsUser._id,
     });
 
     return { success: "User was created. Validate your email" };
   } catch (error) {
-    console.error(error);
     return { error: "Something went wrong. Try again." };
   }
 };

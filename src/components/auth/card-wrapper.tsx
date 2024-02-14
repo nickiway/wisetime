@@ -25,7 +25,7 @@ export const CardWrapper = ({
   return (
     <Card className="w-[400px]">
       <CardHeader>
-        <CardTitle className="flex justify-center text-xl">
+        <CardTitle className="flex justify-center text-xl uppercase">
           {headerLabel}
         </CardTitle>
       </CardHeader>

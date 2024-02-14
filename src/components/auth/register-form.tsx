@@ -48,7 +48,7 @@ export const RegisterForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Register new account"
+      headerLabel="Register"
       backButtonLabel="Do you have account already?"
       backButtonHref="/auth/login"
       showSocials
@@ -113,7 +113,7 @@ export const RegisterForm = () => {
             <FormSuccess message={success} />
           </div>
 
-          <Button type="submit" className="w-full">
+          <Button type="submit" disabled={isPending && true} className="w-full">
             Register My Account
           </Button>
         </form>
