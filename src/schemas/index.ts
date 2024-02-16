@@ -8,7 +8,7 @@ export const LoginSchema = z.object({
 });
 
 export const RegisterSchema = z.object({
-  username: z.string().min(1, "Username length must be more than 6 symbols"),
+  name: z.string().min(1, "Username length must be more than 6 symbols"),
   email: z.string().email({
     message: "Email is reqired",
   }),

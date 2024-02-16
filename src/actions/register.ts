@@ -15,14 +15,14 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     return { error: "Invalid data implemented" };
   }
 
-  const { email, username, password } = validData.data;
+  const { email, name, password } = validData.data;
   const hashedPassword = await bcryptjs.hash(password, 10);
 
   try {
     await dbConnect();
 
     const userExists = await UserCredentialsProvider.findOne({ email });
-    const trimUsername = username.trim();
+    const trimUsername = name.trim();
 
     if (userExists) {
       return { error: "The user with this email already exists" };
@@ -35,7 +35,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     });
 
     await User.create({
-      username: trimUsername,
+      name: trimUsername,
       CredentialsProviderID: createdCredentialsUser._id,
     });
 

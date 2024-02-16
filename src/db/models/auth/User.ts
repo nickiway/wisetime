@@ -1,7 +1,8 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, InferSchemaType } from "mongoose";
 
 const schema = new Schema({
-  username: String,
+  name: String,
+
   GoogleProviderID: {
     type: Schema.Types.ObjectId,
     ref: "UserGoogleProvider",
@@ -16,4 +17,6 @@ const schema = new Schema({
   },
 });
 
-export const User = mongoose.models.User || mongoose.model("User", schema);
+export type UserType = InferSchemaType<typeof schema>;
+
+export const User = mongoose.models?.User || mongoose.model("User", schema);
