@@ -6,7 +6,7 @@ import * as bcryptjs from "bcryptjs";
 import { RegisterSchema } from "@/schemas";
 import { UserCredentialsProvider } from "@/db/models/auth/UserCredentialsProvider";
 import { User } from "@/db/models/auth/User";
-import { connectDB } from "@/db/connectDB";
+import { dbConnect } from "@/lib/dbConnect";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validData = RegisterSchema.safeParse(values);
@@ -19,12 +19,12 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const hashedPassword = await bcryptjs.hash(password, 10);
 
   try {
-    await connectDB();
+    await dbConnect();
 
-    const userExists = await UserCredentialsProvider.find({ email });
+    const userExists = await UserCredentialsProvider.findOne({ email });
     const trimUsername = username.trim();
 
-    if (userExists.length) {
+    if (userExists) {
       return { error: "The user with this email already exists" };
     }
 

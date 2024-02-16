@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    dbConnection: process.env.dbConnection,
+    dbConnect: process.env.dbConnect,
     githubProviderClientID: process.env.githubProviderClientID,
     clientSecret: process.env.clientSecret,
   },

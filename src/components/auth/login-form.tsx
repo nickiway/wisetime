@@ -20,8 +20,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/buttton";
 import { CardWrapper } from "@/components/auth/card-wrapper";
-import { FormError } from "./form-error";
-import { FormSuccess } from "./form-success";
+import { FormError } from "@/components/auth/form-error";
+import { FormSuccess } from "@/components/auth/form-success";
 
 export const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -30,10 +30,10 @@ export const LoginForm = () => {
 
   const onSubmit = async (value: z.infer<typeof LoginSchema>) => {
     startTransition(async () => {
-      const response = await login(value);
+      const { error, success } = await login(value);
 
-      setError(response.error);
-      setSuccess(response.success);
+      setError(error);
+      setSuccess(success);
     });
   };
 

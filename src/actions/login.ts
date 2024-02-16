@@ -1,12 +1,12 @@
 "use server";
 
 import * as z from "zod";
-import bcryptjs from "bcryptjs";
 
 import { LoginSchema } from "@/schemas";
-import { connectDB } from "@/db/connectDB";
-import { User } from "@/db/models/auth/User";
-import { UserCredentialsProvider } from "@/db/models/auth/UserCredentialsProvider";
+import { dbConnect } from "@/lib/dbConnect";
+import { signIn } from "next-auth/react";
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
+import { AuthError } from "next-auth";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validData = LoginSchema.safeParse(values);
@@ -18,32 +18,24 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   const { email, password } = validData.data;
 
   try {
-    await connectDB();
-
-    const userCredentials = await UserCredentialsProvider.findOne({ email });
-
-    if (!userCredentials) {
-      return { error: "There is no user. Register your account" };
-    }
-
-    const isPasswordCorrect = await bcryptjs.compare(
+    await dbConnect();
+    await signIn("credentials", {
+      email,
       password,
-      userCredentials.password
-    );
-
-    if (!userCredentials.emailConfirmed) {
-      return { error: "To enter your account confirm your email" };
-    }
-
-    if (!isPasswordCorrect) {
-      return { error: "Incorrect password or email. Please enter correct." };
-    }
-
-    const user = await User.findOne({
-      CredentialsProviderID: userCredentials._id,
+      redirectTo: DEFAULT_LOGIN_REDIRECT,
     });
   } catch (error) {
-    return { error: "Something went wrong. Try again" };
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case "CredentialsSignin":
+          return { error: "Invalid credentials" };
+
+        default:
+          return { error: "Something went wrong" };
+      }
+
+      throw error;
+    }
   }
 
   return { success: "User Logged in successfully" };

@@ -6,6 +6,10 @@ const schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "UserGoogleProvider",
   },
+  GitHubProviderID: {
+    type: Schema.Types.ObjectId,
+    ref: "GitHubProbider",
+  },
   CredentialsProviderID: {
     type: Schema.Types.ObjectId,
     ref: "UserCredentialsProvider",
