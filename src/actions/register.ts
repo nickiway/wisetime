@@ -32,7 +32,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       name: trimUsername,
       email,
       password: hashedPassword,
-      emailVerified: false,
+      emailVerified: null,
+      image: null,
     });
 
     return { success: "User was created. Validate your email" };

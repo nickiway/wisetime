@@ -11,8 +11,6 @@ export const getUserByEmail = async (
 
     return userCredentials;
   } catch (error) {
-    console.error("Error fetching user by email:", error);
-
     return null;
   }
 };

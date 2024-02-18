@@ -1,5 +1,4 @@
 import NextAuth from "next-auth";
-import { ObjectId } from "mongoose";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 
 import clientPromise from "@/lib/mongodb";
@@ -12,10 +11,9 @@ export const {
   signOut,
   auth,
 } = NextAuth({
-  // TODO: fix the event to rewrite verified email for providers
   events: {
     async linkAccount({ user }) {
-      User.updateOne({ _id: user._id }, { emailVerified: new Date() });
+      await User.updateOne({ _id: user.id }, { emailVerified: new Date() });
     },
   },
   callbacks: {
@@ -27,7 +25,6 @@ export const {
       return session;
     },
     async jwt({ token }) {
-      console.log(token);
       return token;
     },
   },
