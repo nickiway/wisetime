@@ -1,42 +1,43 @@
 import type { NextAuthConfig } from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+import { InferSchemaType } from "mongoose";
 import bcryptjs from "bcryptjs";
 
+import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
+import GitHub from "next-auth/providers/github";
+
 import { LoginSchema } from "./schemas";
-import { getUserByEmail, getUserByEmailReturnType } from "@/data/user";
-import { UserCredentialsProviderType } from "./db/models/auth/UserCredentialsProvider";
+import { getUserByEmail } from "@/data/user";
 import { UserType } from "./db/models/auth/User";
 
 export default {
   providers: [
+    GitHub({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    }),
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
     Credentials({
       async authorize(credentials) {
         const validatedFields = LoginSchema.safeParse(credentials);
 
-        if (validatedFields.success) {
-          const { email, password } = validatedFields.data;
+        if (!validatedFields.success) return null;
+        const { email, password } = validatedFields.data;
 
-          const [user, userCredentials] = (await getUserByEmail(email)) as [
-            UserType,
-            UserCredentialsProviderType
-          ];
+        const user = (await getUserByEmail(email)) as UserType | null;
 
-          if (!userCredentials || !userCredentials.password) return null;
+        if (!user || !user.password) return null;
 
-          const passwordsMatch = await bcryptjs.compare(
-            password,
-            userCredentials.password
-          );
+        const passwordsMatch = await bcryptjs.compare(password, user.password);
 
-          const id: string = (user as any)._id;
-
-          if (passwordsMatch)
-            return {
-              id,
-              email: userCredentials.email,
-              name: user.name,
-            };
-        }
+        if (passwordsMatch)
+          return {
+            name: user.name,
+            email: user.email,
+          };
 
         return null;
       },

@@ -4,7 +4,6 @@ import * as z from "zod";
 import * as bcryptjs from "bcryptjs";
 
 import { RegisterSchema } from "@/schemas";
-import { UserCredentialsProvider } from "@/db/models/auth/UserCredentialsProvider";
 import { User } from "@/db/models/auth/User";
 import { dbConnect } from "@/lib/dbConnect";
 
@@ -16,27 +15,24 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   }
 
   const { email, name, password } = validData.data;
-  const hashedPassword = await bcryptjs.hash(password, 10);
 
   try {
     await dbConnect();
 
-    const userExists = await UserCredentialsProvider.findOne({ email });
-    const trimUsername = name.trim();
+    const userExists = await User.findOne({ email });
 
     if (userExists) {
       return { error: "The user with this email already exists" };
     }
 
-    const createdCredentialsUser = await UserCredentialsProvider.create({
-      email,
-      password: hashedPassword,
-      emailConfirmed: false,
-    });
+    const hashedPassword = await bcryptjs.hash(password, 10);
+    const trimUsername = name.trim();
 
     await User.create({
       name: trimUsername,
-      CredentialsProviderID: createdCredentialsUser._id,
+      email,
+      password: hashedPassword,
+      emailVerified: false,
     });
 
     return { success: "User was created. Validate your email" };

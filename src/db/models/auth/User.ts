@@ -2,19 +2,10 @@ import mongoose, { Schema, InferSchemaType } from "mongoose";
 
 const schema = new Schema({
   name: String,
-
-  GoogleProviderID: {
-    type: Schema.Types.ObjectId,
-    ref: "UserGoogleProvider",
-  },
-  GitHubProviderID: {
-    type: Schema.Types.ObjectId,
-    ref: "GitHubProbider",
-  },
-  CredentialsProviderID: {
-    type: Schema.Types.ObjectId,
-    ref: "UserCredentialsProvider",
-  },
+  email: String,
+  password: String,
+  image: String,
+  emailVerified: Date,
 });
 
 export type UserType = InferSchemaType<typeof schema>;

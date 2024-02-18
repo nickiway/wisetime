@@ -14,7 +14,6 @@ export const ThemeClientProvider = ({
 
   useEffect(() => {
     setMounted(true);
-    console.log("test");
   }, []);
 
   if (!mounted) {
