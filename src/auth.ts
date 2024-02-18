@@ -28,6 +28,10 @@ export const {
       return token;
     },
   },
+  pages: {
+    signIn: "/auth/login",
+    error: "/auth/error",
+  },
   adapter: MongoDBAdapter(clientPromise, { databaseName: "wisetime" }),
   session: { strategy: "jwt" },
   ...authConfig,

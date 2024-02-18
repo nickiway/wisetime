@@ -1,5 +1,7 @@
 import { auth, signOut } from "@/auth";
 
+import { UserAvatar } from "@/components/settings/user-avatar";
+
 export default async function Settings() {
   const session = await auth();
 
@@ -14,6 +16,8 @@ export default async function Settings() {
       >
         <button type="submit">Sign Out</button>
       </form>
+
+      <UserAvatar imageUri={session?.user?.image || ""} />
       {JSON.stringify(session)}
     </div>
   );
