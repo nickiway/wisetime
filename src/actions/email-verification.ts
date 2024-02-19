@@ -5,7 +5,7 @@ import {
   IVerificationToken,
   VerificationToken,
 } from "@/db/models/auth/VerificationToken";
-import { User } from "@/db/models/auth/User";
+import { User, UserType } from "@/db/models/auth/User";
 
 export const emailVerification = async (token: string) => {
   const now = new Date().getTime();
@@ -20,6 +20,16 @@ export const emailVerification = async (token: string) => {
 
   if (verificationToken.expiers.getTime() < now)
     return { error: "The token expired" };
+
+  const user = (await User.findOne({
+    email: verificationToken.email,
+  })) as UserType;
+
+  console.log(user.emailVerified);
+
+  if (user.emailVerified) {
+    return { error: "Token is already validated" };
+  }
 
   await User.updateOne(
     { email: verificationToken.email },

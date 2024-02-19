@@ -23,11 +23,13 @@ export const NewVerificationForm = () => {
     }
 
     emailVerification(userToken)
-      .then(() => {
-        setSuccess("The email was verified");
+      .then((response) => {
+        response.error
+          ? setError(response.error)
+          : setSuccess(response.success);
       })
       .catch(() => {
-        setError("The email was not verified");
+        setError("Something went wrong");
       });
   }, [userToken]);
 
