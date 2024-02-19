@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-
+import { Resend } from "resend";
 import { getVerificationTokenByEmail } from "@/data/verification-token";
 import {
   VerificationToken,
@@ -12,7 +12,7 @@ export const createVerificationToken = async (
   const existingToken = await getVerificationTokenByEmail(email);
 
   if (existingToken) {
-    await VerificationToken.deleteOne({ id: existingToken._id });
+    await VerificationToken.deleteOne({ _id: existingToken._id });
   }
 
   const token = uuidv4();

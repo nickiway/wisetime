@@ -2,10 +2,14 @@
 
 import * as z from "zod";
 import * as bcryptjs from "bcryptjs";
+import type { IVerificationToken } from "@/db/models/auth/VerificationToken";
+
+import { createVerificationToken } from "@/lib/tokens";
+import { dbConnect } from "@/lib/dbConnect";
+import { sendEmailVerification } from "@/lib/mail";
 
 import { RegisterSchema } from "@/schemas";
 import { User } from "@/db/models/auth/User";
-import { createVerificationToken } from "@/lib/tokens";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validData = RegisterSchema.safeParse(values);
@@ -17,13 +21,14 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const { email, name, password } = validData.data;
 
   try {
+    await dbConnect();
+
     const userExists = await User.findOne({ email });
 
     if (userExists) {
       return { error: "The user with this email already exists" };
     }
 
-    const verificationToken = await createVerificationToken(email);
     const hashedPassword = await bcryptjs.hash(password, 10);
     const trimUsername = name.trim();
 
@@ -34,6 +39,11 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       emailVerified: null,
       image: null,
     });
+
+    const validationToken = (await createVerificationToken(
+      email
+    )) as IVerificationToken;
+    await sendEmailVerification(validationToken);
 
     return { success: "Success! User was creted, validated your email" };
   } catch (error) {

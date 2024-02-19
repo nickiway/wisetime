@@ -1,4 +1,3 @@
-import { dbConnect } from "@/lib/dbConnect";
 import mongoose, { Schema, InferSchemaType } from "mongoose";
 
 const schema = new Schema({
@@ -12,5 +11,3 @@ const schema = new Schema({
 export type UserType = InferSchemaType<typeof schema>;
 
 export const User = mongoose.models?.User || mongoose.model("User", schema);
-
-dbConnect();
