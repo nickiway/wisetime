@@ -1,8 +1,0 @@
-[
-  { "label": "Home", "href": "/" },
-  { "label": "Dashboard", "href": "/dashboard" },
-  { "label": "Time Tracking", "href": "/time-tracking" },
-  { "label": "Task Management", "href": "/task-management" },
-  { "label": "Report Error", "href": "/report" },
-  { "label": "Settings", "href": "/settings" }
-]

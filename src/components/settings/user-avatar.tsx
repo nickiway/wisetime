@@ -1,15 +1,17 @@
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 interface UserAvatarProps {
-  imageUri?: string;
-  imageAlt?: string;
+  imageUri: string;
+  imageAlt: string;
+  classes?: string;
 }
 export const UserAvatar = ({
   imageUri,
-  imageAlt = "My Avatar",
+  imageAlt,
+  classes,
 }: UserAvatarProps) => {
   return (
-    <Avatar>
+    <Avatar className={classes}>
       <AvatarImage src={imageUri} />
       <AvatarFallback>{imageAlt}</AvatarFallback>
     </Avatar>

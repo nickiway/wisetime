@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/buttton";
+import { Button } from "@/components/ui/button";
 
 interface BackButtonProps {
   label: string;

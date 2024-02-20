@@ -17,7 +17,7 @@ export default async function Settings() {
         <button type="submit">Sign Out</button>
       </form>
 
-      <UserAvatar imageUri={session?.user?.image || ""} />
+      <UserAvatar imageUri={session?.user?.image || ""} imageAlt="My Profile" />
       {JSON.stringify(session)}
     </div>
   );

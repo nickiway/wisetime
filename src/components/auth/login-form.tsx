@@ -19,7 +19,7 @@ import {
   FormControl,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/buttton";
+import { Button } from "@/components/ui/button";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormError } from "@/components/auth/form-error";
 import { FormSuccess } from "@/components/auth/form-success";
