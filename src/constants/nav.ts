@@ -4,14 +4,14 @@ import { FaQuestion, FaTags, FaFolder } from "react-icons/fa";
 import { BsPeopleFill } from "react-icons/bs";
 
 export const MENU_LIST = [
-  { id: 2, label: "", href: "/productivity", icon: SiGoogleanalytics },
-  { id: 3, label: "", href: "/productivity", icon: SiTask },
-  { id: 5, label: "", href: "/settings", icon: FaTags },
-  { id: 6, label: "", href: "/settings", icon: BsPeopleFill },
-  { id: 8, label: "", href: "/settings", icon: FaFolder },
+  { id: 2, label: "Analytics", href: "/productivity", icon: SiGoogleanalytics },
+  { id: 3, label: "My tasks", href: "/productivity", icon: SiTask },
+  { id: 5, label: "My tags", href: "/settings", icon: FaTags },
+  { id: 6, label: "Contacts", href: "/settings", icon: BsPeopleFill },
+  { id: 8, label: "My projects", href: "/settings", icon: FaFolder },
 ];
 
 export const EXTRA_MENU = [
-  { id: 1, label: "", href: "/settings", icon: IoMdSettings },
-  { id: 4, label: "", href: "/productivity", icon: FaQuestion },
+  { id: 1, label: "Settings", href: "/settings", icon: IoMdSettings },
+  { id: 4, label: "Need help?", href: "/productivity", icon: FaQuestion },
 ];

@@ -1,5 +1,6 @@
-import { NavigationButton } from "@/components/navigation/navigation-button";
 import { IconType } from "react-icons/lib";
+
+import { NavigationButton } from "@/components/navigation/navigation-button";
 
 interface NavigationListProps {
   list: { id: number; label: string; href: string; icon: IconType }[];
@@ -13,17 +14,15 @@ export const NavigationList = ({
 }: NavigationListProps) => {
   return (
     <>
-      {list.map((item) => {
+      {list.map(({ id, href, icon, label }) => {
         return (
           <NavigationButton
-            key={item.id}
-            href={item.href}
-            icon={item.icon}
-            className={
-              "text-xl hover:bg-white hover:text-black " +
-              (activeButtonId === item.id ? "bg-white text-black " : "")
-            }
-            onClick={() => onClick(item.id)}
+            key={id}
+            href={href}
+            icon={icon}
+            label={label}
+            className={activeButtonId === id ? "bg-white text-black " : ""}
+            onClick={() => onClick(id)}
           />
         );
       })}

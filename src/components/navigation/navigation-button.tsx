@@ -1,35 +1,49 @@
 "use client";
 
 import Link from "next/link";
-
-import { cn } from "@/lib/utils";
-
-import { Button } from "@/components/ui/button";
 import { IconType } from "react-icons/lib";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
 
 interface NavigationButtonProps extends React.HTMLAttributes<HTMLDivElement> {
   icon: IconType;
+  onClick: () => void;
   href: string;
-  onClick?: () => void;
-  label?: string;
+  label: string;
 }
 
 export const NavigationButton = ({
   icon: Icon,
   className,
+  label,
   href,
   onClick,
 }: NavigationButtonProps) => {
   return (
-    <Button
-      variant="link"
-      className={cn("text-white", className)}
-      onClick={onClick}
-      asChild
-    >
-      <Link href={href}>
-        <Icon />
-      </Link>
-    </Button>
+    <TooltipProvider delayDuration={200}>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant="menu"
+            className={className}
+            onClick={onClick}
+            asChild
+          >
+            <Link href={href}>
+              <Icon />
+            </Link>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent side="left">
+          <p>{label}</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
