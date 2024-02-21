@@ -1,6 +1,6 @@
 import { auth, signOut } from "@/auth";
 
-import { UserAvatar } from "@/components/settings/user-avatar";
+import { UserAvatar } from "@/components/shared/user-avatar";
 
 export default async function Settings() {
   const session = await auth();

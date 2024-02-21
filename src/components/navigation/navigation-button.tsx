@@ -11,7 +11,8 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 
-interface NavigationButtonProps extends React.HTMLAttributes<HTMLDivElement> {
+interface NavigationButtonProps
+  extends React.HTMLAttributes<HTMLButtonElement> {
   icon: IconType;
   onClick: () => void;
   href: string;
@@ -40,9 +41,7 @@ export const NavigationButton = ({
             </Link>
           </Button>
         </TooltipTrigger>
-        <TooltipContent side="left">
-          <p>{label}</p>
-        </TooltipContent>
+        <TooltipContent side="left">{label}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

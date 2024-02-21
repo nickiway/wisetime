@@ -14,3 +14,7 @@ export const RegisterSchema = z.object({
   }),
   password: z.string().min(6, "Password length must be more than 6 symbols"),
 });
+
+export const SearchSchema = z.object({
+  search: z.string(),
+});

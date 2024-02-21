@@ -7,7 +7,7 @@ export default function ProtectedLayout({
 }) {
   return (
     <div className="flex h-full">
-      <Navigation className="h-full  flex flex-col justify-center bg-zinc-950 " />
+      <Navigation className="h-full flex flex-col justify-center bg-zinc-950 " />
       {children}
     </div>
   );
