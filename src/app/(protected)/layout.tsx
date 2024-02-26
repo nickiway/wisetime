@@ -6,9 +6,10 @@ export default function ProtectedLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-full">
-      <Navigation className="h-full flex flex-col justify-center bg-zinc-950 " />
-      {children}
-    </div>
+    <body className="flex">
+      <Navigation />
+
+      <main className="w-full overflow-scroll bg-zinc-100">{children}</main>
+    </body>
   );
 }

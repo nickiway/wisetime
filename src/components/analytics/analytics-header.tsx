@@ -25,8 +25,8 @@ export const AnalyticsHeader = async ({
   image,
 }: AnalyticsHeaderProps) => {
   return (
-    <div className="p-5 shadow-xl flex gap-x-10">
-      <SearchForm className="w-4/5" />
+    <div className="p-5 shadow-xl flex gap-x-10 bg-white">
+      <SearchForm className="w-4/5 relative" />
 
       {/* TOOD : implement navigation menu */}
       <Flex>

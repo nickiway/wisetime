@@ -22,7 +22,7 @@ export const Navigation = ({ className }: NavigationProps) => {
   };
 
   return (
-    <header className={className}>
+    <header className={"h-full flex flex-col justify-center bg-zinc-950 "}>
       <div className="h-1/4 text-3xl text-white text-center py-10">
         <Link href="/">W</Link>
       </div>
