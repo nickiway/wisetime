@@ -1,12 +1,13 @@
 import { auth } from "@/auth";
 
 import { AnalyticsHeader as Header } from "@/components/analytics/analytics-header";
-import { AnalyticsCalendar } from "@/components/analytics/analytics-calendar";
+import { AnalyticsCalendar as Calendar } from "@/components/analytics/analytics-calendar";
 import { Notification } from "@/components/shared/notification";
 import { TimeChart } from "@/components/analytics/time-chart";
 
 export default async function AnalyticsPage() {
   const session = await auth();
+
   const data = [
     {
       label: "6:00 AM",
@@ -44,17 +45,16 @@ export default async function AnalyticsPage() {
         email={session?.user?.email || ""}
       />
 
-      <div className="lg:grid grid-cols-4 gap-5 m-5">
-        {/*  */}
-        <section className="col-span-3 analytics-container">
+      <div className="md:grid grid-cols-4 gap-5 m-5">
+        <section className="col-span-2 lg:col-span-3 analytics-container">
           <h1 className="text-2xl p-5 capitalize">time analytics</h1>
           <div>
             <TimeChart data={data} />
           </div>
         </section>
 
-        <section className="analytics-container flex justify-center">
-          <AnalyticsCalendar />
+        <section className="col-span-2 lg:col-span-1 analytics-container flex justify-center">
+          <Calendar />
         </section>
 
         {/* TODO: Complete the tasks section at analytics */}
