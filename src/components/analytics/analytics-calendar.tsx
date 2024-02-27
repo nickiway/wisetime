@@ -1,5 +1,5 @@
 "use client";
-import { HTMLAttributes, useEffect, useState } from "react";
+import { HTMLAttributes, useState } from "react";
 
 import { Calendar } from "@/components/ui/calendar";
 

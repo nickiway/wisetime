@@ -79,3 +79,7 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.analytics-container {
+  @apply bg-white rounded-lg shadow-lg p-5;
+}
