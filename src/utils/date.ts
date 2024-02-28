@@ -11,3 +11,13 @@ export const convertToHhMm = (date: number): string => {
 
   return [hours, minutes].join(":");
 };
+
+//   converting date to dd/mo
+export const convertToDdMo = (date: number): string => {
+  const finalDate = new Date(date);
+
+  const day = doubleDigitFormat(finalDate.getDate());
+  const month = doubleDigitFormat(finalDate.getMonth() + 1);
+
+  return `${day}/${month}`;
+};

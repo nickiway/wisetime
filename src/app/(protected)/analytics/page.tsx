@@ -4,6 +4,7 @@ import { AnalyticsHeader as Header } from "@/components/analytics/analytics-head
 import { AnalyticsCalendar as Calendar } from "@/components/analytics/analytics-calendar";
 import { Notification } from "@/components/shared/notification";
 import { TimeChart } from "@/components/analytics/time-chart";
+import { TaskList } from "@/components/shared/task-list";
 
 export default async function AnalyticsPage() {
   const session = await auth();
@@ -38,6 +39,32 @@ export default async function AnalyticsPage() {
       value: 3490,
     },
   ];
+
+  const taskList = [
+    {
+      id: "1",
+      name: "Website development",
+      priority: "Mid",
+      deadline: new Date(),
+      tags: ["development"],
+    },
+
+    {
+      id: "2",
+      name: "Website development",
+      description: "Landing page",
+      priority: "Mid",
+      deadline: new Date(),
+      tags: ["development"],
+    },
+    {
+      id: "3",
+      name: "Website development",
+      priority: "Mid",
+      deadline: new Date(),
+      tags: ["development"],
+    },
+  ];
   return (
     <>
       <Header
@@ -47,10 +74,7 @@ export default async function AnalyticsPage() {
 
       <div className="md:grid grid-cols-4 gap-5 m-5">
         <section className="col-span-2 lg:col-span-3 analytics-container">
-          <h1 className="text-2xl p-5 capitalize">time analytics</h1>
-          <div>
-            <TimeChart data={data} />
-          </div>
+          <TimeChart data={data || []} />
         </section>
 
         <section className="col-span-2 lg:col-span-1 analytics-container flex justify-center">
@@ -59,7 +83,7 @@ export default async function AnalyticsPage() {
 
         {/* TODO: Complete the tasks section at analytics */}
         <section className="col-span-3 row-span-3 analytics-container">
-          your tasks
+          <TaskList list={taskList} className="p-5" title="Your tasks" />
         </section>
 
         {/* TODO: Complete the notification section section at analytics */}

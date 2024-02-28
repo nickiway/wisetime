@@ -69,7 +69,7 @@ export const SearchForm = ({ className }: SearchFormProps) => {
           )}
         />
         <SearchFormOutput
-          className="bg-white rounded-md shadow-lg mt-2"
+          className="bg-white rounded-md shadow-lg mt-2 z-50"
           data={filteredData}
         />
       </form>

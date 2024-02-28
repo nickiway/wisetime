@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { ThemeClientProvider } from "@/components/theme-provider";
+import { Providers } from "@/redux/provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,8 +19,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <Providers>
+      <html lang="en">
+        <body>{children}</body>
+      </html>
+    </Providers>
   );
 }
