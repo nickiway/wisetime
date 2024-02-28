@@ -83,3 +83,11 @@ body {
 .analytics-container {
   @apply bg-white rounded-lg shadow-lg p-5;
 }
+
+th {
+  @apply text-start px-5 py-2;
+}
+
+td {
+  @apply p-5;
+}

@@ -72,7 +72,7 @@ export default async function AnalyticsPage() {
         email={session?.user?.email || ""}
       />
 
-      <div className="md:grid grid-cols-4 gap-5 m-5">
+      <div className=" md:grid grid-cols-4 gap-5 m-5">
         <section className="col-span-2 lg:col-span-3 analytics-container">
           <TimeChart data={data || []} />
         </section>
