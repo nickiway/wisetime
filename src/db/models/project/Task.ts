@@ -1,10 +1,9 @@
 import mongoose, { Schema } from "mongoose";
-import { User } from "../auth/User";
 
 const schema = new Schema({
   _id: Number,
   project: { type: mongoose.Types.ObjectId, ref: "Tasks" },
-  createdBy: User,
+  createdBy: { type: mongoose.Types.ObjectId, ref: "User" },
   title: String,
   tags: String,
   time: {

@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { HTMLAttributes } from "react";
 
 import { TaskFilterPannel } from "@/components/shared/filter-pannel";
+import { TaskListItem } from "@/components/shared/task-list-item";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
-interface TaskListProps extends HTMLAttributes<HTMLDivElement> {
+interface TaskListProps {
   list: {
     id: string;
     name: string;
@@ -14,44 +13,43 @@ interface TaskListProps extends HTMLAttributes<HTMLDivElement> {
     tags?: string[];
     description?: string;
   }[];
+
   title?: string;
+  showAllTasksButton?: boolean;
 }
 
-export const TaskList = ({ className, list, title }: TaskListProps) => {
+export const TaskList = ({
+  list,
+  title,
+  showAllTasksButton,
+}: TaskListProps) => {
   return (
     <>
       <div className="flex items-center">
-        <h1 className="w-full text-2xl p-5 capitalize">{title}</h1>
-        <Button variant="default" asChild>
-          <Link href="/tasks">Show more</Link>
-        </Button>
+        <h1 className="title">{title}</h1>
+
+        {showAllTasksButton && (
+          <Button variant="default" asChild>
+            <Link href="/tasks">Show more</Link>
+          </Button>
+        )}
       </div>
 
       <TaskFilterPannel />
 
-      <table className="table-auto w-full">
-        <thead>
-          <tr>
-            <th>#Work</th>
-            <th>Due Date</th>
-            <th className="w-6">Priority</th>
-          </tr>
-        </thead>
-        <tbody>
-          {list.map(({ id, name, description, deadline, priority }) => {
-            return (
-              <tr key={id}>
-                <td className="">
-                  <p className="text-xl">{name}</p>
-                  <p className="text-muted-foreground text-xs">{description}</p>
-                </td>
-                <td>{deadline.toLocaleDateString()}</td>
-                <td>{priority}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <ul>
+        <li className="flex p-5">
+          <div className="w-2/4">
+            <p className="text-xl">#Work</p>
+          </div>
+          <div className="w-1/4">Due Date</div>
+          <div className="w-1/4">Priority</div>
+        </li>
+
+        {list.map(({ id, ...props }) => (
+          <TaskListItem key={id} {...props} />
+        ))}
+      </ul>
     </>
   );
 };

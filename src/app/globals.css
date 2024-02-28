@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Montserrat";
+  src: url("/src/assets/fonts/Montserrat/Montserrat-VariableFont_wght.ttf")
+    format("truetype");
+}
 html,
 body {
   height: 100%;
@@ -84,10 +89,6 @@ body {
   @apply bg-white rounded-lg shadow-lg p-5;
 }
 
-th {
-  @apply text-start px-5 py-2;
-}
-
-td {
-  @apply p-5;
+.title {
+  @apply w-full text-3xl py-10 px-5 capitalize font-montserrat;
 }

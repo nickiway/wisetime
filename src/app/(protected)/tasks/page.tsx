@@ -1,5 +1,12 @@
-import React from "react";
+import { auth } from "@/auth";
+import { AddTaskForm } from "@/components/tasks/add-task-form";
 
-export default function Tasks() {
-  return <div>Tasks Page</div>;
+export default async function Tasks() {
+  const session = await auth();
+
+  return (
+    <div>
+      <AddTaskForm userId={session?.user?.id} />
+    </div>
+  );
 }

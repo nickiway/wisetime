@@ -12,31 +12,31 @@ export default async function AnalyticsPage() {
   const data = [
     {
       label: "6:00 AM",
-      value: 4000,
+      tasks: 1,
     },
     {
       label: "9:00 AM",
-      value: 3000,
+      tasks: 3,
     },
     {
       label: "12:00 PM",
-      value: 2000,
+      tasks: 5,
     },
     {
       label: "3:00 PM",
-      value: 2780,
+      tasks: 6,
     },
     {
       label: "6:00 PM",
-      value: 1890,
+      tasks: 2,
     },
     {
       label: "9:00 PM",
-      value: 2390,
+      tasks: 1,
     },
     {
       label: "00:00 AM",
-      value: 3490,
+      tasks: 4,
     },
   ];
 
@@ -72,7 +72,7 @@ export default async function AnalyticsPage() {
         email={session?.user?.email || ""}
       />
 
-      <div className=" md:grid grid-cols-4 gap-5 m-5">
+      <div className="md:grid grid-cols-4 gap-5 m-5">
         <section className="col-span-2 lg:col-span-3 analytics-container">
           <TimeChart data={data || []} />
         </section>
@@ -83,7 +83,7 @@ export default async function AnalyticsPage() {
 
         {/* TODO: Complete the tasks section at analytics */}
         <section className="col-span-3 row-span-3 analytics-container">
-          <TaskList list={taskList} className="p-5" title="Your tasks" />
+          <TaskList list={taskList} title="Your tasks" showAllTasksButton />
         </section>
 
         {/* TODO: Complete the notification section section at analytics */}

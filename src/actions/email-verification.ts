@@ -25,8 +25,6 @@ export const emailVerification = async (token: string) => {
     email: verificationToken.email,
   })) as UserType;
 
-  console.log(user.emailVerified);
-
   if (user.emailVerified) {
     return { error: "Token is already validated" };
   }

@@ -16,7 +16,7 @@ import {
 interface TimeChartProps {
   data: {
     label: string;
-    value: number;
+    tasks: number;
   }[];
 }
 
@@ -32,7 +32,7 @@ export const TimeChart = ({ data }: TimeChartProps) => {
 
   return (
     <div>
-      <h1 className="text-2xl p-5 capitalize">time analytics {date}</h1>
+      <h1 className="title">time analytics {date}</h1>
 
       <section>
         <ResponsiveContainer width="100%" height="100%" minHeight={"250px"}>
@@ -54,7 +54,7 @@ export const TimeChart = ({ data }: TimeChartProps) => {
             <Area
               type="bump"
               fill="url(#color)"
-              dataKey="value"
+              dataKey="tasks"
               stroke="#82ca9d"
               activeDot={{ r: 8 }}
             />
