@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { TagType } from "@/db/models/project/Tag";
+import { Types } from "mongoose";
 
 export const fetchTagsByUserId = createAsyncThunk(
   "tags/fetchTags",
-  async (userId: string) => {
+  async (userId: Types.ObjectId) => {
     const response = (await fetch(`/api/tags/${userId}`, {})).json();
 
     console.log(response);
@@ -36,6 +37,10 @@ const tagsSlice = createSlice({
         (tag) => tag._id !== action.payload
       );
     },
+
+    removeAll(state) {
+      state.entities = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -53,5 +58,5 @@ const tagsSlice = createSlice({
   },
 });
 
-export const { addTagToStore, removeTag } = tagsSlice.actions;
+export const { addTagToStore, removeTag, removeAll } = tagsSlice.actions;
 export default tagsSlice.reducer;

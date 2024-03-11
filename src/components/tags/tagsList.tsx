@@ -1,20 +1,30 @@
 "use client";
 
+import { Types } from "mongoose";
 import { useEffect } from "react";
 
+import { fetchTagsByUserId, removeAll } from "@/redux/slices/tagsSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { fetchTagsByUserId } from "@/redux/slices/tagsSlice";
+
+import { deleteAll } from "@/actions/tag";
+
 import { TagBadge } from "@/components/tags/tagBadge";
+import { Button } from "@/components/ui/button";
+import { AlertButtonWrapper } from "@/components/shared/alert-button-wrapper";
 
 interface TagsListProps {
-  userId: string;
+  userId: Types.ObjectId;
 }
 
 export const TagsList = ({ userId }: TagsListProps) => {
   const dispatch = useAppDispatch();
   const { entities, loading } = useAppSelector((state) => state.tagsReducer);
 
-  console.log(entities);
+  const deleteAllTags = async () => {
+    const response = await deleteAll(userId);
+
+    if (response?.deletedCount !== 0) dispatch(removeAll());
+  };
 
   //   inserting the loaded tags from db to store
   useEffect(() => {
@@ -27,7 +37,15 @@ export const TagsList = ({ userId }: TagsListProps) => {
     <>
       <h1 className="title">my tags</h1>
 
-      <div className="controllers"></div>
+      <div className="pb-10">
+        <AlertButtonWrapper
+          actionFunction={deleteAllTags}
+          title="Are you sure you want to delete all the tags?"
+          description="Deleting this tags can be aborted, the data will be lost"
+        >
+          <Button variant="outline">Delete All Tags</Button>
+        </AlertButtonWrapper>
+      </div>
 
       <div className="flex flex-wrap gap-5">
         {entities.length === 0 && <p>There is no tags, create a new one</p>}

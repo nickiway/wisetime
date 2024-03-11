@@ -11,17 +11,7 @@ import { deleteTag } from "@/actions/tag";
 import { useAppDispatch } from "@/redux/hooks";
 import { removeTag } from "@/redux/slices/tagsSlice";
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import { AlertButtonWrapper } from "@/components/shared/alert-button-wrapper";
 
 interface TagBadgeProps extends TagType {
   className: string;
@@ -43,33 +33,21 @@ export const TagBadge = ({
   };
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Badge
-          className={cn(
-            "w-fit px-5 py-2 cursor-pointer hover:opacity-60",
-            className
-          )}
-          style={{ backgroundColor: color, color: textColor }}
-          variant={"default"}
-        >
-          {title}
-        </Badge>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Do you want to delete this tag?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your tag.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => submitDelete(_id)}>
-            Continue
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <AlertButtonWrapper
+      actionFunction={() => submitDelete(_id)}
+      title="Do you want to delete this tag?"
+      description="This action cannot be undone. This will permanently delete your tag."
+    >
+      <Badge
+        className={cn(
+          "w-fit px-5 py-2 cursor-pointer hover:opacity-60",
+          className
+        )}
+        style={{ backgroundColor: color, color: textColor }}
+        variant={"default"}
+      >
+        {title}
+      </Badge>
+    </AlertButtonWrapper>
   );
 };
