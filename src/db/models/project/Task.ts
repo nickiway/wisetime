@@ -1,7 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
 const schema = new Schema({
-  _id: Number,
   project: { type: mongoose.Types.ObjectId, ref: "Tasks" },
   createdBy: { type: mongoose.Types.ObjectId, ref: "User" },
   title: String,

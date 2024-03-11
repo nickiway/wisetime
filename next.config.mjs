@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: false,
   env: {
     dbConnect: process.env.dbConnect,
     githubProviderClientID: process.env.githubProviderClientID,

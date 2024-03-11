@@ -18,3 +18,14 @@ export const RegisterSchema = z.object({
 export const SearchSchema = z.object({
   search: z.string(),
 });
+
+export const AddTaskSchema = z.object({
+  title: z.string(),
+  tags: z.string().array(),
+});
+
+export const AddTagsSchema = z.object({
+  title: z.string().min(1, "The title is required"),
+  color: z.string(),
+  textColor: z.string(),
+});
