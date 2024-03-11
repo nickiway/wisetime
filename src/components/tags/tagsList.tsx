@@ -20,13 +20,12 @@ export const TagsList = ({ userId }: TagsListProps) => {
   const dispatch = useAppDispatch();
   const { entities, loading } = useAppSelector((state) => state.tagsReducer);
 
-  const deleteAllTags = async () => {
+  const deleteAllTags = async (userId: Types.ObjectId) => {
     const response = await deleteAll(userId);
 
     if (response?.deletedCount !== 0) dispatch(removeAll());
   };
 
-  //   inserting the loaded tags from db to store
   useEffect(() => {
     if (loading === "idle") {
       dispatch(fetchTagsByUserId(userId));
@@ -39,7 +38,7 @@ export const TagsList = ({ userId }: TagsListProps) => {
 
       <div className="pb-10">
         <AlertButtonWrapper
-          actionFunction={deleteAllTags}
+          actionFunction={() => deleteAllTags(userId)}
           title="Are you sure you want to delete all the tags?"
           description="Deleting this tags can be aborted, the data will be lost"
         >
