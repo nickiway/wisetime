@@ -105,7 +105,11 @@ export const AddTagsForm = ({ userId }: AddTaskFormProps) => {
         </div>
         <FormError message={error} />
         <FormSuccess message={success} />
-        <Button type="submit" disabled={isPending && true} className="w-full">
+        <Button
+          type="submit"
+          disabled={isPending && true}
+          className="w-full my-5"
+        >
           Create a new task
         </Button>
       </form>

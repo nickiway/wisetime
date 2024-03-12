@@ -31,13 +31,16 @@ export const addTag = async (
       return { error: "The tag with such a title exists already" };
     }
 
-    const insertedTag = await Tag.create({
+    const insertedTagDocument = await Tag.create({
       _id: new mongoose.Types.ObjectId(),
       title,
       color,
       textColor,
       createdBy: new ObjectId(userId),
     });
+
+    // convertin to plain object
+    const insertedTag = insertedTagDocument.toObject();
 
     return { success: "The tag was added", insertedTag };
   } catch (error) {
