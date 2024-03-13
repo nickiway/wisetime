@@ -2,7 +2,7 @@
 
 import { useAppSelector } from "@/redux/hooks";
 
-import { convertToDdMo } from "@/utils/date";
+import { convertToDdMo } from "@/utils/date-time";
 
 import {
   AreaChart,

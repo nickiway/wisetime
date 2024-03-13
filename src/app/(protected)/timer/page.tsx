@@ -1,5 +1,9 @@
-import React from "react";
+import { StopWatch } from "@/components/stop-watch/stop-watch";
 
 export default function TimerPage() {
-  return <div>TimerPage</div>;
+  return (
+    <div>
+      <StopWatch showPage />
+    </div>
+  );
 }

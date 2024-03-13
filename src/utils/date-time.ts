@@ -21,3 +21,15 @@ export const convertToDdMo = (date: number): string => {
 
   return `${day}/${month}`;
 };
+
+export const ticksToTime = (ticks: number): string => {
+  const hours = Math.floor(ticks / (3600 * 1000));
+  const minutes = Math.floor((ticks % (3600 * 1000)) / (60 * 1000));
+  const seconds = Math.floor((ticks % (60 * 1000)) / 1000);
+
+  const padZero = (num: number): string => {
+    return num < 10 ? `0${num}` : `${num}`;
+  };
+
+  return `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+};

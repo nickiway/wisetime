@@ -1,7 +1,7 @@
 import { FaClock } from "react-icons/fa";
 import { HTMLAttributes } from "react";
 
-import { convertToHhMm } from "@/utils/date";
+import { convertToHhMm } from "@/utils/date-time";
 
 interface NotificationProps extends HTMLAttributes<HTMLDivElement> {
   title: string;
