@@ -2,6 +2,9 @@ import { configureStore } from "@reduxjs/toolkit";
 import analyticsReducer from "@/redux/slices/analyticsSlice";
 import tagsReducer from "@/redux/slices/tagsSlice";
 import timerReducer from "@/redux/slices/timerSlice";
+import { enableMapSet } from "immer";
+
+enableMapSet();
 
 export const store = configureStore({
   reducer: {

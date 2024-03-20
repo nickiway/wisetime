@@ -1,15 +1,32 @@
 "use client";
 
 import { Session } from "next-auth";
+import { FaTags } from "react-icons/fa";
 
 import { storeTimerSession } from "@/actions/timer";
 import { useTimer } from "@/hooks/useTimer";
 
-import { pause, start, stop, makeCircle } from "@/redux/slices/timerSlice";
+import {
+  setTaskName,
+  start,
+  stop,
+  makeCircle,
+  insertTimerTag,
+  deleteTimerTag,
+} from "@/redux/slices/timerSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useTags } from "@/hooks/useTags";
+import { ChangeEvent } from "react";
 
 interface TimeTrackerControllersProps {
   session: Session | null;
@@ -20,22 +37,24 @@ export const TimeTrackerControllers = ({
 }: TimeTrackerControllersProps) => {
   const dispatch = useAppDispatch();
   const isTimerOn = useTimer();
+  const tags = useTags(session?.user?.id || "");
 
   const totalTicks = useAppSelector((state) => state.timerReducer.totalTicks);
-  const ticks = useAppSelector((state) => state.timerReducer.ticks);
-  const circles = useAppSelector((state) => state.timerReducer.circles);
+  const taskName = useAppSelector((state) => state.timerReducer.taskName);
+  const selectedTags = useAppSelector(
+    (state) => state.timerReducer.selectedTags
+  );
 
   const onStop = async () => {
     if (!session) {
       return;
     }
 
-    const lastCircle = { ticks, totalTicks };
-
     const { error, result } = await storeTimerSession({
       totalTicks,
-      circles: [...circles, lastCircle],
       userId: session?.user?.id,
+      taskName,
+      selectedTags,
     });
 
     console.log(result);
@@ -43,15 +62,63 @@ export const TimeTrackerControllers = ({
 
   return (
     <>
-      <Input type="text" placeholder="Enter the task name" />
+      <Input
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          dispatch(setTaskName(e.target.value));
+        }}
+        type="text"
+        name="taskName"
+        className="w-[50%]"
+        placeholder="Enter the task name"
+      />
 
-      <div className="flex justify-center gap-x-10 p-10">
+      <div className="w-[40%] flex flex-row-reverse px-10">
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <FaTags color="gray" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            {tags.map((tag) => {
+              return (
+                <DropdownMenuLabel key={tag._id.toString()} className="py-2">
+                  <Button
+                    variant={
+                      selectedTags.has(tag._id.toString())
+                        ? "outline"
+                        : "default"
+                    }
+                    className="cursor-pointer w-full"
+                    asChild
+                    onClick={() => {
+                      selectedTags.has(tag._id.toString())
+                        ? dispatch(deleteTimerTag(tag._id.toString()))
+                        : dispatch(insertTimerTag(tag._id.toString()));
+                    }}
+                  >
+                    <span>{tag.title}</span>
+                  </Button>
+                </DropdownMenuLabel>
+              );
+            })}
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* setTag
+        MoneyMaking
+        AddProject(task) */}
+      </div>
+
+      <div className="flex justify-center gap-x-10">
         <Button
           variant="default"
           className="cursor-pointer"
           asChild
           onClick={() => {
-            isTimerOn ? dispatch(pause()) : dispatch(start());
+            if (isTimerOn) {
+              onStop().then(() => dispatch(stop()));
+            } else {
+              dispatch(start({ selectedTags, taskName }));
+            }
           }}
         >
           <span> {!isTimerOn ? "Start" : "Pause"}</span>

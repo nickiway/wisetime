@@ -6,7 +6,7 @@ import { VscDebugStart } from "react-icons/vsc";
 import { useTimer } from "@/hooks/useTimer";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
-import { pause, start } from "@/redux/slices/timerSlice";
+import { stop } from "@/redux/slices/timerSlice";
 
 import { Button } from "@/components/ui/button";
 import { TimeTrackerDisplay } from "@/components/time-tracker-components/time-tracker-display";
@@ -26,7 +26,7 @@ export const MinimizedTimeTracker = () => {
           className="cursor-pointer"
           asChild
           onClick={() => {
-            isTimerOn ? dispatch(pause()) : dispatch(start());
+            dispatch(stop());
           }}
         >
           <span> {!isTimerOn ? <VscDebugStart /> : <FaPause />}</span>

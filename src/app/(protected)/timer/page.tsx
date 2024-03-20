@@ -9,8 +9,14 @@ export default async function TimerPage() {
 
   return (
     <div>
-      <TimeTrackerDisplay className="text-6xl p-10" />
-      <TimeTrackerControllers session={session} />
+      <section className="flex  p-5 items-center">
+        <TimeTrackerControllers session={session} />
+
+        <div className="w-[10%]">
+          <TimeTrackerDisplay />
+        </div>
+      </section>
+
       <TimeTrackerCycleList />
     </div>
   );

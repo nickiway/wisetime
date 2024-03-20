@@ -6,12 +6,16 @@ interface TagsState {
   ticks: number;
   totalTicks: number;
   circles: { ticks: number; totalTicks: number }[];
+  selectedTags: Set<string>;
+  taskName: string;
 }
 
 const initialState = {
   isTurn: false,
   ticks: 0,
   totalTicks: 0,
+  selectedTags: new Set(),
+  taskName: "",
   circles: [],
 } satisfies TagsState as TagsState;
 
@@ -19,8 +23,10 @@ const timerSlice = createSlice({
   name: "tags",
   initialState,
   reducers: {
-    start(state) {
+    start(state, action) {
       state.isTurn = true;
+      state.selectedTags = action.payload.selectedTags;
+      state.taskName = action.payload.taskName;
     },
 
     incrementTick(state, actions) {
@@ -47,9 +53,29 @@ const timerSlice = createSlice({
 
       state.ticks = 0;
     },
+
+    setTaskName(state, { payload }) {
+      state.taskName = payload;
+    },
+
+    insertTimerTag(state, { payload: tagId }) {
+      state.selectedTags.add(tagId);
+    },
+
+    deleteTimerTag(state, { payload: tagId }) {
+      state.selectedTags.delete(tagId);
+    },
   },
 });
 
-export const { start, pause, incrementTick, stop, makeCircle } =
-  timerSlice.actions;
+export const {
+  start,
+  pause,
+  incrementTick,
+  stop,
+  makeCircle,
+  setTaskName,
+  insertTimerTag,
+  deleteTimerTag,
+} = timerSlice.actions;
 export default timerSlice.reducer;

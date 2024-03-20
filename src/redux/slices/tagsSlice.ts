@@ -4,7 +4,7 @@ import { Types } from "mongoose";
 
 export const fetchTagsByUserId = createAsyncThunk(
   "tags/fetchTags",
-  async (userId: Types.ObjectId) => {
+  async (userId: string | Types.ObjectId) => {
     const response = (await fetch(`/api/tags/${userId}`, {})).json();
 
     console.log(response);

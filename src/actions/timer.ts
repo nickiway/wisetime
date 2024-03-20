@@ -7,16 +7,15 @@ type StoreTimerSessionResult = { error?: String; result?: String };
 type StoreTimerSessionProps = {
   totalTicks: number;
   userId: string | undefined;
-  circles: {
-    ticks: number;
-    totalTicks: number;
-  }[];
+  taskName: string;
+  selectedTags: Set<string>;
 };
 
 export const storeTimerSession = async ({
   totalTicks,
-  circles,
   userId,
+  selectedTags,
+  taskName,
 }: StoreTimerSessionProps): Promise<StoreTimerSessionResult> => {
   try {
     if (!userId) {
@@ -31,11 +30,10 @@ export const storeTimerSession = async ({
 
     const response = await TimerSession.create({
       userId: new ObjectId(userId),
+      taskName,
       totalTicks,
-      circles,
+      selectedTags,
     });
-
-    console.log(response);
 
     return { result: "Your time progress was saved sucessfully" };
   } catch (error) {

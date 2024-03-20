@@ -3,21 +3,15 @@ import mongoose, { Schema, Types } from "mongoose";
 export interface ITimerSession {
   userId: { type: mongoose.Types.ObjectId; ref: "User" };
   totalTicks: number;
-  circles: {
-    totalTicks: number;
-    tocks: number;
-  }[];
+  taskName: string;
+  selectedTags: Set<string>;
 }
 
 const schema = new Schema<ITimerSession>({
   userId: { type: Types.ObjectId, ref: "User" },
   totalTicks: Number,
-  circles: [
-    {
-      totalTicks: Number,
-      ticks: Number,
-    },
-  ],
+  selectedTags: [String],
+  taskName: String,
 });
 
 export const TimerSession =

@@ -11,6 +11,7 @@ import { deleteAll } from "@/actions/tag";
 import { TagBadge } from "@/components/tags/tagBadge";
 import { Button } from "@/components/ui/button";
 import { AlertButtonWrapper } from "@/components/shared/alert-button-wrapper";
+import { useTags } from "@/hooks/useTags";
 
 interface TagsListProps {
   userId: Types.ObjectId;
@@ -18,19 +19,13 @@ interface TagsListProps {
 
 export const TagsList = ({ userId }: TagsListProps) => {
   const dispatch = useAppDispatch();
-  const { entities, loading } = useAppSelector((state) => state.tagsReducer);
+  const entities = useTags(userId);
 
   const deleteAllTags = async (userId: Types.ObjectId) => {
     const response = await deleteAll(userId);
 
     if (response?.deletedCount !== 0) dispatch(removeAll());
   };
-
-  useEffect(() => {
-    if (loading === "idle") {
-      dispatch(fetchTagsByUserId(userId));
-    }
-  }, [dispatch, loading, userId]);
 
   return (
     <>
