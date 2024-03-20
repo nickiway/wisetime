@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 
 import { TimeTrackerControllers } from "@/components/time-tracker-components/time-trackers-controllers";
-import { TimeTrackerCirclesList } from "@/components/time-tracker-components/time-tracker-circles-list";
+import { TimeTrackerCycleList } from "@/components/time-tracker-components/time-tracker-cycle-list";
 import { TimeTrackerDisplay } from "@/components/time-tracker-components/time-tracker-display";
 
 export default async function TimerPage() {
@@ -11,7 +11,7 @@ export default async function TimerPage() {
     <div>
       <TimeTrackerDisplay className="text-6xl p-10" />
       <TimeTrackerControllers session={session} />
-      <TimeTrackerCirclesList />
+      <TimeTrackerCycleList />
     </div>
   );
 }
