@@ -1,9 +1,17 @@
-import { StopWatch } from "@/components/stop-watch/stop-watch";
+import { auth } from "@/auth";
 
-export default function TimerPage() {
+import { TimeTrackerControllers } from "@/components/time-tracker-components/time-trackers-controllers";
+import { TimeTrackerCirclesList } from "@/components/time-tracker-components/time-tracker-circles-list";
+import { TimeTrackerDisplay } from "@/components/time-tracker-components/time-tracker-display";
+
+export default async function TimerPage() {
+  const session = await auth();
+
   return (
     <div>
-      <StopWatch showPage />
+      <TimeTrackerDisplay className="text-6xl p-10" />
+      <TimeTrackerControllers session={session} />
+      <TimeTrackerCirclesList />
     </div>
   );
 }

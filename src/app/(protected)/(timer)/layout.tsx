@@ -1,5 +1,4 @@
 import { MinimizedTimeTracker } from "@/components/time-tracker-components/mimized-time-tracker";
-import { Navigation } from "@/components/navigation/navigation";
 
 export default function ProtectedLayout({
   children,
@@ -7,10 +6,10 @@ export default function ProtectedLayout({
   children: React.ReactNode;
 }) {
   return (
-    <body className="flex">
-      <Navigation />
+    <>
+      <MinimizedTimeTracker />
 
-      <main className="w-full overflow-scroll bg-zinc-100">{children}</main>
-    </body>
+      {children}
+    </>
   );
 }
