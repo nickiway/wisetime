@@ -1,10 +1,10 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
 export interface ISessionBody {
   date: Date;
   totalTicks: number;
   taskName: string;
-  selectedTags: Set<mongoose.Types.ObjectId>;
+  selectedTags: mongoose.Types.ObjectId[];
 }
 
 export interface ITimerSession extends mongoose.Document {
@@ -12,17 +12,18 @@ export interface ITimerSession extends mongoose.Document {
   body: ISessionBody;
 }
 
-const SessionSchema = new Schema<ISessionBody>({
+const SessionSchema = new mongoose.Schema<ISessionBody>({
   date: { type: Date, required: true },
   totalTicks: { type: Number, required: true },
   taskName: { type: String, required: true },
-  selectedTags: [{ type: Schema.Types.ObjectId }],
+  selectedTags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
 });
 
-const schema = new Schema<ITimerSession>({
-  userId: { type: Schema.Types.ObjectId, ref: "User" },
+const schema = new mongoose.Schema<ITimerSession>({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   body: { type: SessionSchema, required: true },
 });
 
 export const TimerSession =
-  mongoose.models.TimerSession || mongoose.model("TimerSession", schema);
+  mongoose.models.TimerSession ||
+  mongoose.model<ITimerSession>("TimerSession", schema);
