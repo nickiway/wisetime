@@ -13,6 +13,7 @@ import {
   makeCircle,
   insertTimerTag,
   deleteTimerTag,
+  toggleTimerTag,
 } from "@/redux/slices/timerSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
@@ -41,9 +42,7 @@ export const TimeTrackerControllers = ({
 
   const totalTicks = useAppSelector((state) => state.timerReducer.totalTicks);
   const taskName = useAppSelector((state) => state.timerReducer.taskName);
-  const selectedTags = useAppSelector(
-    (state) => state.timerReducer.selectedTags
-  );
+  const selectedTags = useAppSelector((state) => state.timerReducer.tags);
 
   const onStop = async () => {
     if (!session) {
@@ -56,8 +55,6 @@ export const TimeTrackerControllers = ({
       taskName,
       selectedTags,
     });
-
-    console.log(result);
   };
 
   return (
@@ -68,31 +65,34 @@ export const TimeTrackerControllers = ({
         }}
         type="text"
         name="taskName"
-        className="w-[50%]"
+        className="w-full"
         placeholder="Enter the task name"
       />
 
-      <div className="w-[40%] flex flex-row-reverse px-10">
+      <div className="w-fit flex flex-row-reverse px-10">
         <DropdownMenu>
           <DropdownMenuTrigger>
             <FaTags color="gray" />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
+            <DropdownMenuLabel>Select your tags</DropdownMenuLabel>
             {tags.map((tag) => {
               return (
                 <DropdownMenuLabel key={tag._id.toString()} className="py-2">
                   <Button
-                    variant={
-                      selectedTags.has(tag._id.toString())
-                        ? "outline"
-                        : "default"
-                    }
-                    className="cursor-pointer w-full"
+                    variant="default"
+                    style={{
+                      backgroundColor: selectedTags.has(tag._id.toString())
+                        ? "gray"
+                        : tag.color,
+                      color: selectedTags.has(tag._id.toString())
+                        ? "black"
+                        : tag.textColor,
+                    }}
+                    className={"cursor-pointer w-full "}
                     asChild
                     onClick={() => {
-                      selectedTags.has(tag._id.toString())
-                        ? dispatch(deleteTimerTag(tag._id.toString()))
-                        : dispatch(insertTimerTag(tag._id.toString()));
+                      dispatch(toggleTimerTag(tag._id.toString()));
                     }}
                   >
                     <span>{tag.title}</span>

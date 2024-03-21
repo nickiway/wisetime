@@ -32,9 +32,10 @@ export const storeTimerSession = async ({
       userId: new ObjectId(userId),
       taskName,
       totalTicks,
-      selectedTags,
+      selectedTags: Array.from(selectedTags),
     });
 
+    console.log(response);
     return { result: "Your time progress was saved sucessfully" };
   } catch (error) {
     console.error(error);
