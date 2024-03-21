@@ -47,7 +47,7 @@ export const TimeTrackerControllers = ({
       return;
     }
 
-    return await storeTimerSession({
+    const response = await storeTimerSession({
       totalTicks,
       userId: session?.user?.id,
       taskName,
@@ -55,6 +55,8 @@ export const TimeTrackerControllers = ({
       project: "",
       date: new Date(),
     });
+
+    return response;
   };
 
   return (
@@ -116,6 +118,7 @@ export const TimeTrackerControllers = ({
             if (isTimerOn) {
               onStop().then((response) => {
                 console.log("response");
+                console.log(response);
                 if (response !== undefined) {
                   dispatch(addRow(response));
                   console.log("stop");

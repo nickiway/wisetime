@@ -4,9 +4,10 @@ import tagsReducer from "@/redux/slices/tagsSlice";
 import timerReducer from "@/redux/slices/timerSlice";
 import timerTableReducer from "./slices/timerTableSlice";
 
-import { enableMapSet } from "immer";
+import { enableMapSet, setAutoFreeze } from "immer";
 
 enableMapSet();
+setAutoFreeze(false);
 
 export const store = configureStore({
   reducer: {

@@ -2,7 +2,7 @@
 import { ObjectId } from "mongodb";
 import { dbConnect } from "@/lib/dbConnect";
 import { TimerSession } from "@/db/models/timer/TimerSessions";
-import { ISessionBody } from "@/db/models/timer/TimerSessions";
+import { ISessionBody, ITimerSession } from "@/db/models/timer/TimerSessions";
 
 type StoreTimerSessionResult = ISessionBody;
 type StoreTimerSessionProps = {
@@ -35,14 +35,24 @@ export const storeTimerSession = async ({
 
     const response = await TimerSession.create({
       userId: new ObjectId(userId),
-      taskName,
-      totalTicks,
-      date,
-      selectedTags: Array.from(selectedTags),
+      session: {
+        date,
+        selectedTags: Array.from(selectedTags),
+        taskName,
+        totalTicks,
+      },
     });
 
-    const parsedResponse = response.toObject() as ISessionBody;
-    return parsedResponse;
+    const responseSession = response.toObject().session;
+
+    const result = {
+      date: responseSession.date,
+      selectedTags: new Set(responseSession.selectedTags),
+      taskName: responseSession.taskName,
+      totalTicks: responseSession.totalTicks,
+    } as ISessionBody;
+
+    return result;
   } catch (error) {
     console.error(error);
   }

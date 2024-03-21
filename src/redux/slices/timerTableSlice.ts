@@ -11,7 +11,7 @@ export const fetchTableByUserId = createAsyncThunk(
 );
 
 interface TimerTableState {
-  table: ISessionBody[];
+  table: { session: ISessionBody }[];
   loading: "idle" | "pending" | "succeeded" | "failed";
   error: string | undefined;
 }
@@ -27,7 +27,7 @@ export const timerTableSlice = createSlice({
   initialState,
   reducers: {
     addRow: (state, action: PayloadAction<ISessionBody>) => {
-      state.table.push(action.payload);
+      //   state.table.push(action.payload);
     },
   },
   extraReducers: (builder) => {

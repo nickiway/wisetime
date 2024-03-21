@@ -3,6 +3,7 @@ import { useEffect } from "react";
 
 import { fetchTableByUserId } from "@/redux/slices/timerTableSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { ISessionBody } from "@/db/models/timer/TimerSessions";
 
 export const useLoadTimerTableData = (userId: string | Types.ObjectId) => {
   const dispatch = useAppDispatch();

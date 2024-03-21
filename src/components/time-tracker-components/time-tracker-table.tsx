@@ -12,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ISessionBody } from "@/db/models/timer/TimerSessions";
+import { ISessionBody, ITimerSession } from "@/db/models/timer/TimerSessions";
 import { useLoadTimerTableData } from "@/hooks/useLoadTimerTableData";
 import { Session } from "next-auth";
 
@@ -20,9 +20,10 @@ interface ITimeTrackerTable {
   session: Session | null;
 }
 export const TimeTrackerTable = ({ session }: ITimeTrackerTable) => {
-  const table: ISessionBody[] = useLoadTimerTableData(session?.user?.id || "");
+  const table = useLoadTimerTableData(session?.user?.id || "");
   console.log("table");
-  console.log(JSON.stringify(table));
+  console.log(table);
+
   return (
     <Table>
       <TableCaption>Your activity</TableCaption>
@@ -36,10 +37,11 @@ export const TimeTrackerTable = ({ session }: ITimeTrackerTable) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {table.reverse().map((item, index) => {
+        {table.reverse().map(({ session: item }, index) => {
+          console.log(session);
           return (
             <TableRow key={index}>
-              <TableCell>{item.date.toISOString()}</TableCell>
+              <TableCell>{new Date(item.date).toString()}</TableCell>
               <TableCell>{item.taskName}</TableCell>
               <TableCell>{item.selectedTags}</TableCell>
               <TableCell>{"Test"}</TableCell>
