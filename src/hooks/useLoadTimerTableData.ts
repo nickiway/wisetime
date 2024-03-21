@@ -1,9 +1,8 @@
 import { Types } from "mongoose";
 import { useEffect } from "react";
 
-import { fetchTableByUserId } from "@/redux/slices/timerTableSlice";
+import { fetchTimerTableByUserId } from "@/redux/slices/timerTableSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { ISessionBody } from "@/db/models/timer/TimerSessions";
 
 export const useLoadTimerTableData = (userId: string | Types.ObjectId) => {
   const dispatch = useAppDispatch();
@@ -12,7 +11,8 @@ export const useLoadTimerTableData = (userId: string | Types.ObjectId) => {
 
   useEffect(() => {
     if (loading === "idle") {
-      dispatch(fetchTableByUserId(userId));
+      console.log("fetching data of table");
+      dispatch(fetchTimerTableByUserId(userId));
     }
   }, [dispatch, loading, userId]);
 

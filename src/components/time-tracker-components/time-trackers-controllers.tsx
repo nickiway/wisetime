@@ -12,7 +12,7 @@ import {
   stop,
   toggleTimerTag,
 } from "@/redux/slices/timerSlice";
-import { addRow } from "@/redux/slices/timerTableSlice";
+import {} from "@/redux/slices/timerTableSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 import { Button } from "@/components/ui/button";
@@ -116,15 +116,17 @@ export const TimeTrackerControllers = ({
           asChild
           onClick={() => {
             if (isTimerOn) {
-              onStop().then((response) => {
-                console.log("response");
-                console.log(response);
-                if (response !== undefined) {
-                  dispatch(addRow(response));
-                  console.log("stop");
-                  dispatch(stop());
-                }
-              });
+              onStop()
+                .then((response) => {
+                  console.log("responsessss", response);
+                  if (response !== undefined) {
+                    dispatch(stop());
+                  }
+                })
+                .catch((error) => {
+                  console.error("error");
+                  console.error(error);
+                });
             } else {
               dispatch(start({ selectedTags, taskName }));
             }

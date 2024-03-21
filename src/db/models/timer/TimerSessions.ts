@@ -4,24 +4,24 @@ export interface ISessionBody {
   date: Date;
   totalTicks: number;
   taskName: string;
-  selectedTags: Set<string>;
+  selectedTags: Set<mongoose.Types.ObjectId>;
 }
 
 export interface ITimerSession extends mongoose.Document {
   userId: mongoose.Types.ObjectId;
-  session: ISessionBody;
+  body: ISessionBody;
 }
 
 const SessionSchema = new Schema<ISessionBody>({
   date: { type: Date, required: true },
   totalTicks: { type: Number, required: true },
   taskName: { type: String, required: true },
-  selectedTags: { type: [String], required: true },
+  selectedTags: [{ type: Schema.Types.ObjectId }],
 });
 
 const schema = new Schema<ITimerSession>({
   userId: { type: Schema.Types.ObjectId, ref: "User" },
-  session: { type: SessionSchema, required: true },
+  body: { type: SessionSchema, required: true },
 });
 
 export const TimerSession =

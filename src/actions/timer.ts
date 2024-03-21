@@ -22,6 +22,7 @@ export const storeTimerSession = async ({
   project,
   taskName,
 }: StoreTimerSessionProps): Promise<StoreTimerSessionResult | undefined> => {
+  console.log("running action");
   try {
     if (!userId) {
       throw new Error("The user did not provide the id");
@@ -35,7 +36,7 @@ export const storeTimerSession = async ({
 
     const response = await TimerSession.create({
       userId: new ObjectId(userId),
-      session: {
+      body: {
         date,
         selectedTags: Array.from(selectedTags),
         taskName,
@@ -43,7 +44,7 @@ export const storeTimerSession = async ({
       },
     });
 
-    const responseSession = response.toObject().session;
+    const responseSession = response.body.toObject();
 
     const result = {
       date: responseSession.date,

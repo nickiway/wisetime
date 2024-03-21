@@ -16,7 +16,7 @@ export async function GET(request: NextRequest, response: NextApiResponse) {
     await dbConnect();
     const table = await TimerSession.find({
       userId: new ObjectId(userId),
-    }).select("session -_id");
+    }).select("body -_id");
 
     return Response.json({ table });
   } catch (error) {
