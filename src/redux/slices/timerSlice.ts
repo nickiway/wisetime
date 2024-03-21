@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { TagType } from "@/db/models/project/Tag";
 
-interface TagsState {
+interface TimerState {
   isTurn: boolean;
   ticks: number;
   totalTicks: number;
@@ -17,16 +16,14 @@ const initialState = {
   tags: new Set(),
   taskName: "",
   circles: [],
-} satisfies TagsState as TagsState;
+} satisfies TimerState as TimerState;
 
 const timerSlice = createSlice({
-  name: "tags",
+  name: "timer",
   initialState,
   reducers: {
     start(state, action) {
       state.isTurn = true;
-      state.tags = action.payload.selectedTags;
-      state.taskName = action.payload.taskName;
     },
 
     incrementTick(state, actions) {

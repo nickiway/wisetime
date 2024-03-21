@@ -10,11 +10,9 @@ import {
   setTaskName,
   start,
   stop,
-  makeCircle,
-  insertTimerTag,
-  deleteTimerTag,
   toggleTimerTag,
 } from "@/redux/slices/timerSlice";
+import { addRow } from "@/redux/slices/timerTableSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 import { Button } from "@/components/ui/button";
@@ -49,11 +47,13 @@ export const TimeTrackerControllers = ({
       return;
     }
 
-    const { error, result } = await storeTimerSession({
+    return await storeTimerSession({
       totalTicks,
       userId: session?.user?.id,
       taskName,
       selectedTags,
+      project: "",
+      date: new Date(),
     });
   };
 
@@ -103,8 +103,7 @@ export const TimeTrackerControllers = ({
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {/* setTag
-        MoneyMaking
+        {/* 
         AddProject(task) */}
       </div>
 
@@ -115,7 +114,14 @@ export const TimeTrackerControllers = ({
           asChild
           onClick={() => {
             if (isTimerOn) {
-              onStop().then(() => dispatch(stop()));
+              onStop().then((response) => {
+                console.log("response");
+                if (response !== undefined) {
+                  dispatch(addRow(response));
+                  console.log("stop");
+                  dispatch(stop());
+                }
+              });
             } else {
               dispatch(start({ selectedTags, taskName }));
             }
@@ -123,32 +129,6 @@ export const TimeTrackerControllers = ({
         >
           <span> {!isTimerOn ? "Start" : "Pause"}</span>
         </Button>
-
-        {/* {(isTimerOn || totalTicks !== 0) && (
-          <>
-            <Button
-              variant="default"
-              className="cursor-pointer"
-              asChild
-              onClick={() => {
-                onStop().then(() => dispatch(stop()));
-              }}
-            >
-              <span>Stop</span>
-            </Button>
-
-            <Button
-              variant="default"
-              className="cursor-pointer"
-              asChild
-              onClick={() => {
-                dispatch(makeCircle());
-              }}
-            >
-              <span>Make a circle</span>
-            </Button>
-          </>
-        )} */}
       </div>
     </>
   );

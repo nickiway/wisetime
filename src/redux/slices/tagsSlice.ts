@@ -7,7 +7,6 @@ export const fetchTagsByUserId = createAsyncThunk(
   async (userId: string | Types.ObjectId) => {
     const response = (await fetch(`/api/tags/${userId}`, {})).json();
 
-    console.log(response);
     return response;
   }
 );

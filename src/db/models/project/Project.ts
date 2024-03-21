@@ -11,7 +11,7 @@ const schema = new Schema({
     default: 0,
   },
   status: Boolean,
-  Desctiption: String,
+  desctiption: String,
 });
 
 export const Project =

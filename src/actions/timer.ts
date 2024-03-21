@@ -2,21 +2,26 @@
 import { ObjectId } from "mongodb";
 import { dbConnect } from "@/lib/dbConnect";
 import { TimerSession } from "@/db/models/timer/TimerSessions";
+import { ISessionBody } from "@/db/models/timer/TimerSessions";
 
-type StoreTimerSessionResult = { error?: String; result?: String };
+type StoreTimerSessionResult = ISessionBody;
 type StoreTimerSessionProps = {
   totalTicks: number;
   userId: string | undefined;
   taskName: string;
   selectedTags: Set<string>;
+  date: Date;
+  project: string | undefined;
 };
 
 export const storeTimerSession = async ({
   totalTicks,
   userId,
   selectedTags,
+  date,
+  project,
   taskName,
-}: StoreTimerSessionProps): Promise<StoreTimerSessionResult> => {
+}: StoreTimerSessionProps): Promise<StoreTimerSessionResult | undefined> => {
   try {
     if (!userId) {
       throw new Error("The user did not provide the id");
@@ -32,13 +37,13 @@ export const storeTimerSession = async ({
       userId: new ObjectId(userId),
       taskName,
       totalTicks,
+      date,
       selectedTags: Array.from(selectedTags),
     });
 
-    console.log(response);
-    return { result: "Your time progress was saved sucessfully" };
+    const parsedResponse = response.toObject() as ISessionBody;
+    return parsedResponse;
   } catch (error) {
     console.error(error);
-    return { error: "Saving your timer results failed" };
   }
 };
