@@ -1,13 +1,18 @@
 import { Types } from "mongoose";
 import { useEffect } from "react";
 
-import { fetchTimerTableByUserId } from "@/redux/slices/timerTableSlice";
+import {
+  TimerTableState,
+  fetchTimerTableByUserId,
+} from "@/redux/slices/timerTableSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 export const useLoadTimerTableData = (userId: string | Types.ObjectId) => {
   const dispatch = useAppDispatch();
 
-  const { table, loading } = useAppSelector((state) => state.timerTableReducer);
+  const { table, loading } = useAppSelector(
+    (state) => state.timerTableReducer
+  ) as TimerTableState;
 
   useEffect(() => {
     if (loading === "idle") {

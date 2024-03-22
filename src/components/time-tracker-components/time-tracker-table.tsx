@@ -37,14 +37,20 @@ export const TimeTrackerTable = ({ session }: ITimeTrackerTable) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {table.map(({ body: item }, index) => {
+        {table.map(({ body }, index) => {
           return (
             <TableRow key={index}>
-              <TableCell>{new Date(item.date).toLocaleDateString()}</TableCell>
-              <TableCell>{item.taskName}</TableCell>
-              <TableCell>{item.selectedTags}</TableCell>
+              <TableCell>{new Date(body.date).toLocaleDateString()}</TableCell>
+              <TableCell>{body.taskName}</TableCell>
+              <TableCell>
+                {body.selectedTags !== undefined
+                  ? Array.from(body?.selectedTags)
+                      .map((item) => item.title)
+                      .join("\n")
+                  : null}
+              </TableCell>
               <TableCell>{"Test"}</TableCell>
-              <TableCell>{ticksToTime(item.totalTicks)}</TableCell>
+              <TableCell>{ticksToTime(body.totalTicks)}</TableCell>
             </TableRow>
           );
         })}

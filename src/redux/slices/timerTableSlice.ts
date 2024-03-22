@@ -12,7 +12,7 @@ export const fetchTimerTableByUserId = createAsyncThunk(
   }
 );
 
-interface TimerTableState {
+export interface TimerTableState {
   table: { body: ISessionBody }[];
   loading: "idle" | "pending" | "succeeded" | "failed";
   error: string | undefined;

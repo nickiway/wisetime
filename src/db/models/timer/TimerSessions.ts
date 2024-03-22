@@ -4,7 +4,7 @@ export interface ISessionBody {
   date: Date;
   totalTicks: number;
   taskName: string;
-  selectedTags: mongoose.Types.ObjectId[];
+  selectedTags: Set<mongoose.Types.ObjectId[]>;
 }
 
 export interface ITimerSession extends mongoose.Document {
