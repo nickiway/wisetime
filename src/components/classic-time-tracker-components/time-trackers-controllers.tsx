@@ -1,7 +1,7 @@
 "use client";
 
 import { Session } from "next-auth";
-import { FaTags } from "react-icons/fa";
+import { FaTags, FaFolder } from "react-icons/fa";
 
 import { storeTimerSession } from "@/actions/timer";
 import { useTimer } from "@/hooks/useTimer";
@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useTags } from "@/hooks/useTags";
 import { ChangeEvent } from "react";
+import { incrementTick } from "@/redux/slices/timerSlice";
 
 interface TimeTrackerControllersProps {
   session: Session | null;
@@ -35,12 +36,16 @@ export const TimeTrackerControllers = ({
   session,
 }: TimeTrackerControllersProps) => {
   const dispatch = useAppDispatch();
-  const isTimerOn = useTimer();
   const tags = useTags(session?.user?.id || "");
 
+  const isTimerOn = useAppSelector((state) => state.timerReducer.isTurn);
   const totalTicks = useAppSelector((state) => state.timerReducer.totalTicks);
   const taskName = useAppSelector((state) => state.timerReducer.taskName);
   const selectedTags = useAppSelector((state) => state.timerReducer.tags);
+
+  useTimer(isTimerOn, () => {
+    dispatch(incrementTick(1000));
+  });
 
   const onStop = async () => {
     if (!session) {
@@ -71,7 +76,7 @@ export const TimeTrackerControllers = ({
         placeholder="Enter the task name"
       />
 
-      <div className="w-fit flex flex-row-reverse px-10">
+      <div className="w-fit flex flex-row-reverse px-10 gap-x-10">
         <DropdownMenu>
           <DropdownMenuTrigger>
             <FaTags color="gray" />

@@ -3,6 +3,7 @@ import analyticsReducer from "@/redux/slices/analyticsSlice";
 import tagsReducer from "@/redux/slices/tagsSlice";
 import timerReducer from "@/redux/slices/timerSlice";
 import timerTableReducer from "./slices/timerTableSlice";
+import pomodorroTimerSlice from "@/redux/slices/pomodorroTimerSlice";
 
 import { enableMapSet, setAutoFreeze } from "immer";
 
@@ -15,6 +16,7 @@ export const store = configureStore({
     tagsReducer,
     timerReducer,
     timerTableReducer,
+    pomodorroTimerSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

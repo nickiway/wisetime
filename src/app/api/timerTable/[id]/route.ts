@@ -20,6 +20,7 @@ export async function GET(request: NextRequest, response: NextApiResponse) {
       userId: new ObjectId(userId),
     })
       .select("body")
+      .sort([["body.date", -1]])
       .populate("body.selectedTags");
 
     console.log(table);

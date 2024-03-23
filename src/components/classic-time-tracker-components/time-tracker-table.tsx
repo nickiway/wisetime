@@ -22,8 +22,6 @@ interface ITimeTrackerTable {
 export const TimeTrackerTable = ({ session }: ITimeTrackerTable) => {
   const table = useLoadTimerTableData(session?.user?.id || "");
 
-  console.log(table);
-
   return (
     <Table>
       <TableCaption>Your activity</TableCaption>
@@ -43,13 +41,11 @@ export const TimeTrackerTable = ({ session }: ITimeTrackerTable) => {
               <TableCell>{new Date(body.date).toLocaleDateString()}</TableCell>
               <TableCell>{body.taskName}</TableCell>
               <TableCell>
-                {body.selectedTags !== undefined
-                  ? Array.from(body?.selectedTags)
-                      .map((item) => item.title)
-                      .join("\n")
+                {!(body.selectedTags instanceof Set)
+                  ? body?.selectedTags.map((item) => item.title).join("\n")
                   : null}
               </TableCell>
-              <TableCell>{"Test"}</TableCell>
+              <TableCell>{"project name"}</TableCell>
               <TableCell>{ticksToTime(body.totalTicks)}</TableCell>
             </TableRow>
           );

@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
+import { TagType } from "../project/Tag";
 
 export interface ISessionBody {
   date: Date;
   totalTicks: number;
   taskName: string;
-  selectedTags: Set<mongoose.Types.ObjectId[]>;
+  selectedTags: Set<mongoose.Types.ObjectId[]> | TagType[];
 }
 
 export interface ITimerSession extends mongoose.Document {

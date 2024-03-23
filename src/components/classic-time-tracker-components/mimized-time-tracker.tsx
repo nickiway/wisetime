@@ -9,12 +9,14 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { stop } from "@/redux/slices/timerSlice";
 
 import { Button } from "@/components/ui/button";
-import { TimeTrackerDisplay } from "@/components/time-tracker-components/time-tracker-display";
+import { TimeTrackerDisplay } from "@/components/classic-time-tracker-components/time-tracker-display";
 
 export const MinimizedTimeTracker = () => {
   const dispatch = useAppDispatch();
   const totalTicks = useAppSelector((state) => state.timerReducer.totalTicks);
-  const isTimerOn = useTimer();
+  const isTimerOn = useTimer(false, () => {
+    console.log("test");
+  });
 
   return (
     totalTicks !== 0 && (

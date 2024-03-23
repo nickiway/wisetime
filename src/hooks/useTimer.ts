@@ -2,19 +2,22 @@ import { useEffect } from "react";
 
 import { clearInterval, setInterval } from "worker-timers";
 
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { incrementTick } from "@/redux/slices/timerSlice";
-
-export const useTimer = (): Boolean => {
-  const dispatch = useAppDispatch();
-  const isTimerOn = useAppSelector((state) => state.timerReducer.isTurn);
-
+export const useTimer = (
+  isTimerOn: Boolean,
+  cb: () => void,
+  options?: { endTrigger: boolean; cbOnEnd: () => void }
+) => {
   useEffect(() => {
+    console.log("running effect");
     let timerInterval: number | undefined;
 
     if (isTimerOn) {
       timerInterval = setInterval(() => {
-        dispatch(incrementTick(1000));
+        cb();
+
+        if (options?.endTrigger === true) {
+          options?.cbOnEnd();
+        }
       }, 1000);
     } else if (timerInterval !== undefined) {
       clearInterval(timerInterval);
@@ -23,7 +26,5 @@ export const useTimer = (): Boolean => {
     return () => {
       if (timerInterval) clearInterval(timerInterval);
     };
-  }, [isTimerOn, dispatch]);
-
-  return isTimerOn;
+  }, [isTimerOn, options]);
 };

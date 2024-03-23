@@ -4,7 +4,6 @@ interface TimerState {
   isTurn: boolean;
   ticks: number;
   totalTicks: number;
-  circles: { ticks: number; totalTicks: number }[];
   tags: Set<string>;
   taskName: string;
 }
@@ -15,7 +14,6 @@ const initialState = {
   totalTicks: 0,
   tags: new Set(),
   taskName: "",
-  circles: [],
 } satisfies TimerState as TimerState;
 
 const timerSlice = createSlice({
@@ -39,16 +37,6 @@ const timerSlice = createSlice({
       state.isTurn = false;
       state.ticks = 0;
       state.totalTicks = 0;
-      state.circles = [];
-    },
-
-    makeCircle(state) {
-      state.circles.push({
-        ticks: state.ticks,
-        totalTicks: state.totalTicks,
-      });
-
-      state.ticks = 0;
     },
 
     setTaskName(state, { payload }) {
@@ -74,7 +62,6 @@ export const {
   pause,
   incrementTick,
   stop,
-  makeCircle,
   setTaskName,
   insertTimerTag,
   deleteTimerTag,
