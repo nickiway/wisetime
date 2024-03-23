@@ -19,8 +19,8 @@ interface IPomodorroInitialState {
 const getTicksFromMin = (min: number): number => min * 1000 * 60;
 
 const initialState: IPomodorroInitialState = {
-  restInterval: { short: getTicksFromMin(5), long: getTicksFromMin(15) },
-  workInterval: getTicksFromMin(0.5),
+  restInterval: { short: getTicksFromMin(0.1), long: getTicksFromMin(0.2) },
+  workInterval: getTicksFromMin(0.1),
 
   isOn: false,
   ticks: 0,
