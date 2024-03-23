@@ -26,5 +26,6 @@ export const useTimer = (
     return () => {
       if (timerInterval) clearInterval(timerInterval);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTimerOn, options]);
 };

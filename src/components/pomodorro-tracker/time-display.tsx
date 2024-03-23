@@ -7,10 +7,9 @@ import {
   addRestCounts,
   addWorkCounts,
   resetTicks,
-  pause,
 } from "@/redux/slices/pomodorroTimerSlice";
 import { ticksToTime } from "@/utils/date-time";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
 export const PomodorroTimeDisplay = () => {
   const dispatch = useAppDispatch();
@@ -30,25 +29,30 @@ export const PomodorroTimeDisplay = () => {
   const startTicks =
     counter.work > counter.rest ? restInterval.short : workInterval;
 
-  console.log(ticks);
   const remainingTime = startTicks - ticks;
   const isRemainingTime = !(startTicks - ticks);
 
-  const doCycle = () => {
+  // do cycle function
+  const doCycle = useCallback(() => {
     counter.work > counter.rest
       ? dispatch(addRestCounts(1))
       : dispatch(addWorkCounts(1));
 
     dispatch(resetTicks());
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
-  const handleTick = () => {
-    console.log("increaseing");
+  // use timer options
+  const options = useMemo(() => {
+    return { endTrigger: isRemainingTime, cbOnEnd: doCycle };
+  }, [isRemainingTime, doCycle]);
+
+  const handleTick = useCallback(() => {
     dispatch(addTick(1000));
-  };
+  }, [dispatch]);
 
   // use effect to call the timer when it works
-  useTimer(isOn, handleTick, { endTrigger: isRemainingTime, cbOnEnd: doCycle });
+  useTimer(isOn, handleTick, options);
 
   return <div>{ticksToTime(remainingTime)}</div>;
 };
