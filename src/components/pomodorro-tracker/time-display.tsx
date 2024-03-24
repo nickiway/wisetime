@@ -9,8 +9,11 @@ import {
   resetTicks,
   pause,
 } from "@/redux/slices/pomodorroTimerSlice";
-import { ticksToTime } from "@/utils/date-time";
+import { ticksToMmSs } from "@/utils/date-time";
 import { useCallback, useMemo } from "react";
+
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 export const PomodorroTimeDisplay = () => {
   const dispatch = useAppDispatch();
@@ -61,10 +64,43 @@ export const PomodorroTimeDisplay = () => {
   // use effect to call the timer when it works
   useTimer(isOn, handleTick, options);
 
+  // information label
+  const informationLabel = isRestCycle
+    ? "Take a break"
+    : "Ok, lets concentrate";
+
   return (
     <div>
-      <div>{isRestCycle ? "Take a break" : "Ok, lets concentrate"}</div>
-      {ticksToTime(remainingTime)}
+      <div className="flex flex-col gap-y-5 py-10">
+        <p className="text-center text-2xl font-mono">{informationLabel}</p>
+
+        <div className="flex justify-center ">
+          <div className="w-1/5">
+            <CircularProgressbar
+              styles={{
+                path: {
+                  stroke: "black",
+                  transition: "stroke-dashoffset 0.5s ease 0s",
+                },
+                trail: {
+                  stroke: "#d6d6d6",
+                },
+                text: {
+                  fill: "black",
+                  fontSize: "16px",
+                },
+                background: {
+                  fill: "#3e98c7",
+                },
+              }}
+              value={remainingTime}
+              maxValue={startTicks}
+              strokeWidth={5}
+              text={ticksToMmSs(remainingTime)}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

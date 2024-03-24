@@ -15,7 +15,7 @@ export const PomodorroControllers = () => {
   const dynamicButtonLabel = () => (isOn ? "Pause" : "Start");
 
   return (
-    <div>
+    <div className="flex justify-center">
       <Button variant="default" onClick={handleClick}>
         {dynamicButtonLabel()}
       </Button>

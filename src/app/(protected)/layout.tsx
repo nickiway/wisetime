@@ -1,4 +1,3 @@
-import { MinimizedTimeTracker } from "@/components/classic-time-tracker-components/mimized-time-tracker";
 import { Navigation } from "@/components/navigation/navigation";
 
 export default function ProtectedLayout({

@@ -3,8 +3,8 @@ export const doubleDigitFormat = (value: number): string | number =>
   value < 10 ? "0" + value : value;
 
 //   converting date to hh:mm
-export const convertToHhMm = (date: number): string => {
-  const finalDate = new Date(date);
+export const convertToHhMm = (ticks: number): string => {
+  const finalDate = new Date(ticks);
 
   const minutes = doubleDigitFormat(finalDate.getMinutes());
   const hours = doubleDigitFormat(finalDate.getHours());
@@ -22,6 +22,7 @@ export const convertToDdMo = (date: number): string => {
   return `${day}/${month}`;
 };
 
+//   converting ticks to hh/mm/ss
 export const ticksToTime = (ticks: number): string => {
   const hours = Math.floor(ticks / (3600 * 1000));
   const minutes = Math.floor((ticks % (3600 * 1000)) / (60 * 1000));
@@ -32,4 +33,13 @@ export const ticksToTime = (ticks: number): string => {
   };
 
   return `${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+};
+
+//   converting ticks to mm/ss
+export const ticksToMmSs = (ticks: number): string => {
+  const date = new Date(ticks);
+  const minutes = doubleDigitFormat(date.getMinutes());
+  const seconds = doubleDigitFormat(date.getSeconds());
+
+  return [minutes, seconds].join(":");
 };
