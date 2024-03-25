@@ -12,7 +12,7 @@ import {
 import { ticksToMmSs } from "@/utils/date-time";
 import { useCallback, useMemo } from "react";
 
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
 export const PomodorroTimeDisplay = () => {
@@ -39,7 +39,7 @@ export const PomodorroTimeDisplay = () => {
 
   // vars if its time to do cycle
   const remainingTime = startTicks - ticks;
-  const endTrigger = !remainingTime;
+  const isTrigger = !remainingTime;
 
   // do cycle function
   const doCycle = useCallback(() => {
@@ -54,8 +54,8 @@ export const PomodorroTimeDisplay = () => {
 
   // use timer options
   const options = useMemo(() => {
-    return { endTrigger, cbOnEnd: doCycle };
-  }, [endTrigger, doCycle]);
+    return { isTrigger, cbOnTrigger: doCycle };
+  }, [isTrigger, doCycle]);
 
   const handleTick = useCallback(() => {
     dispatch(addTick(1000));

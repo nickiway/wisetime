@@ -6,14 +6,14 @@ interface useTimerProps {
   isOn: boolean;
   cb: () => void;
   options: {
-    endTrigger?: boolean;
-    cbOnEnd?: () => void;
+    isTrigger?: boolean;
+    cbOnTrigger?: () => void;
     cbOnMount?: () => void;
   };
 }
 
 export const useTimer = ({ isOn, cb, options }: useTimerProps) => {
-  const { endTrigger, cbOnEnd, cbOnMount } = options;
+  const { isTrigger, cbOnTrigger, cbOnMount } = options;
 
   // on mount function
   useEffect(() => {
@@ -28,8 +28,8 @@ export const useTimer = ({ isOn, cb, options }: useTimerProps) => {
     if (isOn) {
       timerInterval = setInterval(() => {
         cb();
-        if (endTrigger === true) {
-          cbOnEnd?.();
+        if (isTrigger === true) {
+          cbOnTrigger?.();
         }
       }, 1000);
     } else if (timerInterval !== undefined) {
