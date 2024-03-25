@@ -13,7 +13,7 @@ import {
   stop,
   toggleTimerTag,
 } from "@/redux/slices/timerSlice";
-import {} from "@/redux/slices/timerTableSlice";
+import { addToTable } from "@/redux/slices/timerTableSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 
 import { Button } from "@/components/ui/button";
@@ -26,7 +26,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useTags } from "@/hooks/useTags";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useCallback } from "react";
 import { incrementTick } from "@/redux/slices/timerSlice";
 
 interface TimeTrackerControllersProps {
@@ -39,23 +39,20 @@ export const TimeTrackerControllers = ({
   const dispatch = useAppDispatch();
   const tags = useTags(session?.user?.id || "");
 
-  const isTimerOn = useAppSelector((state) => state.timerReducer.isTurn);
-  const totalTicks = useAppSelector((state) => state.timerReducer.totalTicks);
+  const startDate = useAppSelector((state) => state.timerReducer.startDate);
+  const totalTicks = useAppSelector((state) => state.timerReducer.ticks);
   const taskName = useAppSelector((state) => state.timerReducer.taskName);
   const selectedTags = useAppSelector((state) => state.timerReducer.tags);
-  const timerStartDate = useAppSelector(
-    (state) => state.timerReducer.startDate
-  );
 
   useTimer({
-    isTimerOn: isTimerOn,
+    isOn: !!startDate,
     cb: () => {
       dispatch(incrementTick(1000));
     },
     options: {
-      cbOnMount: () => {
+      cbOnMount: useCallback(() => {
         dispatch(onMountTimer());
-      },
+      }, [dispatch]),
     },
   });
 
@@ -132,16 +129,15 @@ export const TimeTrackerControllers = ({
           className="cursor-pointer"
           asChild
           onClick={() => {
-            if (isTimerOn) {
+            if (startDate) {
               onStop()
                 .then((response) => {
-                  console.log("responsessss", response);
                   if (response !== undefined) {
                     dispatch(stop());
+                    dispatch(addToTable(response));
                   }
                 })
                 .catch((error) => {
-                  console.error("error");
                   console.error(error);
                 });
             } else {
@@ -149,7 +145,7 @@ export const TimeTrackerControllers = ({
             }
           }}
         >
-          <span> {!isTimerOn ? "Start" : "Pause"}</span>
+          <span> {!startDate ? "Start" : "Pause"}</span>
         </Button>
       </div>
     </>

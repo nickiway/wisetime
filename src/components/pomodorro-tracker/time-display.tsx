@@ -62,7 +62,7 @@ export const PomodorroTimeDisplay = () => {
   }, [dispatch]);
 
   // use effect to call the timer when it works
-  useTimer({ isTimerOn: isOn, cb: handleTick, options });
+  useTimer({ isOn, cb: handleTick, options });
 
   // information label
   const informationLabel = isRestCycle

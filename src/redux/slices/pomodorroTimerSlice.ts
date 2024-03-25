@@ -9,6 +9,7 @@ interface IPomodorroInitialState {
   //   time tracking
   isOn: boolean;
   ticks: number;
+  totalTicks: number;
 
   counter: {
     rest: number;
@@ -23,7 +24,9 @@ const initialState: IPomodorroInitialState = {
   workInterval: getTicksFromMin(0.1),
 
   isOn: false,
+  totalTicks: 0,
   ticks: 0,
+
   counter: {
     rest: 0,
     work: 0,
@@ -44,9 +47,17 @@ const pomodorroTimerSlice = createSlice({
       state.isOn = false;
     },
 
+    //finish
+    finish(state) {
+      state.isOn = false;
+      state.totalTicks = 0;
+      state.ticks = 0;
+    },
+
     // adding tick
     addTick(state, { payload }) {
       state.ticks += payload;
+      state.totalTicks += payload;
     },
 
     // increasing a work counter

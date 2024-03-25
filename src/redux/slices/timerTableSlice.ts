@@ -27,7 +27,11 @@ const initialState = {
 export const timerTableSlice = createSlice({
   name: "timer table",
   initialState,
-  reducers: {},
+  reducers: {
+    addToTable(state, action) {
+      state.table.unshift(action.payload);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTimerTableByUserId.pending, (state, _) => {
@@ -44,5 +48,5 @@ export const timerTableSlice = createSlice({
 });
 
 // exporting actions and reducers
-export const {} = timerTableSlice.actions;
+export const { addToTable } = timerTableSlice.actions;
 export default timerTableSlice.reducer;

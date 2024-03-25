@@ -1,29 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface TimerState {
+interface InitialTimerState {
   startDate: Date | null;
-  isTurn: boolean;
   ticks: number;
-  totalTicks: number;
   tags: Set<string>;
   taskName: string;
 }
 
 const initialState = {
-  isTurn: false,
   ticks: 0,
-  totalTicks: 0,
   tags: new Set(),
   startDate: null,
   taskName: "",
-} satisfies TimerState as TimerState;
+} satisfies InitialTimerState as InitialTimerState;
 
 const timerSlice = createSlice({
   name: "timer",
   initialState,
   reducers: {
-    start(state, action) {
-      state.isTurn = true;
+    start(state) {
       state.startDate = new Date();
     },
 
@@ -35,18 +30,11 @@ const timerSlice = createSlice({
 
     incrementTick(state, actions) {
       state.ticks += actions.payload;
-      state.totalTicks += actions.payload;
-    },
-
-    pause(state) {
-      state.isTurn = false;
-      state.startDate = null;
     },
 
     stop(state) {
-      state.isTurn = false;
       state.ticks = 0;
-      state.totalTicks = 0;
+      state.startDate = null;
     },
 
     setTaskName(state, { payload }) {
@@ -69,7 +57,6 @@ const timerSlice = createSlice({
 
 export const {
   start,
-  pause,
   incrementTick,
   stop,
   setTaskName,
