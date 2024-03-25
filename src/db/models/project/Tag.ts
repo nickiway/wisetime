@@ -8,7 +8,7 @@ export interface TagType {
   createdBy: { type: mongoose.Types.ObjectId; ref: "User" };
 }
 
-export const tagScema = new Schema<TagType>({
+export const tagSchema = new Schema<TagType>({
   _id: Types.ObjectId,
   title: String,
   color: String,
@@ -17,4 +17,4 @@ export const tagScema = new Schema<TagType>({
 });
 
 export const Tag =
-  mongoose.models.Tag || mongoose.model<TagType>("Tag", tagScema);
+  mongoose.models.Tag || mongoose.model<TagType>("Tag", tagSchema);
