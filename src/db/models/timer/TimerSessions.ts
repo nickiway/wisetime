@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
+
 import { TagType } from "../project/Tag";
+import { tagScema } from "@/db/models/project/Tag";
 
 export interface ISessionBody {
   date: Date;
@@ -17,7 +19,7 @@ const SessionSchema = new mongoose.Schema<ISessionBody>({
   date: { type: Date, required: true },
   totalTicks: { type: Number, required: true },
   taskName: { type: String, required: true },
-  selectedTags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
+  selectedTags: [{ type: tagScema }],
 });
 
 const schema = new mongoose.Schema<ITimerSession>({

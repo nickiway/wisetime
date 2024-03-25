@@ -47,9 +47,7 @@ export const storeTimerSession = async ({
       userId: new ObjectId(userId),
       body: {
         date,
-        selectedTags: Array.from(selectedTags).map(
-          (tagId) => new ObjectId(tagId)
-        ),
+        selectedTags: tags,
         taskName,
         totalTicks,
       },
