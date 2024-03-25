@@ -7,6 +7,7 @@ import { storeTimerSession } from "@/actions/timer";
 import { useTimer } from "@/hooks/useTimer";
 
 import {
+  onMountTimer,
   setTaskName,
   start,
   stop,
@@ -42,9 +43,20 @@ export const TimeTrackerControllers = ({
   const totalTicks = useAppSelector((state) => state.timerReducer.totalTicks);
   const taskName = useAppSelector((state) => state.timerReducer.taskName);
   const selectedTags = useAppSelector((state) => state.timerReducer.tags);
+  const timerStartDate = useAppSelector(
+    (state) => state.timerReducer.startDate
+  );
 
-  useTimer(isTimerOn, () => {
-    dispatch(incrementTick(1000));
+  useTimer({
+    isTimerOn: isTimerOn,
+    cb: () => {
+      dispatch(incrementTick(1000));
+    },
+    options: {
+      cbOnMount: () => {
+        dispatch(onMountTimer());
+      },
+    },
   });
 
   const onStop = async () => {
@@ -133,7 +145,7 @@ export const TimeTrackerControllers = ({
                   console.error(error);
                 });
             } else {
-              dispatch(start({ selectedTags, taskName }));
+              dispatch(start());
             }
           }}
         >

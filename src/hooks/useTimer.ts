@@ -2,21 +2,31 @@ import { useEffect } from "react";
 
 import { clearInterval, setInterval } from "worker-timers";
 
-export const useTimer = (
-  isTimerOn: Boolean,
-  cb: () => void,
-  options?: { endTrigger: boolean; cbOnEnd: () => void }
-) => {
+interface useTimerProps {
+  isTimerOn: Boolean;
+  cb: () => void;
+  options: {
+    endTrigger?: boolean;
+    cbOnEnd?: () => void;
+    cbOnMount?: () => void;
+  };
+}
+
+export const useTimer = ({ isTimerOn, cb, options }: useTimerProps) => {
+  const { endTrigger, cbOnEnd, cbOnMount } = options;
+
   useEffect(() => {
-    console.log("running effect");
     let timerInterval: number | undefined;
+
+    if (cbOnMount !== undefined) {
+      cbOnMount();
+    }
 
     if (isTimerOn) {
       timerInterval = setInterval(() => {
         cb();
-
-        if (options?.endTrigger === true) {
-          options?.cbOnEnd();
+        if (endTrigger === true && cbOnEnd !== undefined) {
+          cbOnEnd();
         }
       }, 1000);
     } else if (timerInterval !== undefined) {

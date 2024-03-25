@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface TimerState {
+  startDate: Date | null;
   isTurn: boolean;
   ticks: number;
   totalTicks: number;
@@ -13,6 +14,7 @@ const initialState = {
   ticks: 0,
   totalTicks: 0,
   tags: new Set(),
+  startDate: null,
   taskName: "",
 } satisfies TimerState as TimerState;
 
@@ -22,6 +24,13 @@ const timerSlice = createSlice({
   reducers: {
     start(state, action) {
       state.isTurn = true;
+      state.startDate = new Date();
+    },
+
+    onMountTimer(state) {
+      if (state.startDate !== null) {
+        state.ticks = new Date().getTime() - state.startDate.getTime();
+      }
     },
 
     incrementTick(state, actions) {
@@ -31,6 +40,7 @@ const timerSlice = createSlice({
 
     pause(state) {
       state.isTurn = false;
+      state.startDate = null;
     },
 
     stop(state) {
@@ -66,5 +76,6 @@ export const {
   insertTimerTag,
   deleteTimerTag,
   toggleTimerTag,
+  onMountTimer,
 } = timerSlice.actions;
 export default timerSlice.reducer;
