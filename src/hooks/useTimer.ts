@@ -6,6 +6,7 @@ interface useTimerProps {
   isOn: boolean;
   cb: () => void;
   options: {
+    timeStep?: number;
     isTrigger?: boolean;
     cbOnTrigger?: () => void;
     cbOnMount?: () => void;
@@ -13,7 +14,7 @@ interface useTimerProps {
 }
 
 export const useTimer = ({ isOn, cb, options }: useTimerProps) => {
-  const { isTrigger, cbOnTrigger, cbOnMount } = options;
+  const { isTrigger, cbOnTrigger, cbOnMount, timeStep } = options;
 
   // on mount function
   useEffect(() => {
@@ -31,7 +32,7 @@ export const useTimer = ({ isOn, cb, options }: useTimerProps) => {
         if (isTrigger === true) {
           cbOnTrigger?.();
         }
-      }, 1000);
+      }, timeStep || 1000);
     } else if (timerInterval !== undefined) {
       clearInterval(timerInterval);
     }

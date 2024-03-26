@@ -5,7 +5,12 @@ import { useToast } from "@/components/ui/use-toast";
 import { storeTimerSession } from "@/actions/timer-action";
 
 import { Button } from "@/components/ui/button";
-import { start, pause, finish } from "@/redux/slices/pomodorroTimerSlice";
+import {
+  start,
+  pause,
+  resume,
+  finish,
+} from "@/redux/slices/pomodorroTimerSlice";
 import { Session } from "next-auth";
 
 export const PomodorroControllers = ({
@@ -15,6 +20,9 @@ export const PomodorroControllers = ({
 }) => {
   const dispatch = useAppDispatch();
   const isOn = useAppSelector((state) => state.pomodorroTimerSlice.isOn);
+  const startDate = useAppSelector(
+    (state) => state.pomodorroTimerSlice.startDate
+  );
   const selectedTags = useAppSelector(
     (state) => state.timeSessionRecordSlice.tags
   );
@@ -32,7 +40,8 @@ export const PomodorroControllers = ({
 
   const handleClick = () => {
     if (!isClassicTimerOn) {
-      isOn ? dispatch(pause()) : dispatch(start());
+      if (startDate !== null) isOn ? dispatch(pause()) : dispatch(resume());
+      else dispatch(start());
     } else {
       toast({
         title: "Please run only one timer at the same time",
@@ -71,7 +80,10 @@ export const PomodorroControllers = ({
     return response;
   };
 
-  const dynamicButtonLabel = () => (isOn ? "Pause" : "Start");
+  const dynamicButtonLabel = () => {
+    if (startDate !== null) return isOn ? "Pause" : "Resume";
+    else return "Start";
+  };
 
   return (
     <div className="flex justify-center gap-x-10">

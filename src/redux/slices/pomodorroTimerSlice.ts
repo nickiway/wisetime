@@ -11,6 +11,9 @@ interface IPomodorroInitialState {
   ticks: number;
   totalTicks: number;
 
+  startDate?: Date | null;
+  pauseDate?: Date | null;
+
   counter: {
     rest: number;
     work: number;
@@ -27,6 +30,8 @@ const initialState: IPomodorroInitialState = {
   totalTicks: 0,
   ticks: 0,
 
+  startDate: null,
+
   counter: {
     rest: 0,
     work: 0,
@@ -40,17 +45,39 @@ const pomodorroTimerSlice = createSlice({
     // turn on the timer
     start(state) {
       state.isOn = true;
+      state.startDate = new Date();
     },
 
     // pause
     pause(state) {
       state.isOn = false;
+      state.pauseDate = new Date();
+    },
+
+    // resume
+    resume(state) {
+      // state.startDate = new Date(
+      //   new Date().getTime() -
+      //     (new Date().getTime() - state.pauseDate?.getTime()!)
+      // );
+      // state.isOn = true;
+    },
+
+    // on mount call
+    onMountTimer(state) {
+      if (state.startDate !== null && state.startDate !== undefined) {
+        state.ticks =
+          Math.floor(
+            (new Date().getTime() - state.startDate?.getTime()) / 1000
+          ) * 1000;
+      }
     },
 
     //finish
     finish(state) {
       state.isOn = false;
       state.totalTicks = 0;
+      state.startDate = null;
       state.ticks = 0;
     },
 
@@ -70,8 +97,8 @@ const pomodorroTimerSlice = createSlice({
       state.counter.rest += payload;
     },
 
-    resetTicks(state) {
-      state.ticks = 0;
+    decreaseTicksByMount(state, actions) {
+      state.ticks -= actions.payload;
     },
   },
 });
@@ -80,9 +107,11 @@ export const {
   start,
   pause,
   addTick,
+  resume,
   finish,
+  onMountTimer,
   addRestCounts,
   addWorkCounts,
-  resetTicks,
+  decreaseTicksByMount,
 } = pomodorroTimerSlice.actions;
 export default pomodorroTimerSlice.reducer;
