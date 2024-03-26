@@ -33,12 +33,13 @@ import { TagsPicker } from "../shared/tags-picker";
 import { useCallback } from "react";
 import { add } from "@/actions/project";
 import { useToast } from "../ui/use-toast";
+import { HeaderTitleWrapper } from "../shared/header-title-wrapper";
 
 interface AddProjectProps {
   userId: string | undefined;
 }
 
-export const AddTaskForm = ({ userId }: AddProjectProps) => {
+export const AddProjectForm = ({ userId }: AddProjectProps) => {
   const dispatch = useAppDispatch();
   const [isPending, setIsPending] = useState(false);
   const { toast } = useToast();
@@ -75,48 +76,52 @@ export const AddTaskForm = ({ userId }: AddProjectProps) => {
 
   return (
     <>
-      <Dialog>
-        <DialogTrigger>+ Add New Project</DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Create new project</DialogTitle>
-          </DialogHeader>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="py-5 space-y-4">
-                <FormField
-                  control={form.control}
-                  name="title"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Project Title</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="University"
-                          type="text"
-                        ></Input>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+      <HeaderTitleWrapper title="Projects">
+        <Dialog>
+          <DialogTrigger>
+            <Button variant="default">+ Add New Project</Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Create new project</DialogTitle>
+            </DialogHeader>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)}>
+                <div className="py-5 space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Project Title</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="University"
+                            type="text"
+                          ></Input>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                {/* tags */}
-                <TagsPicker
-                  label="Select Tags"
-                  selectedTags={selectedTags}
-                  tags={tags}
-                  onClickCb={onTagsClick}
-                />
-              </div>
-              <Button type="submit" disabled={isPending} className="w-full">
-                Create New Project
-              </Button>
-            </form>
-          </Form>
-        </DialogContent>
-      </Dialog>
+                  {/* tags */}
+                  <TagsPicker
+                    label="Select Tags"
+                    selectedTags={selectedTags}
+                    tags={tags}
+                    onClickCb={onTagsClick}
+                  />
+                </div>
+                <Button type="submit" disabled={isPending} className="w-full">
+                  Create New Project
+                </Button>
+              </form>
+            </Form>
+          </DialogContent>
+        </Dialog>
+      </HeaderTitleWrapper>
     </>
   );
 };

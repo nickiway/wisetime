@@ -36,7 +36,7 @@ export const PomodorroDisplay = () => {
         <p className="text-center text-2xl font-mono">{informationLabel}</p>
 
         <div className="flex justify-center ">
-          <div className="w-1/5">
+          <div className="w-[300px]">
             <CircularProgressbar
               styles={{
                 path: {
