@@ -80,6 +80,7 @@ export const {
   start,
   pause,
   addTick,
+  finish,
   addRestCounts,
   addWorkCounts,
   resetTicks,

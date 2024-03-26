@@ -3,7 +3,7 @@
 import { Session } from "next-auth";
 import { FaTags, FaFolder } from "react-icons/fa";
 
-import { storeTimerSession } from "@/actions/timer";
+import { storeTimerSession } from "@/actions/timer-action";
 import { useTimer } from "@/hooks/useTimer";
 
 import {
@@ -28,6 +28,7 @@ import {
 import { useTags } from "@/hooks/useTags";
 import { ChangeEvent, useCallback } from "react";
 import { incrementTick } from "@/redux/slices/timerSlice";
+import { useToast } from "../ui/use-toast";
 
 interface TimeTrackerControllersProps {
   session: Session | null;
@@ -38,6 +39,7 @@ export const TimeTrackerControllers = ({
 }: TimeTrackerControllersProps) => {
   const dispatch = useAppDispatch();
   const tags = useTags(session?.user?.id || "");
+  const { toast } = useToast();
 
   const startDate = useAppSelector((state) => state.timerReducer.startDate);
   const totalTicks = useAppSelector((state) => state.timerReducer.ticks);
@@ -57,7 +59,7 @@ export const TimeTrackerControllers = ({
   });
 
   const onStop = async () => {
-    if (!session) {
+    if (!session?.user?.id) {
       return;
     }
 
@@ -118,9 +120,6 @@ export const TimeTrackerControllers = ({
             })}
           </DropdownMenuContent>
         </DropdownMenu>
-
-        {/* 
-        AddProject(task) */}
       </div>
 
       <div className="flex justify-center gap-x-10">
@@ -138,7 +137,10 @@ export const TimeTrackerControllers = ({
                   }
                 })
                 .catch((error) => {
-                  console.error(error);
+                  toast({
+                    title: "Error with saving your results",
+                    description: error.message,
+                  });
                 });
             } else {
               dispatch(start());

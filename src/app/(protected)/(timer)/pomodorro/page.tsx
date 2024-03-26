@@ -1,14 +1,18 @@
 import { auth } from "@/auth";
 import { PomodorroControllers } from "@/components/pomodorro-tracker/controllers";
-import { PomodorroTimeDisplay } from "@/components/pomodorro-tracker/time-display";
+import { PomodorroLogicModule } from "@/components/pomodorro-tracker/logic-module";
+import { PomodorroDisplay } from "@/components/pomodorro-tracker/display";
+import { TaskEditorController } from "@/components/pomodorro-tracker/task-editor-controller";
 
 export default async function PomodorroTimerPage() {
-  const startTime = 60 * 25 * 1000;
   const session = await auth();
+
   return (
     <>
-      <PomodorroTimeDisplay />
-      <PomodorroControllers />
+      <TaskEditorController />
+      <PomodorroDisplay />
+      <PomodorroLogicModule />
+      <PomodorroControllers session={session} />
     </>
   );
 }
