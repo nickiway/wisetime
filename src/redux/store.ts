@@ -5,6 +5,7 @@ import timerReducer from "@/redux/slices/timerSlice";
 import timerTableReducer from "./slices/timerTableSlice";
 import pomodorroTimerSlice from "@/redux/slices/pomodorroTimerSlice";
 import timeSessionRecordSlice from "@/redux/slices/timeSessionRecordSlice";
+import projectFormSlice from "@/redux/slices/projectFormSlice";
 
 import { enableMapSet, setAutoFreeze } from "immer";
 
@@ -19,6 +20,7 @@ export const store = configureStore({
     timerTableReducer,
     pomodorroTimerSlice,
     timeSessionRecordSlice,
+    projectFormSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

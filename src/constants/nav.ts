@@ -8,7 +8,7 @@ export const MENU_LIST = [
   { id: 9, label: "Classic Timer", href: "/classic", icon: FaClock },
   { id: 8, label: "Pomodorro Timer", href: "/pomodorro", icon: GiTomato },
   { id: 2, label: "Analytics", href: "/analytics", icon: SiGoogleanalytics },
-  { id: 3, label: "My tasks", href: "/tasks", icon: SiTask },
+  { id: 3, label: "My Projects", href: "/projects", icon: FaFolder },
   { id: 5, label: "My tags", href: "/tags", icon: FaTags },
   { id: 6, label: "Contacts", href: "/settings", icon: BsPeopleFill },
 ];

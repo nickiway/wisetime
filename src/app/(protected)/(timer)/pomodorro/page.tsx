@@ -9,7 +9,7 @@ export default async function PomodorroTimerPage() {
 
   return (
     <>
-      <TaskEditorController />
+      <TaskEditorController session={session} />
       <PomodorroDisplay />
       <PomodorroLogicModule />
       <PomodorroControllers session={session} />

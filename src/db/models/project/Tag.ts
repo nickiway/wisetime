@@ -1,14 +1,7 @@
 import mongoose, { Schema, Types } from "mongoose";
+import { ITag } from "@/types/tag";
 
-export interface TagType {
-  _id: Types.ObjectId;
-  title: string;
-  color: string;
-  textColor: string;
-  createdBy: { type: mongoose.Types.ObjectId; ref: "User" };
-}
-
-export const tagSchema = new Schema<TagType>({
+export const tagSchema = new Schema<ITag>({
   _id: Types.ObjectId,
   title: String,
   color: String,
@@ -17,4 +10,4 @@ export const tagSchema = new Schema<TagType>({
 });
 
 export const Tag =
-  mongoose.models.Tag || mongoose.model<TagType>("Tag", tagSchema);
+  mongoose.models.Tag || mongoose.model<ITag>("Tag", tagSchema);

@@ -19,9 +19,8 @@ export const SearchSchema = z.object({
   search: z.string(),
 });
 
-export const AddTaskSchema = z.object({
-  title: z.string(),
-  tags: z.string().array(),
+export const AddProjectSchema = z.object({
+  title: z.string().min(1, "Enter the project name"),
 });
 
 export const AddTagsSchema = z.object({

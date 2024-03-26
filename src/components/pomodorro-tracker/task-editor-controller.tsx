@@ -2,6 +2,7 @@
 import { FaTags } from "react-icons/fa";
 import { ChangeEvent } from "react";
 
+import { useTags } from "@/hooks/useTags";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setTask, toggleTimerTag } from "@/redux/slices/timeSessionRecordSlice";
 
@@ -13,10 +14,16 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Session } from "next-auth";
 
-export const TaskEditorController = () => {
+export const TaskEditorController = ({
+  session,
+}: {
+  session: Session | null;
+}) => {
   const dispatch = useAppDispatch();
-  const tags = useAppSelector((state) => state.tagsReducer.entities);
+  const tags = useTags(session?.user?.id || "");
+
   const selectedTags = useAppSelector(
     (state) => state.timeSessionRecordSlice.tags
   );

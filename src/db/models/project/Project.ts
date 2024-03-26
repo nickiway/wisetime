@@ -1,18 +1,14 @@
-import mongoose, { Schema, mongo } from "mongoose";
-import { User } from "../auth/User";
+import { Schema, model, models } from "mongoose";
+import { IProject } from "@/types/project";
+import { tagSchema } from "@/db/models/project/Tag";
 
-const schema = new Schema({
-  _id: Number,
-  createdBy: User,
+export const projectSchema = new Schema<IProject>({
+  createdBy: { type: Schema.Types.ObjectId, ref: "User" },
   title: String,
-  tags: String,
-  totalTime: {
-    type: Number,
-    default: 0,
-  },
-  status: Boolean,
-  desctiption: String,
+  tags: [tagSchema],
+  totalTime: Number,
+  status: { type: String, default: "in progress" },
 });
 
 export const Project =
-  mongoose.models.Project || mongoose.model("Project", schema);
+  models.Project || model<IProject>("Project", projectSchema);
