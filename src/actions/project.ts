@@ -8,6 +8,7 @@ import { Project } from "@/db/models/project/Project";
 import { ObjectId } from "mongodb";
 import { dbConnect } from "@/lib/dbConnect";
 import { Tag } from "@/db/models/project/Tag";
+import { User } from "@/db/models/auth/User";
 
 export const add = async (
   userId: string | Types.ObjectId,
@@ -28,8 +29,11 @@ export const add = async (
     },
   });
 
+  const createdBy = await User.findById(new ObjectId(userId));
+  if (!createdBy) throw new Error("Relogin to your account");
+
   const response = await Project.create({
-    createdBy: new ObjectId(userId),
+    createdBy,
     title: values.title,
     tags: tags,
     totalTime: 0,

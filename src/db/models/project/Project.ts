@@ -1,9 +1,10 @@
 import { Schema, model, models } from "mongoose";
 import { IProject } from "@/types/project";
 import { tagSchema } from "@/db/models/project/Tag";
+import { userSchema } from "@/db/models/auth/User";
 
 export const projectSchema = new Schema<IProject>({
-  createdBy: { type: Schema.Types.ObjectId, ref: "User" },
+  createdBy: userSchema,
   title: String,
   tags: [tagSchema],
   totalTime: Number,
