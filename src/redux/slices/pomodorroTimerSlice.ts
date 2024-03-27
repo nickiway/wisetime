@@ -56,17 +56,26 @@ const pomodorroTimerSlice = createSlice({
 
     // resume
     resume(state) {
-      // state.startDate = new Date(
-      //   new Date().getTime() -
-      //     (new Date().getTime() - state.pauseDate?.getTime()!)
-      // );
-      // state.isOn = true;
+      state.startDate = new Date(
+        new Date().getTime() -
+          (new Date().getTime() - state.pauseDate?.getTime()!)
+      );
+      state.isOn = true;
     },
 
     // on mount call
     onMountTimer(state) {
-      if (state.startDate !== null && state.startDate !== undefined) {
+      if (
+        state.startDate !== null &&
+        state.startDate !== undefined &&
+        state.isOn
+      ) {
         state.ticks =
+          Math.floor(
+            (new Date().getTime() - state.startDate?.getTime()) / 1000
+          ) * 1000;
+
+        state.totalTicks =
           Math.floor(
             (new Date().getTime() - state.startDate?.getTime()) / 1000
           ) * 1000;

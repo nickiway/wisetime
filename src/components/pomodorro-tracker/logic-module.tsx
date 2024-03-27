@@ -21,7 +21,6 @@ export const PomodorroLogicModule = () => {
     (state) => state.pomodorroTimerSlice
   );
 
-  console.log("ticks", ticks);
   // Determining if it's time for a rest cycle
   const isRestCycle = counter.work > counter.rest;
 
@@ -42,7 +41,7 @@ export const PomodorroLogicModule = () => {
       dispatch(pause());
     }
 
-    dispatch(decreaseTicksByMount(startTicks));
+    dispatch(decreaseTicksByMount(startTicks + 1000));
   }, [dispatch, isRestCycle, counter.work, startTicks]);
 
   // Callback on mount
