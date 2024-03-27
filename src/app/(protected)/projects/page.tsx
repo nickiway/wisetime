@@ -1,7 +1,8 @@
 "use server";
+
 import { auth } from "@/auth";
 import { AddProjectForm } from "@/components/projects/add-project-form";
-import { DataTableDemo } from "@/components/projects/projects-table";
+import { ProjectsTable } from "@/components/projects/projects-table";
 
 export default async function Tasks() {
   const session = await auth();
@@ -9,7 +10,7 @@ export default async function Tasks() {
   return (
     <div className="container">
       <AddProjectForm userId={session?.user?.id} />
-      <DataTableDemo />
+      <ProjectsTable userId={session?.user?.id} />
     </div>
   );
 }

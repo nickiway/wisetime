@@ -7,17 +7,11 @@ import { useAppSelector } from "@/redux/hooks";
 
 import { cn } from "@/lib/utils";
 
-interface TimeTrackerDisplayProps extends HTMLAttributes<HTMLDivElement> {
-  ticksType?: "circle" | "total";
-}
+interface TimeTrackerDisplayProps extends HTMLAttributes<HTMLDivElement> {}
 
-export const TimeTrackerDisplay = ({
-  className,
-  ticksType = "circle",
-}: TimeTrackerDisplayProps) => {
-  const ticksToShow = ticksType === "circle" ? "ticks" : "totalTicks";
-  const ticks = useAppSelector((state) => state.timerReducer[ticksToShow]);
-  const formatedTime = ticksToTime(ticks);
+export const TimeTrackerDisplay = ({ className }: TimeTrackerDisplayProps) => {
+  const { totalTicks } = useAppSelector((state) => state.timerReducer);
+  const formatedTime = ticksToTime(totalTicks);
 
   return (
     <section className="flex justify-center">

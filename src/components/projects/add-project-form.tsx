@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 import { AddProjectSchema } from "@/schemas";
-import { toggleTimerTag } from "@/redux/slices/projectFormSlice";
+import { toggleTimerTag } from "@/redux/slices/createProjectFormSlice";
 
 import {
   Dialog,
@@ -45,7 +45,9 @@ export const AddProjectForm = ({ userId }: AddProjectProps) => {
   const { toast } = useToast();
 
   const tags = useTags(userId ?? "");
-  const selectedTags = useAppSelector((state) => state.projectFormSlice.tags);
+  const selectedTags = useAppSelector(
+    (state) => state.createProjectFormSlice.tags
+  );
 
   const onTagsClick = useCallback(
     (_id: string) => {

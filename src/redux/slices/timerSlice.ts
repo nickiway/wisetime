@@ -2,14 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface InitialTimerState {
   startDate: Date | null;
-  ticks: number;
-  tags: Set<string>;
+  totalTicks: number;
+  selectedTags: Set<string>;
   taskName: string;
 }
 
 const initialState = {
-  ticks: 0,
-  tags: new Set(),
+  totalTicks: 0,
+  selectedTags: new Set(),
   startDate: null,
   taskName: "",
 } satisfies InitialTimerState as InitialTimerState;
@@ -24,16 +24,16 @@ const timerSlice = createSlice({
 
     onMountTimer(state) {
       if (state.startDate !== null) {
-        state.ticks = new Date().getTime() - state.startDate.getTime();
+        state.totalTicks = new Date().getTime() - state.startDate.getTime();
       }
     },
 
     incrementTick(state, actions) {
-      state.ticks += actions.payload;
+      state.totalTicks += actions.payload;
     },
 
     stop(state) {
-      state.ticks = 0;
+      state.totalTicks = 0;
       state.startDate = null;
     },
 
@@ -42,15 +42,17 @@ const timerSlice = createSlice({
     },
 
     insertTimerTag(state, { payload: id }) {
-      state.tags.add(id);
+      state.selectedTags.add(id);
     },
 
     deleteTimerTag(state, { payload: id }) {
-      state.tags.delete(id);
+      state.selectedTags.delete(id);
     },
 
     toggleTimerTag(state, { payload: id }) {
-      state.tags.has(id) ? state.tags.delete(id) : state.tags.add(id);
+      state.selectedTags.has(id)
+        ? state.selectedTags.delete(id)
+        : state.selectedTags.add(id);
     },
   },
 });

@@ -3,7 +3,7 @@ import { ITag } from "@/types/tag";
 
 export type ProjectStatusType = "in progress" | "finished";
 
-export interface IProject {
+export interface IProject extends mongoose.Document {
   createdBy: mongoose.Types.ObjectId;
   title: String;
   status: ProjectStatusType;

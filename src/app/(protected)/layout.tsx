@@ -10,7 +10,7 @@ export default function ProtectedLayout({
     <body className="flex">
       <Navigation />
       <Toaster />
-      <main className="w-full overflow-scroll bg-zinc-100">{children}</main>
+      <main className="w-full overflow-scroll ">{children}</main>
     </body>
   );
 }

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { TagType } from "@/db/models/project/Tag";
+import { ITag } from "@/types/tag";
 import { Types } from "mongoose";
 
 export const fetchTagsByUserId = createAsyncThunk(
@@ -12,7 +12,7 @@ export const fetchTagsByUserId = createAsyncThunk(
 );
 
 interface TagsState {
-  entities: TagType[];
+  entities: ITag[];
   loading: "idle" | "pending" | "succeeded" | "failed";
   error: string | undefined;
 }

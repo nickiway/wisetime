@@ -12,8 +12,8 @@ const initialState = {
   project: "",
 } satisfies IProjectFormInitialState as IProjectFormInitialState;
 
-const projectFormSlice = createSlice({
-  name: "projectFormSlice",
+const createProjectFormSlice = createSlice({
+  name: "createcreateProjectFormSlice",
   initialState,
   reducers: {
     setTask(state, actions) {
@@ -30,5 +30,6 @@ const projectFormSlice = createSlice({
   },
 });
 
-export const { setTags, setTask, toggleTimerTag } = projectFormSlice.actions;
-export default projectFormSlice.reducer;
+export const { setTags, setTask, toggleTimerTag } =
+  createProjectFormSlice.actions;
+export default createProjectFormSlice.reducer;

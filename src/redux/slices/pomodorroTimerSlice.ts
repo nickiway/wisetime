@@ -23,8 +23,8 @@ interface IPomodorroInitialState {
 const getTicksFromMin = (min: number): number => min * 1000 * 60;
 
 const initialState: IPomodorroInitialState = {
-  restInterval: { short: getTicksFromMin(0.1), long: getTicksFromMin(0.2) },
-  workInterval: getTicksFromMin(0.1),
+  restInterval: { short: getTicksFromMin(5), long: getTicksFromMin(15) },
+  workInterval: getTicksFromMin(25),
 
   isOn: false,
   totalTicks: 0,
@@ -56,29 +56,28 @@ const pomodorroTimerSlice = createSlice({
 
     // resume
     resume(state) {
-      state.startDate = new Date(
-        new Date().getTime() -
-          (new Date().getTime() - state.pauseDate?.getTime()!)
-      );
-      state.isOn = true;
+      const { pauseDate } = state;
+
+      if (pauseDate) {
+        const currentTime = new Date().getTime();
+        const elapsedTime = currentTime - pauseDate.getTime();
+
+        state.startDate = new Date(currentTime - elapsedTime);
+        state.isOn = true;
+      }
     },
 
-    // on mount call
+    // on timer mount
     onMountTimer(state) {
-      if (
-        state.startDate !== null &&
-        state.startDate !== undefined &&
-        state.isOn
-      ) {
-        state.ticks =
-          Math.floor(
-            (new Date().getTime() - state.startDate?.getTime()) / 1000
-          ) * 1000;
+      const { startDate, isOn } = state;
 
-        state.totalTicks =
-          Math.floor(
-            (new Date().getTime() - state.startDate?.getTime()) / 1000
-          ) * 1000;
+      if (startDate && isOn) {
+        const currentTime = new Date().getTime();
+        const elapsedSeconds =
+          Math.floor((currentTime - startDate.getTime()) / 1000) * 1000;
+
+        state.ticks = elapsedSeconds;
+        state.totalTicks = elapsedSeconds;
       }
     },
 

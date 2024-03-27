@@ -41,7 +41,7 @@ export const PomodorroLogicModule = () => {
       dispatch(pause());
     }
 
-    dispatch(decreaseTicksByMount(startTicks + 1000));
+    dispatch(decreaseTicksByMount(startTicks));
   }, [dispatch, isRestCycle, counter.work, startTicks]);
 
   // Callback on mount
@@ -51,12 +51,12 @@ export const PomodorroLogicModule = () => {
 
   // Options for the timer
   const options = useMemo(() => {
-    return { isTrigger, cbOnTrigger: doCycle, cbOnMount, timeStep: 10 };
+    return { isTrigger, cbOnTrigger: doCycle, cbOnMount, timeStep: 100 };
   }, [isTrigger, doCycle, cbOnMount]);
 
   // Function to handle ticks
   const handleTick = useCallback(() => {
-    dispatch(addTick(10));
+    dispatch(addTick(100));
   }, [dispatch]);
 
   // Using the timer effect

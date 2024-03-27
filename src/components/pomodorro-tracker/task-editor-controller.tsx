@@ -7,14 +7,10 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setTask, toggleTimerTag } from "@/redux/slices/timeSessionRecordSlice";
 
 import { Input } from "@/components/ui/input";
-import { Button } from "../ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { Session } from "next-auth";
+import { TagsPicker } from "../shared/tags-picker";
+import { ProjectsSelectList } from "../shared/projects-select-list";
 
 export const TaskEditorController = ({
   session,
@@ -29,48 +25,26 @@ export const TaskEditorController = ({
   );
 
   return (
-    <div className="p-5 flex gap-x-10">
+    <div className="p-5 flex gap-x-10 ">
       <Input
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           dispatch(setTask(e.target.value));
         }}
         type="text"
         name="task"
-        className="w-full"
         placeholder="Enter the task name"
+        className="w-full"
       />
-      <DropdownMenu>
-        <DropdownMenuTrigger>
-          <FaTags color="gray" />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>Select your tags</DropdownMenuLabel>
-          {tags.map((tag) => {
-            return (
-              <DropdownMenuLabel key={tag._id.toString()} className="py-2">
-                <Button
-                  variant="default"
-                  style={{
-                    backgroundColor: selectedTags.has(tag._id.toString())
-                      ? "gray"
-                      : tag.color,
-                    color: selectedTags.has(tag._id.toString())
-                      ? "black"
-                      : tag.textColor,
-                  }}
-                  className={"cursor-pointer w-full "}
-                  asChild
-                  onClick={() => {
-                    dispatch(toggleTimerTag(tag._id.toString()));
-                  }}
-                >
-                  <span>{tag.title}</span>
-                </Button>
-              </DropdownMenuLabel>
-            );
-          })}
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <ProjectsSelectList projectsList={[]} />
+
+      <TagsPicker
+        selectedTags={selectedTags}
+        tags={tags}
+        onClickCb={(_id: string) => {
+          dispatch(toggleTimerTag(_id));
+        }}
+        label="Select Tags"
+      />
     </div>
   );
 };
