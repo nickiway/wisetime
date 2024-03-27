@@ -1,6 +1,6 @@
 import mongoose, { Schema, InferSchemaType } from "mongoose";
 
-const schema = new Schema({
+export const userSchema = new Schema({
   name: String,
   email: String,
   password: String,
@@ -8,6 +8,6 @@ const schema = new Schema({
   emailVerified: Date,
 });
 
-export type UserType = InferSchemaType<typeof schema>;
+export type UserType = InferSchemaType<typeof userSchema>;
 
-export const User = mongoose.models?.User || mongoose.model("User", schema);
+export const User = mongoose.models?.User || mongoose.model("User", userSchema);

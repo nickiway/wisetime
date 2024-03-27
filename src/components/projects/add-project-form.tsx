@@ -3,7 +3,7 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 
 import { AddProjectSchema } from "@/schemas";
 import { toggleTimerTag } from "@/redux/slices/createProjectFormSlice";
@@ -32,6 +32,7 @@ import { useTags } from "@/hooks/useTags";
 import { TagsPicker } from "../shared/tags-picker";
 import { useCallback } from "react";
 import { add } from "@/actions/project";
+import { add as addNewProject } from "@/redux/slices/projectsSlice";
 import { useToast } from "../ui/use-toast";
 import { HeaderTitleWrapper } from "../shared/header-title-wrapper";
 
@@ -41,7 +42,7 @@ interface AddProjectProps {
 
 export const AddProjectForm = ({ userId }: AddProjectProps) => {
   const dispatch = useAppDispatch();
-  const [isPending, setIsPending] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
 
   const tags = useTags(userId ?? "");
@@ -64,24 +65,31 @@ export const AddProjectForm = ({ userId }: AddProjectProps) => {
   });
 
   const onSubmit = async (value: z.infer<typeof AddProjectSchema>) => {
-    setIsPending(true);
-    if (userId === undefined) throw new Error("Relogin to your account");
-    const response = await add(userId, value, selectedTags);
-    setIsPending(false);
+    startTransition(async () => {
+      if (userId === undefined) {
+        toast({
+          title: "The error occured",
+          description: "Relogin to your account",
+        });
+        return;
+      }
+      const response = await add(userId, value, selectedTags);
 
-    if (response) {
-      toast({
-        title: "The project created successfully",
-      });
-    }
+      if (response) {
+        dispatch(addNewProject(response));
+        toast({
+          title: "The project created successfully",
+        });
+      }
+    });
   };
 
   return (
     <>
-      <HeaderTitleWrapper title="Projects">
+      <HeaderTitleWrapper title="My Projects">
         <Dialog>
-          <DialogTrigger>
-            <Button variant="default">+ Add New Project</Button>
+          <DialogTrigger className="bg-black text-white font-medium rounded-md py-2 px-3 text-sm hover:opacity-75">
+            + Add New Project
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>

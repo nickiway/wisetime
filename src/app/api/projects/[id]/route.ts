@@ -16,11 +16,9 @@ export async function GET(request: NextRequest, response: NextApiResponse) {
     }
 
     await dbConnect();
-    const projects = await Project.find({
-      createdBy: new ObjectId(userId),
-    })
-      .populate("tags")
-      .sort("title");
+    const projects = await Project.find({ createdBy: userId })
+      .populate("createdBy")
+      .sort([["title", -1]]);
 
     // Send the response with the table data
     return Response.json({ projects });

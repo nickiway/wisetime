@@ -25,7 +25,11 @@ const initialState = {
 const projectsSlice = createSlice({
   name: "projectsSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    add(state, actions) {
+      state.projects.unshift(actions.payload);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProjectsById.pending, (state, _) => {
@@ -41,5 +45,5 @@ const projectsSlice = createSlice({
   },
 });
 
-export const {} = projectsSlice.actions;
+export const { add } = projectsSlice.actions;
 export default projectsSlice.reducer;
