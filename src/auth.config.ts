@@ -33,11 +33,7 @@ export default {
 
         const passwordsMatch = await bcryptjs.compare(password, user.password);
 
-        if (passwordsMatch)
-          return {
-            name: user.name,
-            email: user.email,
-          };
+        if (passwordsMatch) return user;
 
         return null;
       },
