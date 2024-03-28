@@ -73,7 +73,7 @@ export const AddProjectForm = ({ userId }: AddProjectProps) => {
         });
         return;
       }
-      const response = await add(userId, value, selectedTags);
+      const response = await add({ _id: userId, values: value, selectedTags });
 
       if (response) {
         dispatch(addNewProject(response));

@@ -9,7 +9,10 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 export const useProjects = (userId: string | Types.ObjectId | undefined) => {
   const dispatch = useAppDispatch();
 
-  const { projects, loading } = useAppSelector((state) => state.projectsSlice);
+  console.log(userId);
+  const { projects, loading, error } = useAppSelector(
+    (state) => state.projectsSlice
+  );
 
   useEffect(() => {
     if (loading === "idle" && userId) {
@@ -17,5 +20,5 @@ export const useProjects = (userId: string | Types.ObjectId | undefined) => {
     }
   }, [dispatch, loading, userId]);
 
-  return projects;
+  return error ? [] : projects;
 };

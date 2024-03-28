@@ -25,7 +25,7 @@ export const TaskEditorController = ({
   );
 
   return (
-    <div className="p-5 flex gap-x-10 ">
+    <section className="p-5 flex gap-x-10 ">
       {/* input for task name */}
       <Input
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +38,7 @@ export const TaskEditorController = ({
       />
 
       {/* projects picker */}
-      <ProjectsPicker _id={session?.user?.id} />
+      <ProjectsPicker _id={session?.user?.id} className="w-50" />
 
       {/* tags picker */}
       <TagsPicker
@@ -49,6 +49,6 @@ export const TaskEditorController = ({
         }}
         label="Select Tags"
       />
-    </div>
+    </section>
   );
 };

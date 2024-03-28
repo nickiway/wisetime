@@ -74,7 +74,7 @@ export const TimeTrackerControllers = ({
   };
 
   return (
-    <>
+    <section className="flex gap-x-5 w-full">
       <Input
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           dispatch(setTaskName(e.target.value));
@@ -86,48 +86,44 @@ export const TimeTrackerControllers = ({
         placeholder="Enter the task name"
       />
 
-      <div className="px-10">
-        <TagsPicker
-          selectedTags={selectedTags}
-          tags={tags}
-          onClickCb={(_id: string) => {
-            dispatch(toggleTimerTag(_id));
-          }}
-          label="Select Tags"
-        />
-      </div>
+      <TagsPicker
+        selectedTags={selectedTags}
+        tags={tags}
+        onClickCb={(_id: string) => {
+          dispatch(toggleTimerTag(_id));
+        }}
+        label="Select Tags"
+      />
 
       {/* projects picker */}
-      <ProjectsPicker _id={session?.user?.id} />
+      <ProjectsPicker _id={session?.user?.id} className="w-50" />
 
-      <div className="flex justify-center gap-x-10">
-        <Button
-          variant="default"
-          className="cursor-pointer"
-          asChild
-          onClick={() => {
-            if (startDate) {
-              onStop()
-                .then((response) => {
-                  if (response !== undefined) {
-                    dispatch(stop());
-                    dispatch(addToTable(response));
-                  }
-                })
-                .catch((error) => {
-                  toast({
-                    title: "Error with saving your results",
-                    description: error.message,
-                  });
+      <Button
+        variant="default"
+        className="cursor-pointer"
+        asChild
+        onClick={() => {
+          if (startDate) {
+            onStop()
+              .then((response) => {
+                if (response !== undefined) {
+                  dispatch(stop());
+                  dispatch(addToTable(response));
+                }
+              })
+              .catch((error) => {
+                toast({
+                  title: "Error with saving your results",
+                  description: error.message,
                 });
-            } else {
-              dispatch(start());
-            }
-          }}
-        >
-          <span> {!startDate ? "Start" : "Finish"}</span>
-        </Button>
-      </div>
-    </>
+              });
+          } else {
+            dispatch(start());
+          }
+        }}
+      >
+        <span> {!startDate ? "Start" : "Finish"}</span>
+      </Button>
+    </section>
   );
 };

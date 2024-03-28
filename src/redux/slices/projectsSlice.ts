@@ -6,6 +6,7 @@ export const fetchProjectsById = createAsyncThunk(
   "projects/fetch",
   async (_id: Types.ObjectId | string) => {
     const data = (await fetch("/api/projects/" + _id)).json();
+    console.log("data");
     console.log(data);
     return data;
   }
@@ -14,11 +15,13 @@ export const fetchProjectsById = createAsyncThunk(
 interface IProjectsInitialState {
   projects: IProject[];
   loading: "idle" | "pending" | "succeeded" | "failed";
+  error: string | null;
 }
 
 const initialState = {
   projects: [],
   loading: "idle",
+  error: null,
 } satisfies IProjectsInitialState as IProjectsInitialState;
 
 const projectsSlice = createSlice({
@@ -40,6 +43,7 @@ const projectsSlice = createSlice({
       })
       .addCase(fetchProjectsById.rejected, (state, action) => {
         state.loading = "failed";
+        state.error = action.error.message!;
       });
   },
 });

@@ -23,6 +23,7 @@ export async function GET(request: NextRequest, response: NextApiResponse) {
     // Send the response with the table data
     return Response.json({ projects });
   } catch (error) {
+    console.error(error);
     return Response.json({ error });
   }
 }

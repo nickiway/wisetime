@@ -19,7 +19,7 @@ export const {
     },
   },
   callbacks: {
-    async session({ token, session }) {
+    async session({ token, session, user }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
