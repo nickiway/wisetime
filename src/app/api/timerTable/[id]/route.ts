@@ -22,7 +22,6 @@ export async function GET(request: NextRequest, response: NextApiResponse) {
       .select("body")
       .sort([["body.date", -1]]);
 
-    console.log(table);
     // Send the response with the table data
     return Response.json({ table });
   } catch (error) {

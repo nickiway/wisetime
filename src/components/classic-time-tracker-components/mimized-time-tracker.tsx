@@ -15,7 +15,6 @@ export const MinimizedTimeTracker = () => {
   const dispatch = useAppDispatch();
   const totalTicks = useAppSelector((state) => state.timerReducer.totalTicks);
   const isTimerOn = useTimer(false, () => {
-    console.log("test");
   });
 
   return (

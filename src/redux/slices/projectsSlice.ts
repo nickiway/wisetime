@@ -6,7 +6,6 @@ export const fetchProjectsById = createAsyncThunk(
   "projects/fetch",
   async (_id: Types.ObjectId | string) => {
     const data = (await fetch("/api/projects/" + _id)).json();
-    console.log("data");
     console.log(data);
     return data;
   }

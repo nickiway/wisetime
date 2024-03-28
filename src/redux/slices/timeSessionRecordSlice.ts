@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Types } from "mongoose";
 
 interface ITimeSessionRecordSliceInitialState {
   task: string;
   tags: Set<string>;
-  project?: string;
+  project: Types.ObjectId | string;
 }
 
 const initialState = {
@@ -27,9 +28,13 @@ const timeSessionRecordSlice = createSlice({
     toggleTimerTag(state, { payload: id }) {
       state.tags.has(id) ? state.tags.delete(id) : state.tags.add(id);
     },
+
+    setProject(state, { payload: _id }) {
+      state.project = _id;
+    },
   },
 });
 
-export const { setTags, setTask, toggleTimerTag } =
+export const { setTags, setTask, toggleTimerTag, setProject } =
   timeSessionRecordSlice.actions;
 export default timeSessionRecordSlice.reducer;

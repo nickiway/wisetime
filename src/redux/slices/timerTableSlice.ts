@@ -6,8 +6,6 @@ export const fetchTimerTableByUserId = createAsyncThunk(
   "timer/fetchTable",
   async (userId: string | Types.ObjectId) => {
     const response = (await fetch(`/api/timerTable/${userId}`, {})).json();
-
-    console.log("response", response);
     return response;
   }
 );

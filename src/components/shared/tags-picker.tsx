@@ -29,8 +29,10 @@ export const TagsPicker = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className={className}>
-        <Button className="flex gap-x-2 items-center">
-          <FaTags /> {label}
+        <Button className="flex gap-x-2 items-center" asChild>
+          <span>
+            <FaTags /> {label}
+          </span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>

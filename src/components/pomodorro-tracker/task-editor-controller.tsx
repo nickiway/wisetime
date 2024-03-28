@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 
 import { Session } from "next-auth";
 import { TagsPicker } from "../shared/tags-picker";
-import { ProjectsSelectList } from "../shared/projects-select-list";
+import ProjectsPicker from "@/components/projects-picker";
 
 export const TaskEditorController = ({
   session,
@@ -26,6 +26,7 @@ export const TaskEditorController = ({
 
   return (
     <div className="p-5 flex gap-x-10 ">
+      {/* input for task name */}
       <Input
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           dispatch(setTask(e.target.value));
@@ -35,8 +36,11 @@ export const TaskEditorController = ({
         placeholder="Enter the task name"
         className="w-full"
       />
-      <ProjectsSelectList projectsList={[]} />
 
+      {/* projects picker */}
+      <ProjectsPicker _id={session?.user?.id} />
+
+      {/* tags picker */}
       <TagsPicker
         selectedTags={selectedTags}
         tags={tags}

@@ -1,3 +1,5 @@
+"use client";
+
 import { Types } from "mongoose";
 import { useEffect } from "react";
 

@@ -16,7 +16,6 @@ export const useLoadTimerTableData = (userId: string | Types.ObjectId) => {
 
   useEffect(() => {
     if (loading === "idle") {
-      console.log("fetching data of table");
       dispatch(fetchTimerTableByUserId(userId));
     }
   }, [dispatch, loading, userId]);

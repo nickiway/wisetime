@@ -10,8 +10,8 @@ export default async function PomodorroTimerPage() {
   return (
     <>
       <TaskEditorController session={session} />
-      <PomodorroDisplay />
       <PomodorroLogicModule />
+      <PomodorroDisplay />
       <PomodorroControllers session={session} />
     </>
   );

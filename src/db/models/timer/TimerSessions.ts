@@ -1,13 +1,17 @@
 import mongoose from "mongoose";
 
-import { TagType } from "../project/Tag";
+import type { ITag } from "@/types/tag";
+
+import { projectSchema } from "@/db/models/project/Project";
 import { tagSchema } from "@/db/models/project/Tag";
+import { IProject } from "@/types/project";
 
 export interface ISessionBody {
   date: Date;
   totalTicks: number;
   taskName: string;
-  selectedTags: Set<mongoose.Types.ObjectId[]> | TagType[];
+  project: IProject;
+  selectedTags: Set<mongoose.Types.ObjectId[]> | ITag[];
 }
 
 export interface ITimerSession extends mongoose.Document {
@@ -19,6 +23,7 @@ const SessionSchema = new mongoose.Schema<ISessionBody>({
   date: { type: Date, required: true },
   totalTicks: { type: Number, required: true },
   taskName: { type: String, required: true },
+  project: projectSchema,
   selectedTags: [{ type: tagSchema }],
 });
 

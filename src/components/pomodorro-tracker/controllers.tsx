@@ -20,6 +20,10 @@ export const PomodorroControllers = ({
 }) => {
   const dispatch = useAppDispatch();
   const isOn = useAppSelector((state) => state.pomodorroTimerSlice.isOn);
+  const selectedProjectId = useAppSelector(
+    (state) => state.timeSessionRecordSlice.project
+  );
+
   const startDate = useAppSelector(
     (state) => state.pomodorroTimerSlice.startDate
   );
@@ -73,7 +77,7 @@ export const PomodorroControllers = ({
       userId: session?.user?.id,
       taskName,
       selectedTags,
-      project: "",
+      projectId: selectedProjectId,
       date: new Date(),
     });
 

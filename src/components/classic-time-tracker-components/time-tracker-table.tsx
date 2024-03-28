@@ -36,6 +36,7 @@ export const TimeTrackerTable = ({ session }: ITimeTrackerTable) => {
       </TableHeader>
       <TableBody>
         {table.map(({ body }, index) => {
+          console.log(body);
           return (
             <TableRow key={index}>
               <TableCell>{new Date(body.date).toLocaleDateString()}</TableCell>
@@ -45,7 +46,7 @@ export const TimeTrackerTable = ({ session }: ITimeTrackerTable) => {
                   ? body?.selectedTags.map((item) => item.title).join("\n")
                   : null}
               </TableCell>
-              <TableCell>{"project name"}</TableCell>
+              <TableCell>{body.project?.title}</TableCell>
               <TableCell>{ticksToTime(body.totalTicks)}</TableCell>
             </TableRow>
           );

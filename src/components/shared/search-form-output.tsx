@@ -13,7 +13,6 @@ export const SearchFormOutput = ({
 }: SearchFormOutputProps) => {
   if (data === undefined || data.length === 0) return "";
 
-  console.log(data);
   return (
     <div className={cn("w-full absolute", className)}>
       {data.map((item, index) => (

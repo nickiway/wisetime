@@ -1,11 +1,13 @@
 "use server";
 
+import type { Types } from "mongoose";
 import { ObjectId } from "mongodb";
 import { dbConnect } from "@/lib/dbConnect";
 
 import { TimerSession } from "@/db/models/timer/TimerSessions";
 import { ITimerSession } from "@/db/models/timer/TimerSessions";
 import { Tag } from "@/db/models/project/Tag";
+import { update } from "@/actions/project";
 
 interface StoreTimerSessionProps {
   totalTicks: number;
@@ -13,7 +15,7 @@ interface StoreTimerSessionProps {
   taskName: string;
   selectedTags: Set<string>;
   date: Date;
-  project: string;
+  projectId: Types.ObjectId | string;
 }
 
 export const storeTimerSession = async ({
@@ -21,7 +23,7 @@ export const storeTimerSession = async ({
   userId,
   selectedTags,
   date,
-  project,
+  projectId,
   taskName,
 }: StoreTimerSessionProps): Promise<ITimerSession | never> => {
   if (!userId) {
@@ -44,6 +46,14 @@ export const storeTimerSession = async ({
     },
   });
 
+  // updating project and getting it as response
+  const updatedProject = await update({
+    _id: projectId,
+    key: "totalTime",
+    operation: "add",
+    payload: totalTicks,
+  });
+
   const response = await TimerSession.create({
     userId: new ObjectId(userId),
     body: {
@@ -51,6 +61,7 @@ export const storeTimerSession = async ({
       selectedTags: tags,
       taskName,
       totalTicks,
+      project: updatedProject,
     },
   });
 

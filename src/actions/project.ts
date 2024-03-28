@@ -1,14 +1,25 @@
 "use server";
 import * as z from "zod";
 
-import { Types } from "mongoose";
-import { AddProjectSchema } from "@/schemas";
-import { IProject } from "@/types/project";
-import { Project } from "@/db/models/project/Project";
 import { ObjectId } from "mongodb";
+
+import type { Types } from "mongoose";
+import type { IProject } from "@/types/project";
+
+import { AddProjectSchema } from "@/schemas";
+
 import { dbConnect } from "@/lib/dbConnect";
+
+import { Project } from "@/db/models/project/Project";
 import { Tag } from "@/db/models/project/Tag";
 import { User } from "@/db/models/auth/User";
+
+interface UpdateParams {
+  _id: string | Types.ObjectId;
+  key: string;
+  payload: number | string;
+  operation: "replace" | "add";
+}
 
 export const add = async (
   userId: string | Types.ObjectId,
@@ -17,7 +28,6 @@ export const add = async (
 ): Promise<IProject | never> => {
   const isValid = AddProjectSchema.safeParse(values);
 
-  console.log("selected tags", selectedTags);
   if (!isValid) throw new Error("The provided data is not valid");
   if (!userId) throw new Error("Relogin to your account");
 
@@ -43,4 +53,42 @@ export const add = async (
   const parsedResponse = response.toObject();
 
   return parsedResponse;
+};
+
+export const update = async ({
+  _id,
+  key,
+  payload,
+  operation = "replace",
+}: UpdateParams): Promise<IProject | never> => {
+  const project = await Project.findById(_id);
+
+  if (!project) {
+    throw new Error("The selected project does not exists");
+  }
+
+  let updatedValue;
+
+  if (typeof payload === "number") {
+    if (operation === "add") {
+      updatedValue = project.totalTime + payload;
+    } else {
+      updatedValue = payload;
+    }
+  } else {
+    updatedValue = payload;
+  }
+
+  // Update the document
+  const updatedProject = await Project.findByIdAndUpdate(
+    _id,
+    { [key]: updatedValue },
+    { new: true }
+  );
+
+  if (!updatedProject) {
+    throw new Error("Updating project model failed");
+  }
+
+  return updatedProject;
 };

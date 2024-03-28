@@ -39,6 +39,9 @@ export const TimeTrackerControllers = ({
   const { startDate, totalTicks, taskName, selectedTags } = useAppSelector(
     (state) => state.timerReducer
   );
+  const selectedProjectId = useAppSelector(
+    (state) => state.timeSessionRecordSlice.project
+  );
 
   useTimer({
     isOn: !!startDate,
@@ -62,7 +65,7 @@ export const TimeTrackerControllers = ({
       userId: session?.user?.id,
       taskName,
       selectedTags,
-      project: "",
+      projectId: selectedProjectId,
       date: new Date(),
     });
 

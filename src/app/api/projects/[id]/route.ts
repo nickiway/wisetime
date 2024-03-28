@@ -1,6 +1,5 @@
 import { NextRequest } from "next/server";
 import { NextApiRequest, NextApiResponse } from "next";
-import { ObjectId } from "mongodb";
 
 import { Project } from "@/db/models/project/Project";
 import { dbConnect } from "@/lib/dbConnect";
@@ -16,7 +15,8 @@ export async function GET(request: NextRequest, response: NextApiResponse) {
     }
 
     await dbConnect();
-    const projects = await Project.find({ createdBy: userId })
+
+    const projects = await Project.find({ "createdBy._id": userId })
       .populate("createdBy")
       .sort([["title", -1]]);
 
