@@ -23,6 +23,7 @@ import { ChangeEvent, useCallback } from "react";
 import { incrementTick } from "@/redux/slices/timerSlice";
 import { useToast } from "../ui/use-toast";
 import { TagsPicker } from "../shared/tags-picker";
+import ProjectsPicker from "../projects-picker";
 
 interface TimeTrackerControllersProps {
   session: Session | null;
@@ -95,6 +96,9 @@ export const TimeTrackerControllers = ({
           label="Select Tags"
         />
       </div>
+
+      {/* projects picker */}
+      <ProjectsPicker _id={session?.user?.id} />
 
       <div className="flex justify-center gap-x-10">
         <Button
