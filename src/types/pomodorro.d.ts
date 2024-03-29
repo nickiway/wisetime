@@ -6,7 +6,10 @@ interface IPomodorroInterval {
 }
 
 interface IPomodorroNotification {
-  filepath: string;
+  file: {
+    filepath: string;
+  };
+
   soundNotificationEnabled: boolean;
 }
 

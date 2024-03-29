@@ -6,11 +6,14 @@ interface IProfileSettings {
   image: string;
 }
 
+// pomodorro settings
 interface IPomodorroTimerSettings {
   workConfig: IWorkConfiguration;
   restConfig: IRestConfiguration;
 }
 
-interface INotificationSettings {}
-
-interface ISettings {}
+// global settings
+export interface ISettings {
+  profile: IProfileSettings;
+  pomodorro: IPomodorroTimerSettings;
+}

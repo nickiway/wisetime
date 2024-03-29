@@ -7,6 +7,7 @@ import pomodorroTimerSlice from "@/redux/slices/pomodorroTimerSlice";
 import timeSessionRecordSlice from "@/redux/slices/timeSessionRecordSlice";
 import createProjectFormSlice from "@/redux/slices/createProjectFormSlice";
 import projectsSlice from "@/redux/slices/projectsSlice";
+import settingsSlice from "./slices/settingsSlice";
 
 import { enableMapSet, setAutoFreeze } from "immer";
 
@@ -23,6 +24,7 @@ export const store = configureStore({
     timeSessionRecordSlice,
     createProjectFormSlice,
     projectsSlice,
+    settingsSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
