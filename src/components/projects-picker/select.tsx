@@ -8,6 +8,8 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
+  SelectLabel,
+  SelectGroup,
   SelectValue,
 } from "@/components/ui/select";
 
@@ -32,14 +34,17 @@ export const ProjectsPickerSelect = ({
       </SelectTrigger>
 
       <SelectContent>
-        {data.map((project) => {
-          console.log(project);
-          return (
-            <SelectItem key={project?._id} value={project?._id}>
-              {project?.title}
-            </SelectItem>
-          );
-        })}
+        <SelectGroup>
+          <SelectLabel>Select Your Project</SelectLabel>
+          {data.map((project) => {
+            console.log(project);
+            return (
+              <SelectItem key={project?._id} value={project?._id}>
+                {project?.title}
+              </SelectItem>
+            );
+          })}
+        </SelectGroup>
       </SelectContent>
     </Select>
   );

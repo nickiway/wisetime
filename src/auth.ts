@@ -24,9 +24,18 @@ export const {
         session.user.id = token.sub;
       }
 
+      if (token.isCredentials && session.user) {
+        session.user.isCredentials = token.isCredentials as boolean;
+      }
+
       return session;
     },
-    async jwt({ token }) {
+    async jwt({ token, user }) {
+      // @ts-ignore
+      if (user?.password) {
+        token.isCredentials = true;
+      }
+
       return token;
     },
   },
