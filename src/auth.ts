@@ -25,7 +25,7 @@ export const {
       }
 
       if (token.isCredentials && session.user) {
-        session.user.isCredentials = token.isCredentials as boolean;
+        session.user.isCredentials = true;
       }
 
       return session;
