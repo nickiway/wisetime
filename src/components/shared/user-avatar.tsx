@@ -1,17 +1,17 @@
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { HTMLAttributes } from "react";
 
-interface UserAvatarProps {
+interface UserAvatarProps extends HTMLAttributes<HTMLImageElement> {
   imageUri: string;
   imageAlt: string;
-  classes?: string;
 }
 export const UserAvatar = ({
   imageUri,
   imageAlt,
-  classes,
+  className,
 }: UserAvatarProps) => {
   return (
-    <Avatar className={classes}>
+    <Avatar className={className}>
       <AvatarImage src={imageUri} />
       <AvatarFallback>{imageAlt}</AvatarFallback>
     </Avatar>

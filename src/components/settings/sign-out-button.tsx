@@ -1,4 +1,7 @@
+import { LogOut, TimerIcon, Settings } from "lucide-react";
 import { signOut } from "@/auth";
+
+import { Button } from "@/components/ui/button";
 
 export const SignOutButton = () => {
   return (
@@ -9,7 +12,14 @@ export const SignOutButton = () => {
         await signOut({ redirectTo: "/" });
       }}
     >
-      <button type="submit">Sign Out</button>
+      <Button
+        type="submit"
+        variant="link"
+        className="w-full text-destructive flex justify-start"
+      >
+        <LogOut className="mr-3" />
+        <span>Sign Out</span>
+      </Button>
     </form>
   );
 };

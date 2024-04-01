@@ -1,4 +1,3 @@
-import { ObjectId } from "mongodb";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import type { ISettings } from "@/types/settings";
@@ -8,12 +7,6 @@ import type { ILoading, IError } from "@/types/general";
 export const fetchSettingsById = createAsyncThunk(
   "fetchSettings",
   async (_id: Types.ObjectId | string) => {
-    const isValidId = ObjectId.isValid(_id);
-
-    if (!isValidId) {
-      throw new Error("The id is not valid");
-    }
-
     const data = (await fetch(`/api/settings/1`)).json();
 
     if (!data) {
