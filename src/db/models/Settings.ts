@@ -6,12 +6,7 @@ import {
   IPomodorroTimerSettings,
 } from "@/types/settings";
 
-import {
-  IPomodorroCounter,
-  IPomodorroInterval,
-  IRestConfiguration,
-  IWorkConfiguration,
-} from "@/types/pomodorro";
+import { IRestConfiguration, IWorkConfiguration } from "@/types/pomodorro";
 
 export interface ISettingsCreatedBy {
   createdBy: Types.ObjectId;
