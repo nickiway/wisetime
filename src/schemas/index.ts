@@ -1,3 +1,4 @@
+import { IProfileSettings } from "@/types/settings";
 import * as z from "zod";
 
 export const LoginSchema = z.object({
@@ -29,17 +30,12 @@ export const AddTagsSchema = z.object({
   textColor: z.string(),
 });
 
-// SETTINGS SCHEMAS
-const MAX_FILE_SIZE = 1024 * 1024 * 5;
-const ACCEPTED_IMAGE_MIME_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-];
-
 export const SettingsProfileSchema = z.object({
   firstName: z
     .string()
-    .min(1, "Firstname length must be greater than 1 character"),
+    .min(1, "First name length must be greater than 1 character"),
+
+  lastName: z
+    .string()
+    .min(1, "Last name length must be greater than 1 character"),
 });

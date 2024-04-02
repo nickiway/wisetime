@@ -30,6 +30,7 @@ const schemaWorkConfig = new Schema<IWorkConfiguration>({
 
 const schemaProfileSettings = new Schema<IProfileSettings>({
   firstName: String,
+  lastName: String,
 });
 
 const schemaPomodorroSettings = new Schema<IPomodorroTimerSettings>({
@@ -62,6 +63,7 @@ const schemaSettings = new Schema<ISettings & ISettingsCreatedBy>({
     type: schemaProfileSettings,
     default: {
       firstName: "",
+      lastName: "",
     },
   },
 });

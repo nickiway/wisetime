@@ -10,6 +10,7 @@ import { User } from "@/db/models/auth/User";
 import { Settings } from "@/db/models/Settings";
 
 import { dbConnect } from "@/lib/dbConnect";
+import { IProfileSettings } from "@/types/settings";
 
 interface IUpdateCloudinaryProfilePhoto {
   _id: Types.ObjectId | string | undefined;
@@ -55,11 +56,14 @@ export const updateSettingsProfile = async (
 
     if (!isDataValid) return { error: "Incorrect data" };
 
+    // data to update
+    const profile = {
+      ...values,
+    } as IProfileSettings;
+
+    // updating data
     await dbConnect();
-    await Settings.updateOne(
-      { createdBy: _id },
-      { $set: { "profile.username": values.firstName } }
-    );
+    await Settings.updateOne({ createdBy: _id }, { profile });
 
     return { success: "Profile data was updated" };
   } catch (error) {

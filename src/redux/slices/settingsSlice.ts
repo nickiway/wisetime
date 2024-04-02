@@ -34,6 +34,7 @@ const initialState = {
   },
   profile: {
     firstName: "",
+    lastName: "",
   },
 } as ISettings & ILoading & IError;
 
@@ -43,6 +44,10 @@ const settingsSlice = createSlice({
   reducers: {
     updateFirstName(state, { payload }) {
       state.profile.firstName = payload;
+    },
+
+    updateLastName(state, { payload }) {
+      state.profile.lastName = payload;
     },
   },
   extraReducers: (builder) => {
@@ -62,5 +67,5 @@ const settingsSlice = createSlice({
   },
 });
 
-export const { updateFirstName } = settingsSlice.actions;
+export const { updateFirstName, updateLastName } = settingsSlice.actions;
 export default settingsSlice.reducer;

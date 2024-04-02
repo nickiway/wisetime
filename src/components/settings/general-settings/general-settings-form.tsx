@@ -41,6 +41,7 @@ export const GeneralSettingsForm = () => {
     resolver: zodResolver(SettingsProfileSchema),
     defaultValues: {
       firstName: "",
+      lastName: "",
     },
   });
 
@@ -49,6 +50,7 @@ export const GeneralSettingsForm = () => {
     if (loading === "succeeded") {
       form.reset({
         firstName: profile.firstName,
+        lastName: profile.lastName,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,7 +90,7 @@ export const GeneralSettingsForm = () => {
             control={form.control}
             name="firstName"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="my-5">
                 <FormLabel>{"Enter Your First Name"}</FormLabel>
                 <FormControl>
                   <Input
@@ -98,6 +100,29 @@ export const GeneralSettingsForm = () => {
                     onChange={(e) => {
                       dispatch(updateFirstName(e.target.value));
                       form.setValue("firstName", e.target.value);
+                      setIsDataUpdated(true);
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem className="my-5">
+                <FormLabel>{"Enter Your Last Name"}</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    placeholder="Last Name"
+                    type="text"
+                    onChange={(e) => {
+                      dispatch(updateFirstName(e.target.value));
+                      form.setValue("lastName", e.target.value);
                       setIsDataUpdated(true);
                     }}
                   />
