@@ -1,8 +1,13 @@
 import { IRestConfiguration, IWorkConfiguration } from "@/types/pomodorro";
 
-// profile serttings
+// profile settings
 interface IProfileSettings {
-  username: string;
+  firstName: string;
+  lastName: string;
+  birthDate?: Date;
+  gender?: "male" | "female" | "other";
+  website?: string;
+  country?: string;
 }
 
 // pomodorro settings

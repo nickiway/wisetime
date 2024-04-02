@@ -33,21 +33,27 @@ const initialState = {
     },
   },
   profile: {
-    username: "",
+    firstName: "",
   },
 } as ISettings & ILoading & IError;
 
 const settingsSlice = createSlice({
   name: "settings",
   initialState,
-  reducers: {},
+  reducers: {
+    updateFirstName(state, { payload }) {
+      state.profile.firstName = payload;
+    },
+  },
   extraReducers: (builder) => {
+    builder.addCase(fetchSettingsById.pending, (state, _) => {
+      state.loading = "pending";
+    });
     builder.addCase(fetchSettingsById.fulfilled, (state, actions) => {
       state.loading = "succeeded";
 
-      //   TODO: write api
-      //   state.pomodorro = actions.payload.pomodorro;
-      //   state.profile = actions.payload.profile;
+      state.pomodorro = actions.payload.pomodorro;
+      state.profile = actions.payload.profile;
     });
     builder.addCase(fetchSettingsById.rejected, (state, actions) => {
       state.loading = "failed";
@@ -56,5 +62,5 @@ const settingsSlice = createSlice({
   },
 });
 
-export const {} = settingsSlice.actions;
+export const { updateFirstName } = settingsSlice.actions;
 export default settingsSlice.reducer;

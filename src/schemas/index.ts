@@ -39,7 +39,7 @@ const ACCEPTED_IMAGE_MIME_TYPES = [
 ];
 
 export const SettingsProfileSchema = z.object({
-  username: z
+  firstName: z
     .string()
-    .min(1, "Username length must be greater than 1 character"),
+    .min(1, "Firstname length must be greater than 1 character"),
 });

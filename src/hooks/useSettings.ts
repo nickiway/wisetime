@@ -8,17 +8,20 @@ import { fetchSettingsById } from "@/redux/slices/settingsSlice";
 
 export const useSettings = () => {
   const dispatch = useAppDispatch();
+
   const { data: session } = useSession({
     required: true,
   });
 
-  const settings = useAppSelector((state) => state.settingsSlice);
+  const { loading, pomodorro, profile } = useAppSelector(
+    (state) => state.settingsSlice
+  );
 
   useEffect(() => {
-    if (settings.loading === "idle" && session?.user.id) {
+    if (loading === "idle" && session?.user.id) {
       dispatch(fetchSettingsById(session?.user.id));
     }
-  });
+  }, [dispatch, loading, session]);
 
-  return settings;
+  return { pomodorro, profile, loading };
 };

@@ -29,7 +29,7 @@ const schemaWorkConfig = new Schema<IWorkConfiguration>({
 });
 
 const schemaProfileSettings = new Schema<IProfileSettings>({
-  username: String,
+  firstName: String,
 });
 
 const schemaPomodorroSettings = new Schema<IPomodorroTimerSettings>({
@@ -61,7 +61,7 @@ const schemaSettings = new Schema<ISettings & ISettingsCreatedBy>({
   profile: {
     type: schemaProfileSettings,
     default: {
-      username: "",
+      firstName: "",
     },
   },
 });

@@ -13,7 +13,7 @@ import {
   SettingsTabsElement,
   SettingsTabsGroup,
 } from "@/components/settings";
-import { ProfileSettingsTab } from "@/components/settings/profile-settings-tab";
+import { ProfileSettingsTab } from "@/components/settings/general-settings/profile-settings-tab";
 
 export default async function SettingsPage() {
   const session = await auth();
