@@ -4,7 +4,6 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CldUploadButton } from "next-cloudinary";
 
-import { Session } from "next-auth";
 import { useTransition, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
@@ -12,6 +11,8 @@ import { useSession } from "next-auth/react";
 import { updateCloudinaryProfilePhoto } from "@/actions/settings";
 
 import { SettingsProfileSchema } from "@/schemas";
+
+import type { Types } from "mongoose";
 
 import {
   Form,
@@ -30,13 +31,13 @@ import { useToast } from "../ui/use-toast";
 export const ProfileSettingsTab = () => {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
-  const { data: session, update } = useSession();
+  const { data: session, update } = useSession({
+    required: true,
+  });
 
+  console.log("session", session?.user?.id);
   const image = session?.user.image;
-  useEffect(() => {
-    console.log("session");
-    console.log(session);
-  }, [session]);
+  const _id = session?.user.id;
 
   const form = useForm<z.infer<typeof SettingsProfileSchema>>({
     resolver: zodResolver(SettingsProfileSchema),
@@ -46,8 +47,13 @@ export const ProfileSettingsTab = () => {
     },
   });
 
-  const onCloudinarySuccess = async (event?: string, info?: any) => {
+  const onCloudinarySuccess = async (
+    _id: Types.ObjectId | string | undefined,
+    event?: string,
+    info?: any
+  ) => {
     try {
+      console.log(session?.user.id);
       const { error, success, url } = await updateCloudinaryProfilePhoto({
         _id: session?.user.id,
         event,
@@ -55,7 +61,7 @@ export const ProfileSettingsTab = () => {
       });
 
       if (url) {
-        update({ ...session, user: { ...session?.user, image: url } });
+        update({ picture: url });
       }
 
       toast({
@@ -145,7 +151,7 @@ export const ProfileSettingsTab = () => {
                         process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME
                       }
                       onSuccess={(result) => {
-                        onCloudinarySuccess(result.event, result.info);
+                        onCloudinarySuccess(_id, result.event, result.info);
                       }}
                     >
                       Upload new avatar
