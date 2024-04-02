@@ -7,7 +7,7 @@ import type { ILoading, IError } from "@/types/general";
 export const fetchSettingsById = createAsyncThunk(
   "fetchSettings",
   async (_id: Types.ObjectId | string) => {
-    const data = (await fetch(`/api/settings/1`)).json();
+    const data = (await fetch(`/api/settings/${_id}`)).json();
 
     if (!data) {
       throw new Error("There is no settings");
@@ -25,23 +25,14 @@ const initialState = {
     restConfig: {
       count: 4,
       duration: { long: 15, short: 5 },
-      soundNotificationEnabled: true,
-      file: {
-        filepath: "",
-      },
     },
 
     workConfig: {
       count: 4,
       duration: { long: 15, short: 5 },
-      soundNotificationEnabled: true,
-      file: {
-        filepath: "",
-      },
     },
   },
   profile: {
-    image: "",
     username: "",
   },
 } as ISettings & ILoading & IError;

@@ -2,18 +2,21 @@
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 import { fetchSettingsById } from "@/redux/slices/settingsSlice";
 
-import { Types } from "mongoose";
-
-export const useSettings = (_id: Types.ObjectId | string) => {
+export const useSettings = () => {
   const dispatch = useAppDispatch();
+  const { data: session } = useSession({
+    required: true,
+  });
+
   const settings = useAppSelector((state) => state.settingsSlice);
 
   useEffect(() => {
-    if (settings.loading === "idle") {
-      dispatch(fetchSettingsById(_id));
+    if (settings.loading === "idle" && session?.user.id) {
+      dispatch(fetchSettingsById(session?.user.id));
     }
   });
 

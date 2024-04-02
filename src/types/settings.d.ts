@@ -3,7 +3,6 @@ import { IRestConfiguration, IWorkConfiguration } from "@/types/pomodorro";
 // profile serttings
 interface IProfileSettings {
   username: string;
-  image: string;
 }
 
 // pomodorro settings

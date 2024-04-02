@@ -42,14 +42,4 @@ export const SettingsProfileSchema = z.object({
   username: z
     .string()
     .min(1, "Username length must be greater than 1 character"),
-
-  file: z
-    .any()
-    .refine((files) => {
-      return files?.[0]?.size <= MAX_FILE_SIZE;
-    }, `Max image size is 5MB.`)
-    .refine(
-      (files) => ACCEPTED_IMAGE_MIME_TYPES.includes(files?.[0]?.type),
-      "Only .jpg, .jpeg, .png and .webp formats are supported."
-    ),
 });

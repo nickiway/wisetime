@@ -10,6 +10,7 @@ import { sendEmailVerification } from "@/lib/mail";
 
 import { RegisterSchema } from "@/schemas";
 import { User } from "@/db/models/auth/User";
+import { Settings } from "@/db/models/Settings";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validData = RegisterSchema.safeParse(values);
@@ -32,7 +33,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     const hashedPassword = await bcryptjs.hash(password, 10);
     const trimUsername = name.trim();
 
-    await User.create({
+    const response = await User.create({
       name: trimUsername,
       email,
       password: hashedPassword,
@@ -43,6 +44,11 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     const validationToken = (await createVerificationToken(
       email
     )) as IVerificationToken;
+
+    await Settings.create({
+      createdBy: response._id,
+    });
+
     await sendEmailVerification(validationToken);
 
     return { success: "Success! User was creted, validated your email" };

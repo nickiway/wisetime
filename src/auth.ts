@@ -20,8 +20,6 @@ export const {
   },
   callbacks: {
     async session({ token, session }) {
-      console.log("token call", token);
-      console.log("session call", session);
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
@@ -38,11 +36,7 @@ export const {
         token.isCredentials = true;
       }
 
-      console.log("trigger", trigger);
-      console.log("session", session);
       if (trigger === "update" && session) {
-        console.log("triggered");
-
         return { ...token, ...session };
       }
 

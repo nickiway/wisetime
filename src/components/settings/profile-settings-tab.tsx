@@ -4,7 +4,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CldUploadButton } from "next-cloudinary";
 
-import { useTransition, useState, useEffect } from "react";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 
@@ -27,6 +27,7 @@ import { Button } from "../ui/button";
 import { UserAvatar } from "../shared/user-avatar";
 import { SettingsHeader, SettingsSeparator } from ".";
 import { useToast } from "../ui/use-toast";
+import { useSettings } from "@/hooks/useSettings";
 
 export const ProfileSettingsTab = () => {
   const [isPending, startTransition] = useTransition();
@@ -35,7 +36,7 @@ export const ProfileSettingsTab = () => {
     required: true,
   });
 
-  console.log("session", session?.user?.id);
+  const settings = useSettings();
   const image = session?.user.image;
   const _id = session?.user.id;
 
@@ -43,7 +44,6 @@ export const ProfileSettingsTab = () => {
     resolver: zodResolver(SettingsProfileSchema),
     defaultValues: {
       username: "",
-      file: undefined,
     },
   });
 
@@ -52,28 +52,19 @@ export const ProfileSettingsTab = () => {
     event?: string,
     info?: any
   ) => {
-    try {
-      console.log(session?.user.id);
-      const { error, success, url } = await updateCloudinaryProfilePhoto({
-        _id: session?.user.id,
-        event,
-        info,
-      });
+    const { error, success, url } = await updateCloudinaryProfilePhoto({
+      _id: session?.user.id,
+      event,
+      info,
+    });
 
-      if (url) {
-        update({ picture: url });
-      }
-
-      toast({
-        title: error ? error : success,
-      });
-    } catch (error) {
-      console.error("Error updating session:", error);
-      toast({
-        title: "Failed to update session",
-        color: "red",
-      });
+    if (url) {
+      update({ picture: url });
     }
+
+    toast({
+      title: error ? error : success,
+    });
   };
 
   const onSubmit = (values: z.infer<typeof SettingsProfileSchema>) => {
@@ -132,35 +123,22 @@ export const ProfileSettingsTab = () => {
             </SettingsHeader>
 
             {/* file input */}
-            <FormField
-              control={form.control}
-              name="file"
-              render={({ field }) => (
-                <FormItem className="flex gap-x-10 items-end">
-                  {/* preview of new logo */}
-                  <UserAvatar
-                    className="size-20"
-                    imageAlt="Your Profile Image"
-                    imageUri={image ?? ""}
-                  />
-
-                  <FormControl>
-                    <CldUploadButton
-                      options={{ multiple: false }}
-                      uploadPreset={
-                        process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME
-                      }
-                      onSuccess={(result) => {
-                        onCloudinarySuccess(_id, result.event, result.info);
-                      }}
-                    >
-                      Upload new avatar
-                    </CldUploadButton>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <CldUploadButton
+              className="flex gap-x-10 items-center"
+              options={{ multiple: false }}
+              uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME}
+              onSuccess={(result) => {
+                onCloudinarySuccess(_id, result.event, result.info);
+              }}
+            >
+              {/* preview of new logo */}
+              <UserAvatar
+                className="size-20"
+                imageAlt="Your Profile Image"
+                imageUri={image ?? ""}
+              />
+              <span>Upload new avatar</span>
+            </CldUploadButton>
           </section>
 
           <Button type="submit" disabled={isPending} className="w-full">
