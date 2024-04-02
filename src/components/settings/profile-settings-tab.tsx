@@ -2,10 +2,14 @@
 
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CldUploadButton } from "next-cloudinary";
 
 import { Session } from "next-auth";
-import { useTransition, useState } from "react";
+import { useTransition, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
+
+import { updateCloudinaryProfilePhoto } from "@/actions/settings";
 
 import { SettingsProfileSchema } from "@/schemas";
 
@@ -23,17 +27,16 @@ import { UserAvatar } from "../shared/user-avatar";
 import { SettingsHeader, SettingsSeparator } from ".";
 import { useToast } from "../ui/use-toast";
 
-export const ProfileSettingsTab = ({
-  session,
-}: {
-  session: Session | null;
-}) => {
-  const image = session?.user.image;
-  const _id = session?.user.id;
-
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+export const ProfileSettingsTab = () => {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
+  const { data: session, update } = useSession();
+
+  const image = session?.user.image;
+  useEffect(() => {
+    console.log("session");
+    console.log(session);
+  }, [session]);
 
   const form = useForm<z.infer<typeof SettingsProfileSchema>>({
     resolver: zodResolver(SettingsProfileSchema),
@@ -43,16 +46,35 @@ export const ProfileSettingsTab = ({
     },
   });
 
+  const onCloudinarySuccess = async (event?: string, info?: any) => {
+    try {
+      const { error, success, url } = await updateCloudinaryProfilePhoto({
+        _id: session?.user.id,
+        event,
+        info,
+      });
+
+      if (url) {
+        update({ ...session, user: { ...session?.user, image: url } });
+      }
+
+      toast({
+        title: error ? error : success,
+      });
+    } catch (error) {
+      console.error("Error updating session:", error);
+      toast({
+        title: "Failed to update session",
+        color: "red",
+      });
+    }
+  };
+
   const onSubmit = (values: z.infer<typeof SettingsProfileSchema>) => {
     startTransition(async () => {
       try {
-        const response = await fetch("/api/settings/general", {
-          method: "PATCH",
-          body: JSON.stringify(values),
-        });
-
-        console.log(response);
       } catch (error) {
+        console.error(error);
         toast({
           title: "Updating was failed",
           color: "red",
@@ -113,24 +135,21 @@ export const ProfileSettingsTab = ({
                   <UserAvatar
                     className="size-20"
                     imageAlt="Your Profile Image"
-                    imageUri={
-                      selectedImage
-                        ? URL.createObjectURL(selectedImage)
-                        : image ?? ""
-                    }
+                    imageUri={image ?? ""}
                   />
 
                   <FormControl>
-                    <Input
-                      type="file"
-                      onBlur={field.onBlur}
-                      name={field.name}
-                      onChange={(e) => {
-                        field.onChange(e.target.files);
-                        setSelectedImage(e.target.files?.[0] || null);
+                    <CldUploadButton
+                      options={{ multiple: false }}
+                      uploadPreset={
+                        process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME
+                      }
+                      onSuccess={(result) => {
+                        onCloudinarySuccess(result.event, result.info);
                       }}
-                      ref={field.ref}
-                    />
+                    >
+                      Upload new avatar
+                    </CldUploadButton>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -30,10 +30,18 @@ export const {
 
       return session;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       // @ts-ignore
       if (user?.password) {
         token.isCredentials = true;
+      }
+
+      console.log("trigger", trigger);
+      console.log("session", session);
+      if (trigger === "update" && session) {
+        console.log("triggered");
+
+        return { ...token, user: session };
       }
 
       return token;

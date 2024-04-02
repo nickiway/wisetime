@@ -9,7 +9,6 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 export const useProjects = (userId: string | Types.ObjectId | undefined) => {
   const dispatch = useAppDispatch();
 
-  console.log(userId);
   const { projects, loading, error } = useAppSelector(
     (state) => state.projectsSlice
   );

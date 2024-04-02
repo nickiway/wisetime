@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ThemeClientProvider } from "@/components/theme-provider";
 import { Providers } from "@/redux/provider";
 import "./globals.css";
+import AuthWrapper from "./auth_wrapper";
 
 export const metadata: Metadata = {
   title: {
@@ -19,10 +20,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Providers>
-      <html lang="en">
-        <body>{children}</body>
-      </html>
-    </Providers>
+    <AuthWrapper>
+      <Providers>
+        <html lang="en">
+          <body>{children}</body>
+        </html>
+      </Providers>
+    </AuthWrapper>
   );
 }

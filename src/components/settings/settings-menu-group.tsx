@@ -1,3 +1,6 @@
+"use client";
+import { CldImage } from "next-cloudinary";
+
 export const SettingsMenuGroup = ({
   children,
 }: {

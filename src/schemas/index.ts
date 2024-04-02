@@ -46,7 +46,6 @@ export const SettingsProfileSchema = z.object({
   file: z
     .any()
     .refine((files) => {
-      console.log(files);
       return files?.[0]?.size <= MAX_FILE_SIZE;
     }, `Max image size is 5MB.`)
     .refine(

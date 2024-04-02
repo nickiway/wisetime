@@ -37,7 +37,6 @@ export const ProjectsPickerSelect = ({
         <SelectGroup>
           <SelectLabel>Select Your Project</SelectLabel>
           {data.map((project) => {
-            console.log(project);
             return (
               <SelectItem key={project?._id} value={project?._id}>
                 {project?.title}

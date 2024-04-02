@@ -36,7 +36,6 @@ export const TimeTrackerTable = ({ session }: ITimeTrackerTable) => {
       </TableHeader>
       <TableBody>
         {table.map(({ body }, index) => {
-          console.log(body);
           return (
             <TableRow key={index}>
               <TableCell>{new Date(body.date).toLocaleDateString()}</TableCell>
