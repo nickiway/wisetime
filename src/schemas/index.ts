@@ -69,13 +69,13 @@ export const PomodorroSettingsSchema = z
         required_error: "Enter the short work interval",
         invalid_type_error: "The interval must be provided as number",
       })
-      .min(20, "The short rest interval must be minimum 5"),
+      .min(20, "The short rest interval must be minimum 20"),
     workLongInterval: z.coerce
       .number({
         required_error: "Enter the long work interval",
         invalid_type_error: "The interval must be provided as number",
       })
-      .min(30, "The long rest interval must be minimum 15"),
+      .min(30, "The long rest interval must be minimum 30"),
   })
   .refine((data) => data.restShortInterval < data.restLongInterval, {
     message: "The short rest interval must be less than the long rest interval",
