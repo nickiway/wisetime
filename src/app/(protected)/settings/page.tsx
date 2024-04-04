@@ -14,6 +14,7 @@ import {
   SettingsTabsGroup,
 } from "@/components/settings";
 import { ProfileSettingsTab } from "@/components/settings/general-settings/profile-settings-tab";
+import { PomodorroSettingsTab } from "@/components/settings/pomodorro-settings/pomodrro-settings-tab";
 
 export default async function SettingsPage() {
   const session = await auth();
@@ -41,16 +42,20 @@ export default async function SettingsPage() {
         </SettingsMenuGroup>
 
         <SettingsTabsGroup>
-          <SettingsHeader variant="lg" className="pb-5">
-            Settings
-          </SettingsHeader>
-
           <SettingsTabsElement pathToMatch="profile">
+            <SettingsHeader variant="lg" className="pb-5">
+              General Settings
+            </SettingsHeader>
+
             <ProfileSettingsTab />
           </SettingsTabsElement>
 
           <SettingsTabsElement pathToMatch="pomodrro">
-            <div>Pomodorro</div>
+            <SettingsHeader variant="lg" className="pb-5">
+              Pomodorro Settings
+            </SettingsHeader>
+
+            <PomodorroSettingsTab />
           </SettingsTabsElement>
         </SettingsTabsGroup>
       </Settings>

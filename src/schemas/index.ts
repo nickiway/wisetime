@@ -39,3 +39,52 @@ export const SettingsProfileSchema = z.object({
     .string()
     .min(1, "Last name length must be greater than 1 character"),
 });
+
+export const PomodorroSettingsSchema = z
+  .object({
+    count: z.coerce
+      .number({
+        required_error: "Enter the number of cycles",
+        invalid_type_error: "The cycles number must be entered",
+      })
+      .refine((value) => value >= 4 && value <= 8, {
+        message: "The number of cycles must be from 4 to 8",
+      }),
+
+    restShortInterval: z.coerce
+      .number({
+        required_error: "Enter the interval of short rest",
+        invalid_type_error: "The interval must be provided as number",
+      })
+      .min(5, "The short rest interval must be minimum 5"),
+    restLongInterval: z.coerce
+      .number({
+        required_error: "Enter the interval of long rest",
+        invalid_type_error: "The interval must be provided as number",
+      })
+      .min(15, "The long rest interval must be minimum 15"),
+
+    workShortInterval: z.coerce
+      .number({
+        required_error: "Enter the short work interval",
+        invalid_type_error: "The interval must be provided as number",
+      })
+      .min(20, "The short rest interval must be minimum 5"),
+    workLongInterval: z.coerce
+      .number({
+        required_error: "Enter the long work interval",
+        invalid_type_error: "The interval must be provided as number",
+      })
+      .min(30, "The long rest interval must be minimum 15"),
+  })
+  .refine((data) => data.restShortInterval < data.restLongInterval, {
+    message: "The short rest interval must be less than the long rest interval",
+    path: ["restShortInterval"],
+  })
+  .refine((data) => data.workShortInterval < data.workLongInterval, {
+    message: "The short work interval must be less than the long work interval",
+    path: ["workShortInterval"],
+  })
+  .transform((data) => {
+    return data;
+  });

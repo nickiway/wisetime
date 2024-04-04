@@ -8,7 +8,7 @@ import { updateFirstName } from "@/redux/slices/settingsSlice";
 import { useToast } from "../../ui/use-toast";
 import { useSettings } from "@/hooks/useSettings";
 import { useAppDispatch } from "@/redux/hooks";
-import { useTransition, useEffect, useState } from "react";
+import { useTransition, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { SettingsProfileSchema } from "@/schemas";
@@ -28,8 +28,6 @@ import { SettingsHeader, SettingsSeparator } from "..";
 import { useSession } from "next-auth/react";
 
 export const GeneralSettingsForm = () => {
-  const [isDataUpdated, setIsDataUpdated] = useState(false);
-
   const { toast } = useToast();
   const dispatch = useAppDispatch();
 
@@ -58,7 +56,7 @@ export const GeneralSettingsForm = () => {
 
   const onSubmit = (values: z.infer<typeof SettingsProfileSchema>) => {
     startTransition(async () => {
-      if (!isDataUpdated) return;
+      if (!form.formState.isDirty) return;
 
       if (!session?.user.id) return;
 
@@ -98,9 +96,9 @@ export const GeneralSettingsForm = () => {
                     placeholder="First Name"
                     type="text"
                     onChange={(e) => {
+                      field.onChange();
                       dispatch(updateFirstName(e.target.value));
                       form.setValue("firstName", e.target.value);
-                      setIsDataUpdated(true);
                     }}
                   />
                 </FormControl>
@@ -121,9 +119,9 @@ export const GeneralSettingsForm = () => {
                     placeholder="Last Name"
                     type="text"
                     onChange={(e) => {
+                      field.onChange();
                       dispatch(updateFirstName(e.target.value));
                       form.setValue("lastName", e.target.value);
-                      setIsDataUpdated(true);
                     }}
                   />
                 </FormControl>
@@ -137,7 +135,7 @@ export const GeneralSettingsForm = () => {
 
         <Button
           type="submit"
-          disabled={isPending || !isDataUpdated}
+          disabled={isPending || !form.formState.isDirty}
           className="w-full"
         >
           Save
