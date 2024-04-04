@@ -34,12 +34,6 @@ export default async function SettingsPage() {
             <span className="capitalize">Pomodorro settings</span>
           </SettingsMenuElement>
 
-          {/* Contact */}
-          <SettingsMenuElement path="contacts">
-            <ContactIcon className="mr-3" />
-            <span className="contact">Contacts settings</span>
-          </SettingsMenuElement>
-
           <SettingsSeparator />
 
           {/* signout button  */}
@@ -52,15 +46,11 @@ export default async function SettingsPage() {
           </SettingsHeader>
 
           <SettingsTabsElement pathToMatch="profile">
-            <ProfileSettingsTab session={session} />
+            <ProfileSettingsTab />
           </SettingsTabsElement>
 
           <SettingsTabsElement pathToMatch="pomodrro">
             <div>Pomodorro</div>
-          </SettingsTabsElement>
-
-          <SettingsTabsElement pathToMatch="contacts">
-            <div>Contacts</div>
           </SettingsTabsElement>
         </SettingsTabsGroup>
       </Settings>

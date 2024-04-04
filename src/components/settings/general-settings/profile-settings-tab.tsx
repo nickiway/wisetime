@@ -6,8 +6,12 @@ import { GeneralSettingsForm } from "./general-settings-form";
 export const ProfileSettingsTab = () => {
   return (
     <div className="flex gap-x-10 ">
-      <GeneralSettingsForm />
-      <UploadAvatarPicker />
+      <section className="w-full">
+        <GeneralSettingsForm />
+      </section>
+      <section>
+        <UploadAvatarPicker />
+      </section>
     </div>
   );
 };
