@@ -2,7 +2,7 @@
 
 import { useTimer } from "@/hooks/useTimer";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import {
   addTick,
   addRestCounts,
@@ -10,11 +10,25 @@ import {
   decreaseTicksByMount,
   onMountTimer,
   pause,
+  configSettings,
 } from "@/redux/slices/pomodorroTimerSlice";
 import "react-circular-progressbar/dist/styles.css";
+import { useSettings } from "@/hooks/useSettings";
 
 export const PomodorroLogicModule = () => {
   const dispatch = useAppDispatch();
+  const { pomodorro } = useSettings();
+
+  useEffect(() => {
+    console.log(pomodorro, "pomodorro");
+    const settingsPayload = {
+      restLong: pomodorro.restConfig.duration.long,
+      restShort: pomodorro.restConfig.duration.short,
+      workShort: pomodorro.workConfig.duration.short,
+    };
+
+    dispatch(configSettings(settingsPayload));
+  }, [dispatch, pomodorro]);
 
   // Selecting necessary state variables
   const { workInterval, restInterval, ticks, isOn, counter } = useAppSelector(

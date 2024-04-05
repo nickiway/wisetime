@@ -78,6 +78,7 @@ export const updatePomodorroTimeSettings = async (
 ): Promise<{
   error?: string;
   success?: string;
+  objToUpdate?: IPomodorroTimerSettings;
 }> => {
   try {
     const isDataValid = PomodorroSettingsSchema.safeParse(values);
@@ -88,7 +89,7 @@ export const updatePomodorroTimeSettings = async (
       };
 
     // creating object to update
-    const pomodorro = {
+    const objToUpdate = {
       restConfig: {
         count: values.count,
         duration: {
@@ -110,10 +111,10 @@ export const updatePomodorroTimeSettings = async (
     await dbConnect();
     await Settings.findOneAndUpdate(
       { createdBy: new ObjectId(_id) },
-      { pomodorro }
+      { pomodorro: objToUpdate }
     );
 
-    return { success: "Pomodorro settings data was updated" };
+    return { success: "Pomodorro settings data was updated", objToUpdate };
   } catch (error) {
     console.error(error);
     return { error: "The pomodorro settigns data updated was failed" };

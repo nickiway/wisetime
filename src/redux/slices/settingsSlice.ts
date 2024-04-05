@@ -49,6 +49,10 @@ const settingsSlice = createSlice({
     updateLastName(state, { payload }) {
       state.profile.lastName = payload;
     },
+
+    updatePomodorroSliceSettings(state, { payload }) {
+      state.pomodorro = payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchSettingsById.pending, (state, _) => {
@@ -67,5 +71,6 @@ const settingsSlice = createSlice({
   },
 });
 
-export const { updateFirstName, updateLastName } = settingsSlice.actions;
+export const { updateFirstName, updatePomodorroSliceSettings, updateLastName } =
+  settingsSlice.actions;
 export default settingsSlice.reducer;

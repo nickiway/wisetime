@@ -42,6 +42,14 @@ const pomodorroTimerSlice = createSlice({
   name: "pomodorroTimerSlice",
   initialState,
   reducers: {
+    // config settings
+    configSettings(state, { payload }) {
+      state.restInterval = {
+        short: getTicksFromMin(payload.restShort),
+        long: getTicksFromMin(payload.restLong),
+      };
+      state.workInterval = getTicksFromMin(payload.workShort);
+    },
     // turn on the timer
     start(state) {
       state.isOn = true;
@@ -121,5 +129,6 @@ export const {
   addRestCounts,
   addWorkCounts,
   decreaseTicksByMount,
+  configSettings,
 } = pomodorroTimerSlice.actions;
 export default pomodorroTimerSlice.reducer;

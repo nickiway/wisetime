@@ -24,9 +24,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SettingsHeader, SettingsSeparator } from "..";
 import { updatePomodorroTimeSettings } from "@/actions/settings";
+import { updatePomodorroSliceSettings } from "@/redux/slices/settingsSlice";
 
 export const PomodorroSettingsForm = () => {
   const { loading, pomodorro } = useSettings();
+  const dispatch = useAppDispatch();
   const { toast } = useToast();
 
   const [isPending, startTransition] = useTransition();
@@ -38,11 +40,14 @@ export const PomodorroSettingsForm = () => {
 
       if (!session?.user.id) return;
 
-      console.log(values);
-      const { error, success } = await updatePomodorroTimeSettings(
+      const { error, success, objToUpdate } = await updatePomodorroTimeSettings(
         session?.user.id,
         values
       );
+
+      if (objToUpdate) {
+        dispatch(updatePomodorroSliceSettings(objToUpdate));
+      }
 
       toast({
         title: success ? success : error,
