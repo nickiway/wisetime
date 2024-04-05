@@ -23,9 +23,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SettingsHeader, SettingsSeparator } from "..";
+import { updatePomodorroTimeSettings } from "@/actions/settings";
 
 export const PomodorroSettingsForm = () => {
   const { loading, pomodorro } = useSettings();
+  const { toast } = useToast();
 
   const [isPending, startTransition] = useTransition();
   const { data: session } = useSession();
@@ -37,14 +39,14 @@ export const PomodorroSettingsForm = () => {
       if (!session?.user.id) return;
 
       console.log(values);
-      //   const { error, success } = await updateSettingsProfile(
-      //     session?.user.id,
-      //     values
-      //   );
+      const { error, success } = await updatePomodorroTimeSettings(
+        session?.user.id,
+        values
+      );
 
-      //   toast({
-      //     title: success ? success : error,
-      //   });
+      toast({
+        title: success ? success : error,
+      });
     });
   };
 

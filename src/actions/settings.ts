@@ -4,13 +4,13 @@ import * as z from "zod";
 import type { Types } from "mongoose";
 import { ObjectId } from "mongodb";
 
-import { SettingsProfileSchema } from "@/schemas";
+import { PomodorroSettingsSchema, SettingsProfileSchema } from "@/schemas";
 
 import { User } from "@/db/models/auth/User";
 import { Settings } from "@/db/models/Settings";
 
 import { dbConnect } from "@/lib/dbConnect";
-import { IProfileSettings } from "@/types/settings";
+import { IPomodorroTimerSettings, IProfileSettings } from "@/types/settings";
 
 interface IUpdateCloudinaryProfilePhoto {
   _id: Types.ObjectId | string | undefined;
@@ -68,5 +68,54 @@ export const updateSettingsProfile = async (
     return { success: "Profile data was updated" };
   } catch (error) {
     return { error: "Something went wrong" };
+  }
+};
+
+//
+export const updatePomodorroTimeSettings = async (
+  _id: Types.ObjectId | string,
+  values: z.infer<typeof PomodorroSettingsSchema>
+): Promise<{
+  error?: string;
+  success?: string;
+}> => {
+  try {
+    const isDataValid = PomodorroSettingsSchema.safeParse(values);
+
+    if (!isDataValid)
+      return {
+        error: "The provided data is incorrect please enter other data",
+      };
+
+    // creating object to update
+    const pomodorro = {
+      restConfig: {
+        count: values.count,
+        duration: {
+          long: values.restLongInterval,
+          short: values.restShortInterval,
+        },
+      },
+
+      workConfig: {
+        count: values.count,
+        duration: {
+          long: values.workLongInterval,
+          short: values.workShortInterval,
+        },
+      },
+    } as IPomodorroTimerSettings;
+
+    // updating
+    await dbConnect();
+    await Settings.findOneAndUpdate(
+      { createdBy: new ObjectId(_id) },
+      { pomodorro }
+    );
+
+    return { success: "Pomodorro settings data was updated" };
+  } catch (error) {
+    console.error(error);
+    return { error: "The pomodorro settigns data updated was failed" };
   }
 };
