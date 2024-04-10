@@ -20,7 +20,6 @@ export const fetchSettingsById = createAsyncThunk(
 const initialState = {
   loading: "idle",
   error: null,
-
   pomodorro: {
     restConfig: {
       count: 4,

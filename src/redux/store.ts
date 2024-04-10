@@ -1,5 +1,6 @@
-import { configureStore } from "@reduxjs/toolkit";
-import analyticsReducer from "@/redux/slices/analyticsSlice";
+import { configureStore, createListenerMiddleware } from "@reduxjs/toolkit";
+
+import analyticsReducer, { setDateRange } from "@/redux/slices/analyticsSlice";
 import tagsReducer from "@/redux/slices/tagsSlice";
 import timerReducer from "@/redux/slices/timerSlice";
 import timerTableReducer from "./slices/timerTableSlice";
@@ -13,6 +14,14 @@ import { enableMapSet, setAutoFreeze } from "immer";
 
 enableMapSet();
 setAutoFreeze(false);
+
+const listenerMiddlewareAnalytics = createListenerMiddleware();
+listenerMiddlewareAnalytics.startListening({
+  actionCreator: setDateRange,
+  effect: async (action, listenApi) => {
+    console.log(action.payload);
+  },
+});
 
 export const store = configureStore({
   reducer: {
@@ -29,7 +38,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }),
+    }).prepend(listenerMiddlewareAnalytics.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

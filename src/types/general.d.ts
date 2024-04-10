@@ -8,6 +8,4 @@ export interface IError {
   error: string | null;
 }
 
-export interface IObjectId {
-  _id: Types.ObjectId | string;
-}
+export type IObjectId = Types.ObjectId | string;

@@ -1,32 +1,48 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
-type AnalyticsState = {
-  calendarDay: Date;
-};
+import { fetchAnalytics as actionsFetchAnalytics } from "@/actions/analytics";
 
-type InitialState = {
-  value: AnalyticsState;
-};
+import { IError, ILoading } from "@/types/general";
+import type { IAnalytics } from "@/types/analytics";
+import type { DateRange } from "react-day-picker";
+import { IObjectId } from "@/types/general";
+
+export const fetchAnalytics = createAsyncThunk(
+  "fetchAnalytics",
+  async (payload: { _id: IObjectId; dateRange: DateRange }) => {
+    // const data = await actionsFetchAnalytics(payload._id, payload.dateRange);
+    // fetch(
+    //   `/api/analytics/${payload._id}/${payload.dateRange.from}/${payload.dateRange.to}`
+    // );
+    // console.log("settigns");
+    // return data;
+  }
+);
 
 const initialState = {
-  value: {
-    calendarDay: new Date(),
-  } as AnalyticsState,
-} as InitialState;
+  loading: "idle",
+  error: null,
+  dateRange: {
+    from: new Date(new Date().setHours(0, 0, 0, 0)),
+    to: new Date(new Date().setHours(23, 59, 59, 59)),
+  },
+  timeSessions: 0,
+  totalWorkHours: 0,
+} as IAnalytics & ILoading & IError;
 
-export const analytics = createSlice({
+const analytics = createSlice({
   name: "analytics",
-  initialState: initialState,
+  initialState,
   reducers: {
-    setDate: (state, action: PayloadAction<Date>) => {
-      return {
-        value: {
-          calendarDay: action.payload,
-        },
-      };
+    setDateRange(state, { payload }: PayloadAction<DateRange>) {
+      state.dateRange = payload;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchAnalytics.fulfilled, (state, action) => {
+      console.log(action.payload);
+    });
+  },
 });
-
-export const { setDate } = analytics.actions;
+export const { setDateRange } = analytics.actions;
 export default analytics.reducer;
