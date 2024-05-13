@@ -92,3 +92,19 @@ body {
 .title {
   @apply w-full text-3xl py-10 px-5 capitalize font-montserrat;
 }
+
+.paragraph {
+  @apply mb-5 text-justify;
+}
+
+.text-title {
+  @apply capitalize font-montserrat;
+}
+
+.text-title-2xl {
+  @apply capitalize font-montserrat;
+}
+
+.feed-section {
+  @apply my-10;
+}
