@@ -171,6 +171,37 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="feed-section bg-primary p-20">
+          <div className="container flex gap-x-10">
+            <StatisticCard
+              title="hours saved monthly"
+              statisticNumber="40+"
+              description="at Perception Engineering with one-click time tracking and reporting"
+              forwardButtonHref="auth/login"
+              bgColor="rgba(228, 210, 166, 1)"
+              forwardButtonTitle="Read case study"
+            />
+
+            <StatisticCard
+              title="time tracking adoption"
+              statisticNumber="100%"
+              description="with easy, non-intrusive time reporting at software consultancy Newlogic"
+              forwardButtonHref="auth/login"
+              bgColor="rgba(166, 211, 228, 1)"
+              forwardButtonTitle="Read case study"
+            />
+
+            <StatisticCard
+              title="increase in profitability"
+              statisticNumber="20%"
+              description="by accurately tracking billable work hours at Sweat+Co PR agency"
+              forwardButtonHref="auth/login"
+              bgColor="rgba(187, 166, 228, 1)"
+              forwardButtonTitle="Read case study"
+            />
+          </div>
+        </section>
+
         {/* carousel section */}
         <section className="feed-section">
           {/* Icon */}

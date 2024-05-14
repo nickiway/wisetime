@@ -22,7 +22,7 @@ export const StatisticCard = ({
   description,
 }: StatisticCardProps) => {
   return (
-    <Card style={{ backgroundColor: bgColor }}>
+    <Card style={{ backgroundColor: bgColor }} className="border-0">
       <CardContent>
         <p className="text-2xl  py-2">
           <span className="font-bold ">{statisticNumber}</span> {title}
@@ -32,8 +32,9 @@ export const StatisticCard = ({
       <CardContent>{description}</CardContent>
       <CardContent>
         <Button className="w-full" asChild>
-          <Link href={forwardButtonHref}>
-            {forwardButtonTitle} <ArrowRightIcon />
+          <Link href={forwardButtonHref} className="flex gap-x-5">
+            <span>{forwardButtonTitle}</span>
+            <ArrowRightIcon />
           </Link>
         </Button>
       </CardContent>
