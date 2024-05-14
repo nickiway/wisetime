@@ -172,6 +172,13 @@ export default function Home() {
         </section>
 
         <section className="feed-section bg-primary p-20">
+          <div className="container">
+            <p className="py-10">
+              <span className="uppercase text-primary-foreground text-title text-2xl">
+                People THAT USE WiseTime TRACK SEE:
+              </span>
+            </p>
+          </div>
           <div className="container flex gap-x-10">
             <StatisticCard
               title="hours saved monthly"
