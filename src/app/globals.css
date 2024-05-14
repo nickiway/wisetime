@@ -98,7 +98,7 @@ body {
 }
 
 .text-title {
-  @apply capitalize font-montserrat;
+  @apply font-montserrat;
 }
 
 .text-title-2xl {
